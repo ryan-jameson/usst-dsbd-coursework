@@ -1,0 +1,136 @@
+/* styles.css */
+/* styles.css */
+body{
+    margin: 0;
+    font-family: Arial, sans-serif; /* 修正字体家族属性 */
+    background-image: url(image/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center center; /* 背景图片居中显示 */
+    background-attachment: fixed; /* 背景图片固定，不随滚动条滚动 */
+    background-size: cover; /* 背景图片覆盖整个屏幕 */
+}
+
+.navbar {
+    background-color: #333; /* 修正背景颜色属性 */
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000; /* 修正z-index属性 */
+}
+
+.navbar a {
+    display: block;
+    color: white;
+    text-align: center; /* 修正文本对齐属性 */
+    padding: 10px 15px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #ddd; /* 修正背景颜色属性 */
+    color: black;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* 将登录提示推到最右边 */
+    color: #fff ; /* 设置字体颜色为白色，并确保优先级 */
+    padding: 14px 15px; /* 设置内边距 */
+    padding-right: 30px; /* 为最右侧的元素增加空间 */
+    overflow: hidden; /* 隐藏溢出的内容 */
+}
+/* 添加搜索框样式 */
+.search-form {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 水平居中 */
+    margin-top: 5px;
+    margin-left: 40px; /* 自动推到最左侧 */
+    margin-right: 20px; /* 如果需要，也可以设置右边距 */
+}
+
+.search-form input[type="text"] {
+    padding: 8px; /* 增加内边距 */
+    border: 1px solid #ccc; /* 轻微灰色边框 */
+    border-radius: 4px;
+    width: 200px; /* 设置一个合适的宽度 */
+    margin-right: 10px; /* 与按钮之间的间距 */
+}
+
+.search-form button {
+    padding: 8px 16px; /* 调整按钮内边距 */
+    background-color: #5cb85c; /* 按钮背景色 */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: #4cae4c; /* 按钮悬停时的背景色 */
+}
+.carousel {
+    width: 80%;
+    height: auto; /* 高度自动，根据内容调整 */
+    overflow: hidden; /* 隐藏溢出的部分 */
+    margin: 20px auto; /* 居中显示 */
+    margin-top: 80px; /* 根据需要调整这个值 */
+    position: centre; /* 相对于最近的已定位祖先元素定位 */
+    top: 60px; /* 向下移动20px */
+    left: 0; /* 从左边开始 */
+}
+
+.carousel img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover; /* 保证图片覆盖整个区域，不被拉伸变形 */
+    display: none; /* 默认隐藏所有图片 */
+}
+
+.carousel img.active {
+    display: block; /* 显示当前活动的图片 */
+}
+
+.product-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+/* 设置商品项的背景为白色，增加内边距和边框以增强视觉效果 */
+.product {
+    border: 1px solid #ddd; /* 轻微灰色边框 */
+    margin: 10px;
+    width: calc(25% - 20px); /* 限制商品的宽度，使其占据行的四分之一 */
+    box-sizing: border-box;
+    padding: 10px; /* 内边距，增加点击区域 */
+    text-align: center; /* 文本居中 */
+}
+
+/* 商品图片样式保持不变 */
+.product img {
+    width: 100%;
+    height: 200px; /* 限制商品图片的高度 */
+    object-fit: cover; /* 保证图片覆盖整个区域，不被拉伸变形 */
+}
+/* 商品描述样式，确保文本颜色与背景有足够的对比度 */
+.product-description {
+    margin-top: 5px;
+    color: #333; /* 深灰色字体 */
+}
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}

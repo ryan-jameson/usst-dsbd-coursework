@@ -1,0 +1,16 @@
+package 上机作业1;
+
+public class Dowhile {
+	public static void main(String args[]) {
+		int i=1;
+		int num=0;
+		do {
+			if(i%5==0 && i%3!=0)
+				num++;
+			i++;
+		}while(i<200);
+		System.out.println("有"+num+"个数能被五整除不能被三整除");
+	}
+}
+
+有26个数能被五整除不能被三整除

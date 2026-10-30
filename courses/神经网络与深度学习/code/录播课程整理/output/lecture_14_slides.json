@@ -1,0 +1,127 @@
+{
+ "lecture": "第14讲",
+ "total_frames": 1650,
+ "slide_count": 15,
+ "slides": [
+  {
+   "slide_no": 1,
+   "time_s": 0,
+   "time_str": "00:00",
+   "frame_file": "000001.jpg",
+   "text": "教32课做学习的更新过程\n2026-04-01 10:40:00\n0.5\n0.5\n-0.5\n-0.5\n-0.5\n0.5\n-0.5\n0.5\n0.5\n0.5\nW4\n-0.5\n-0.5\n-0.5\n0.5\n-0.5\n-1\n0.5\n《神经网络与深度学习》",
+   "lines_count": 21
+  },
+  {
+   "slide_no": 2,
+   "time_s": 494,
+   "time_str": "08:14",
+   "frame_file": "000248.jpg",
+   "text": "教32课件\n2026-04-01 10:48:14\n当数据集是两类线性可分时,对于训练集D=((x(n),J\n其中x(n)为样本的增广特征向量,y(n)E{-1,1),那么存在一个正的常数(>0)和权重向量w*,并且 Ilw*I = 1,对所有 n都满足(w*)T(y(n)x(n))≥.我们可以证明如下定理.\n定理3.1-感知器收敛性：给定训练集D=(x\n令R是训练集中最大的特征向量的模，即\nR = max x(n)Il\n如果训练集D线性可分，两类感知器的参数学习算法3.1的权重更新次数不超过\n《神经网络与深度学习》\n41",
+   "lines_count": 15
+  },
+  {
+   "slide_no": 3,
+   "time_s": 580,
+   "time_str": "09:40",
+   "frame_file": "000291.jpg",
+   "text": "教132课件\n2026-04-01 10:49:40\n感知器的权重向量的更新方式为\n(a)(a) + I-m = Ym\n在第K次更新时感知器的权重向量为\nWk = Zy(k)x(k)\nk=1\n Ilwkll2 的上界\nIWk12的下界\n《神经网络与深度学习》\n42",
+   "lines_count": 11
+  },
+  {
+   "slide_no": 4,
+   "time_s": 1106,
+   "time_str": "18:26",
+   "frame_file": "000554.jpg",
+   "text": "http://playground.tensorflow.org\n教132课件\n2026-04-01 10:58:26\n如何处理非线性可分问题？\nsin(x)\nColorsshows\nsin(x)\ndata, neuron and\nweight values.\nShowtestdata\nDiscretize output\nsinx\nColorsshows\ndata,neuron and\nsin(X)\nweightvalues.\nShowtestdata\nDiscretize output\n48",
+   "lines_count": 20
+  },
+  {
+   "slide_no": 5,
+   "time_s": 1338,
+   "time_str": "22:18",
+   "frame_file": "000670.jpg",
+   "text": "教132课件\n2026-04-01 11:02:18\n>掌握知识点\n>Logistic回归\nSoftmax回归损失函数\n>编程练习\nchap3 softmax regression\n《神经网络与深度学习》\n49",
+   "lines_count": 10
+  },
+  {
+   "slide_no": 6,
+   "time_s": 1392,
+   "time_str": "23:12",
+   "frame_file": "000697.jpg",
+   "text": "Oexerdise/ciapa_eoftrnaxregtessieX\nhisps/github.tommindl/ejwoae/ee/maetec/ahsep3_apltmuk_nagmon\n教132课件\n2026-04-01 11:03:12\nSig\nO Nutications\nnndi /exereise Puiie\n掌握知识！\nOissuas 4 Pull regnests 5Adtions\ntx Cede\nProyects\nDGeouabrandquatty\n尺Iinsghis\n>Logistic回火\nexercize / chap3_snitmax_ pegressian / \nQ Go to file\nSoftmax回我经经patehep31eede\nbeltid5 6 yeors ego\nieme\nLastitaamilioosage\n损失函数\nLaetlicommit alite\nDREABMEnd\n√编程练习\noeotee chapdrearme\n6yeate ago\nDlogistic.regresion-exerete.ipynb\ndoaHaokcigisticregiessionandsotnaxcegcession\n7 years ago\nD srrtmekunegnessten-exeraisexipyhil\ndaarlaawogwticregsascienamesojiaseegretninn\nchap3 sofu\nnag6\nREADMEmd\nLogistic回归以及softmax回归问题描述\n1完成logistic_regressian-exercise.ipnb中的填空\n。填空一：实现sigmaid的交叉报失函数（不使用内置的loss函数)\n2.完成softmax_regressicn-axercise.ipnb中的填空\no填空一：在init构造函数中建立模型所需的参数填空二：实现sotmax的文焗损失函数（下使用tt内置的loss函数）\n11:03\n2026/4/1",
+   "lines_count": 44
+  },
+  {
+   "slide_no": 7,
+   "time_s": 1488,
+   "time_str": "24:48",
+   "frame_file": "000745.jpg",
+   "text": "正在加..X\n一教132课件\n2026-04-01\n11:04:47\nb.com\n@https//github.com\nSign in\nnndl/exercise Public\nBOT\nO Issues 4\nPull requests5OActions\n<>Code\nProjects\n←Files\nexercise/chap3_softmax_regression/\nSof\nbef1a85.6years ago\n龚经经udpatechap3readme\nNaine\nLast ciommit message\nLast eammil date\n README.md\nudpate chap3 readme\n6years ago\nlogistic_regression-exerecise.ip..\ncha\nsdd f2.0 logistic regression and sof..\n7 years ago\n softmaxregression-exercise...\nadd tf2.0 logistic regressionand sof..\n7 years ago\nREADME.md\nLogistic回归以及softmax回归问题描述\n1.完成logistic_regression-exercise.ipnb中的填空\n。填空一：实现sigmoicl的交叉滴损失函数（不使用tf内置的loss函数）\n2.完成 softmax_regression-exercise.ipnb中的填空\n。填空一：在_init_构造函数中建立模型所需的参数\no填空二：实现softmax的交叉损失函数（不使用tf内置的loss函数）\n11:04\n2026/4/1",
+   "lines_count": 41
+  },
+  {
+   "slide_no": 8,
+   "time_s": 1822,
+   "time_str": "30:22",
+   "frame_file": "000912.jpg",
+   "text": "constant.GitHuX\n一教132课件\n2026-04-01\n11:10:22\nb.com\ngnup\nExplore\n围 Enterprise\nLearn More\nBOT\nLearn More\n串Copilot\nLearn More\nμSof\n日Pricing\nLearn More\nSearch syntax tips\n>损\nTools and trends evolve, but collaboration endures.With GitHub,\ndevelopers,agents,andcodecometogetheron oneplatform.\nEnteryouremail\nSign up for GitHub\ncha\nTry GitHub Copilot free\n#characters.module.css.\nGITHUB COPILOT:CHAT\ns game.tsX\nbonus-level.ts\n11:10\n2026/4/1",
+   "lines_count": 30
+  },
+  {
+   "slide_no": 9,
+   "time_s": 1908,
+   "time_str": "31:48",
+   "frame_file": "000955.jpg",
+   "text": "constant.GitHuX\n一教正32课件\n2026-04-01\n11:11:48\nb.com\nPlatformy\nPricing\nSolutionsy\nSearch or jump to...\nSign in\nResourcesv\nOpenSourcey\nEnterprisey\nSign up\nAI CODE CREATION\nDEVELOPER WORKFLOWS\nAPPLICATION SECURITY\nEXPLORE\nBOT\nActions\nGitHub Copilot\nGitHubAdvanced Security\nWhy GitHub\nAutomateanyworkflow\nWritebettercodewithAl\nFind and fix vulinerabilities\nDocumentation\nGitHubSpark\nCodespaces\nCode security\nSof\nBuild and deployintelligent apps\nSecure your code as you build\nInstantdevenvironments\nBlog\nGitHub Models\nSecretprotection\nIssues\nChangelog\nManageand compareprompts\nPlan and track.work\nStop leaks before they start\nMarketplace\nMCP Registry New\nCode Review\n<>\n>编科\nIntegrateexternaltools\nManage code changes\nViewallfeatures>\ncha\nGITHUB COPILOT:CHAT\ns game.ts X\n#characters.module.cssX\nsbonus-level.tsX\n11:11\n2026/4/1",
+   "lines_count": 57
+  },
+  {
+   "slide_no": 10,
+   "time_s": 2106,
+   "time_str": "35:06",
+   "frame_file": "001054.jpg",
+   "text": "代码托管和研发×\n一教32课件\n2026-04-01\n11:15:05\nGgitee\n价格模力方舟开源服务与支持产品客户案例搜开源登录注册\nBOT\n让每一行代码\nSof\n都有改变世界的力量\ncha\n电信\nHUAWE\n11:15\n2026/4/1",
+   "lines_count": 23
+  },
+  {
+   "slide_no": 11,
+   "time_s": 2126,
+   "time_str": "35:26",
+   "frame_file": "001064.jpg",
+   "text": "款件搜素（新）×\n一正32课件\n2026-04-01\n11:15:25\nee.com/7q=nndl\nGgitee\nipuu\n搜索nndl约200个结果排序方式\nBOT4\n何仕躺/nndl\n编程语言\nPython\n< Python\n最后更新：2025-06-24\n40\nHTML\nZE\nSof\nHtml\nYulongWu/神经网络与深度学习nndl\n复旦邱锡鹏教授《神经网络与深度学习》资料\nJupyterNotebook\n12\n>损\n>HTML-\n1★12最后更新：2025-04-04\nTex\nCSS\nSapientialM/nndl\nJavaScript\nStep1机器学习+深度学习快速入门，复旦大学邱老师的开源书《神经网络与深度学习》，copyfromhttps://github.com/nndl/nndl.github.io\nLua\nHTML1★11\n最后更新：2022-01-18\ncha\nMakefile\nfoodkiller/nndl.github.io\nShell\n邱锡鹏《神经网络与深度学习》\nTypeScript\n<HTML-★00最后更新：2025-05-01\nothers\n叶康平/nndl.github.io\n许可证\n<>HTML\n08\n最后更新：2025-08-10\nMIT\nAGPL-3.0\n嘻哈瓜皮/nndl.github.io\nAFL-3.0\n<>HTML\n08\n最后更新：2025-12-02\nApache-2.0\nGPL-3.0\n石争/nndl.github.io-20250822\nMulanPSL-2.0\n<>.HTML\n08\n最后更新：2025-08-22\n他来自江湖/nndi\n11:15\n2026/4/1",
+   "lines_count": 65
+  },
+  {
+   "slide_no": 12,
+   "time_s": 2342,
+   "time_str": "39:02",
+   "frame_file": "001172.jpg",
+   "text": "此电脑微信教132课件\n2026-04-01\n11:19:02\nchap3-线性模型.pptx-\n搜素\nPowerPoint\n登录回收\nPowerPc\n文件开始视图录制插入绘图设计动画幻灯片放映录制帮助切换共享回版式形状道市新建排列快速样式\nAa.\nAdobe\n幻灯片载项形状效果选择\nchap3线性\nAcrobat\n模型.pptx\n幻灯片字体绘图剪贴板加载项多分类（Multi-classClassification）\nFlash中心\nExcel\nMicrosoft\nWPS办\nchap4.前馈\nEdge\n神经网..\nVLC media\n网畅学考勤\nplayer\n(3)\n(3:10)\nWPS office\n单击此处添加备注火绒安全软件\n10\n腾讯QQ\n注口批注回品豆灰辅助功能：调查简体中文(中国大陆)\n幻灯片第28张，共49张\n+54%\n腾讯会议\n11:19\n2026/4/1",
+   "lines_count": 70
+  },
+  {
+   "slide_no": 13,
+   "time_s": 2362,
+   "time_str": "39:22",
+   "frame_file": "001182.jpg",
+   "text": "此电脑微信教132课件\n2026-04-0111:19:22\n回收站\nPowerPoint\n键重启电脑\nAdobe\nchap3线性\nAcrobat\n模型：pptx\nFash中心\nExcel\n脱离平台不能信网购交易要警惕\nMicrosoft\nWPS协作\nchap4馈\nEdge\n神经网络.\n诈骗低价购物\nVLC media\n网畅学电子\n(player\n考勤\n+转账交易\nWPS Office\n网购诈骗不汇款/不轻信四不原则不泄密/不链接保卫处宣火绒安全软件腾讯QQ\n腾讯会议\n11:19\n2026/4/1",
+   "lines_count": 38
+  },
+  {
+   "slide_no": 14,
+   "time_s": 2396,
+   "time_str": "39:56",
+   "frame_file": "001199.jpg",
+   "text": "0搜素\nchap4-前馈神经网络.pptx-PowerPoint\n登录文件审阅视图帮助开始教132课件\n2026-04-01 11:19:56\n1个文字方向形状填复制\n[中对齐文本。\n排列\nZ形状轮快速样式粘贴\nAav\n幻灯片节格式刷看转换为SmartArty\n形状效果选择裁项幻灯片剪贴板字体绘图编辑加载项默认节\n《神经网据与深质学习》\n《神经网络与深度学习》\n前馈神经网络\nhttoew/nndethub.o\n内容神经网络种经元网络结构前馈神经网络参教学习计算图与自动微分前馈神经网络\n★优化问题\nhttps://nndl.github.io/\n神经网络单击此处添加备注神经网络神经网络最早是作为一种主要的追接主义模型。\n二备注口批注幻灯片第1张，共72张简体中文（中国大陆辅助功能：调查\n+ 88% \n11:19\n2026/4/1",
+   "lines_count": 56
+  },
+  {
+   "slide_no": 15,
+   "time_s": 2892,
+   "time_str": "48:12",
+   "frame_file": "001447.jpg",
+   "text": "教132课件\n2026-04-01 11:28:11\n神经网络最早是作为一种主要的连接主义模型。\n>20世纪80年代后期，最流行的一种连接主义模型是分布式并行处理\n(Parallel Distributed Processing，PDP）网络，其有3个主要特性：\n>1）信息表示是分布式的（非局部的）；\n2）记忆和知识是存储在单元之间的连接上；\n>3）通过逐渐改变单元之间的连接强度来学习新的知识。\n>引入误差反向传播来改进其学习能力之后，神经网络也越来越多地应用在各种机器学习任务上。\n《神经网络与深度学习》",
+   "lines_count": 11
+  }
+ ]
+}

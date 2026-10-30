@@ -1,0 +1,15 @@
+package homework0524;
+
+import java.util.Calendar;
+
+public class Onehundred {
+	public static void main(String[] args) {
+		Calendar cal=Calendar.getInstance();
+		cal.add(Calendar.DATE, 100);
+		
+		int y=cal.get(Calendar.YEAR);
+		int m=cal.get(Calendar.MONTH);
+		int d=cal.get(Calendar.DATE);
+		System.out.println("100天后是"+y+"年"+m+"月"+d+"日");
+	}
+}

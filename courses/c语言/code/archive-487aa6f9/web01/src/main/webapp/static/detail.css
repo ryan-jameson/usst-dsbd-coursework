@@ -1,0 +1,112 @@
+/* styles.css */
+body{
+    margin: 0;
+    font-family: Arial, sans-serif; /* 修正字体家族属性 */
+    background-image: url(image/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center center; /* 背景图片居中显示 */
+    background-attachment: fixed; /* 背景图片固定，不随滚动条滚动 */
+    background-size: cover; /* 背景图片覆盖整个屏幕 */
+}
+
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000; /* 确保导航栏在内容之上 */
+}
+
+.navbar a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 15px; /* 减小导航项的内边距 */
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* 将登录提示推到最右边 */
+    color: #fff ; /* 设置字体颜色为白色，并确保优先级 */
+    padding: 14px 15px; /* 设置内边距 */
+    padding-right: 30px; /* 为最右侧的元素增加空间 */
+    overflow: hidden; /* 隐藏溢出的内容 */
+}
+
+.product-detail-page {
+    max-width: 800px;
+    margin: 60px auto 20px; /* 保持与导航栏相同的上边距 */
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: flex-start; /* 从起始位置开始排列 */
+    align-items: flex-start; /* 顶部对齐 */
+}
+
+.product-image {
+    max-width: 300px; /* 商品大图片的最大宽度 */
+    margin-right: 20px; /* 减小与商品信息的间距 */
+}
+
+.product-info {
+    flex-grow: 1;
+    margin-left: 0; /* 减小与商品图片的间距 */
+    padding: 20px; /* 内边距，确保内容不会贴边 */
+}
+
+.product-info h1 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 24px; /* 增大字体大小 */
+}
+
+.product-info p {
+    margin: 0 0 10px 0;
+    color: #666;
+}
+
+.price-add-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.price {
+    font-size: 20px; /* 增大价格字体大小 */
+    color: #333;
+}
+
+.add-to-cart-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.add-to-cart-button:hover {
+    background-color: #45a049;
+}

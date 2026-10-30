@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>测试表单</title>
+</head>
+<body>
+  <h1>表单测试 (POST)</h1>
+  <form method="POST" action="/cgi-bin/test.bat">
+    <label>姓名: <input type="text" name="name" value="Alice"></label><br><br>
+    <label>分数: <input type="text" name="score" value="100"></label><br><br>
+    <button type="submit">提交</button>
+  </form>
+  <p>你也可以直接访问 CGI: <a href="/cgi-bin/test.bat">/cgi-bin/test.bat</a></p>
+</body>
+</html>

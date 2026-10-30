@@ -1,0 +1,84 @@
+
+body,html{
+    margin: 0;
+    font-family: Arial, sans-serif; /* 修正字体家族属性 */
+    background-image: url(image/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center center; /* 背景图片居中显示 */
+    background-attachment: fixed; /* 背景图片固定，不随滚动条滚动 */
+    background-size: cover; /* 背景图片覆盖整个屏幕 */
+}
+
+.navbar {
+    background-color: #333; /* 修正背景颜色属性 */
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000; /* 修正z-index属性 */
+}
+
+.navbar a {
+    display: block;
+    color: white;
+    text-align: center; /* 修正文本对齐属性 */
+    padding: 10px 15px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #ddd; /* 修正背景颜色属性 */
+    color: black;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* 将登录提示推到最右边 */
+    color: #fff ; /* 设置字体颜色为白色，并确保优先级 */
+    padding: 14px 15px; /* 设置内边距 */
+    padding-right: 30px; /* 为最右侧的元素增加空间 */
+    overflow: hidden; /* 隐藏溢出的内容 */
+}
+.history-container {
+    max-width: 1000px; /* 最大宽度 */
+    margin: 20px auto; /* 水平居中 */
+    padding: 20px; /* 内边距 */
+    background-color: #ffffff; /* 白色背景 */
+    border-radius: 8px; /* 圆角边框 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+}
+
+.history-item {
+    display: flex; /* 使用flex布局 */
+    align-items: center; /* 垂直居中对齐 */
+    margin-bottom: 20px; /* 每个条目下方的间距 */
+    padding: 10px; /* 内边距 */
+    border-bottom: 1px solid #eee; /* 底部边框线 */
+    cursor: pointer; /* 鼠标悬停时显示为手型 */
+}
+
+.history-item img {
+    width: 100px; /* 图片宽度 */
+    height: 100px; /* 图片高度 */
+    margin-right: 20px; /* 图片与文本间距 */
+    object-fit: cover; /* 图片覆盖 */
+}
+
+.history-item p {
+    margin: 0; /* 去除默认的外边距 */
+    color: #333; /* 文本颜色 */
+}
+
+.history-item:hover {
+    background-color: #f8f8f8; /* 鼠标悬停时的背景色 */
+}

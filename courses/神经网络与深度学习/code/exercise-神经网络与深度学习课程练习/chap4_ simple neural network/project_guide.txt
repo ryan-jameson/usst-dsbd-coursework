@@ -1,0 +1,91 @@
+chap4_simple_neural_network 项目完成指南
+
+目录文件说明
+- README.md：题目要求与报告模块要求（函数定义 / 数据采集 / 模型描述 / 拟合效果）。
+- tf2.0-exercise.ipynb：TensorFlow2.0 基础函数实现练习（softmax/sigmoid/交叉熵），用于“函数定义”能力展示与数值验证。
+- tutorial_minst_fnn-tf2.0-exercise.ipynb：用 TensorFlow2.0 手写两层全连接网络训练 MNIST（自动求导）。
+- tutorial_minst_fnn-numpy-exercise.ipynb：用 NumPy 手写算子与反向传播训练 MNIST（手动求导）。
+- tf2.0-tutorial.pdf：课程/教程材料（可选参考）。
+
+一、Notebooks 是否“符合 Markdown 文件”
+- 结论：.ipynb 不是 .md 文件。
+- 但：.ipynb 内部包含两类 cell：
+  1) markdown cell：内容语法就是 Markdown（可以写标题、列表、公式等）。
+  2) code cell：内容是代码（Python/TensorFlow/NumPy）。
+- 因此你可以把 notebook 当成“由多个 Markdown 模块 + 多个代码模块”组成的实验报告。
+
+二、按要求完成实验的推荐顺序（从易到难）
+1. 先做 tf2.0-exercise.ipynb（基础函数实现）
+   - 目的：确保你理解 softmax/sigmoid/交叉熵的数学与数值实现。
+   - 运行方式：从上到下依次运行。
+   - 验证点：每个函数 cell 末尾的布尔张量比较结果应为 True（或全部接近 True）。
+   - 对应报告模块：函数定义（说明公式与实现细节、数值稳定性）。
+
+2. 再做 tutorial_minst_fnn-tf2.0-exercise.ipynb（TF2 MNIST，全连接网络）
+   - 目的：在自动求导框架下完成 MNIST 分类训练流程。
+   - 运行方式：从上到下依次运行。
+   - 你要关注的输出：每个 epoch 的 loss/accuracy，以及最后 test loss/test accuracy。
+   - 对应报告模块：
+     - 数据采集：mnist_dataset() 读取 MNIST + 归一化。
+     - 模型描述：myModel（两层全连接，ReLU）。
+     - 函数定义：compute_loss/compute_accuracy/train_one_step/test。
+     - 拟合效果：训练与测试输出指标。
+
+3. 最后做 tutorial_minst_fnn-numpy-exercise.ipynb（NumPy MNIST，手写反向传播）
+   - 目的：把“算子 forward/backward + 手推梯度”真正跑通。
+   - 运行方式：从上到下依次运行。
+   - 关键检查点：
+     - Matmul.backward 与 Relu.backward 是否正确（已在 notebook 中补齐并加注释）。
+     - “最终梯度检查” cell：与 TensorFlow 结果应一致或非常接近（数值误差允许）。
+     - 训练输出：loss 逐步下降、accuracy 逐步上升，最后给出 test 指标。
+   - 对应报告模块：同上（数据采集/模型描述/函数定义/拟合效果），但在“函数定义”部分应重点解释你写的 backward 推导。
+
+三、报告（或 Markdown 文字说明）怎么写：模块与位置对照表
+你报告至少应包含 4 个模块。建议每个模块写 5~10 句话，并配 1~2 个关键公式/伪代码。
+
+1) 函数定义
+- tf2.0-exercise.ipynb
+  - softmax(x)：对最后一维归一化；说明数值稳定性（减 max）。
+  - sigmoid(x)：1/(1+exp(-x))。
+  - softmax_ce(prob, label)：-mean(sum(label*log(prob)))。
+  - sigmoid_ce(prob, label)：-mean(y*log(p)+(1-y)*log(1-p))。
+- tutorial_minst_fnn-tf2.0-exercise.ipynb
+  - compute_loss / compute_accuracy / train_one_step / test。
+- tutorial_minst_fnn-numpy-exercise.ipynb
+  - Matmul/Relu/Softmax/Log 的 forward/backward；重点写 Matmul 与 Relu 的梯度推导。
+
+2) 数据采集
+- tutorial_minst_fnn-tf2.0-exercise.ipynb：mnist_dataset() cell（读取 MNIST + 归一化到 [0,1]）。
+- tutorial_minst_fnn-numpy-exercise.ipynb：mnist_dataset() cell（同上）。
+- 推荐写法：
+  - 数据规模（60000 训练，10000 测试）。
+  - 输入形状 28x28，像素归一化的原因（提高训练稳定性）。
+  - 标签是 0~9 的整数（TF 版）或 one-hot（NumPy 版）。
+
+3) 模型描述
+- tutorial_minst_fnn-tf2.0-exercise.ipynb：myModel
+  - 结构：flatten(784) -> FC(100)+ReLU -> FC(10) 输出 logits。
+  - 参数：W1/b1/W2/b2 的维度含义。
+- tutorial_minst_fnn-numpy-exercise.ipynb：myModel
+  - 结构：输入拼接 bias 后变 785 -> 100 -> 10。
+  - 输出用 Softmax+Log 得到 log(prob)，便于写交叉熵。
+
+4) 拟合效果
+- tutorial_minst_fnn-tf2.0-exercise.ipynb：训练 cell（打印每个 epoch 的 loss/accuracy + 最终 test 指标）。
+- tutorial_minst_fnn-numpy-exercise.ipynb：训练 cell（同上）。
+- 推荐写法：
+  - 画图不是硬性要求，但可以截图/记录最终 test accuracy。
+  - 描述 loss 下降、accuracy 上升的趋势，并解释原因（模型逐渐学到可分特征）。
+
+四、常见问题与排查
+- 如果 loss 不下降：
+  - 检查输入是否归一化到 [0,1]。
+  - 检查 NumPy backward 是否写对（尤其 Matmul.backward、Relu.backward）。
+  - 学习率是否过大/过小。
+- 如果 softmax/交叉熵测试不通过：
+  - softmax 记得做数值稳定性（减 max）。
+  - log 里加 eps（避免 log(0)）。
+
+五、你需要提交什么
+- 按题目要求：补全后的 *.ipynb。
+- 报告：包含“函数定义 / 数据采集 / 模型描述 / 拟合效果”四部分。

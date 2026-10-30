@@ -1,0 +1,172 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+.navbar a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px 15px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    color: #fff;
+    padding: 14px 15px;
+    padding-right: 30px;
+    overflow: hidden;
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+    margin: 20px 0;
+}
+
+p {
+    color: red;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    width: 100%;
+    flex-grow: 1; /* 确保聊天内容占据导航条和发言框之间的所有空间 */
+    overflow-y: auto; /* 添加滚动条，以防内容过多 */
+    margin-bottom: 60px; /* 预留发言框的高度，防止遮挡 */
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.chat-message {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.chat-message .user {
+    font-weight: bold;
+    margin-right: 12px;
+}
+
+.chat-message .text {
+    padding: 22px;
+    border-radius: 15px;
+    font-size: 22px;
+    max-width: 70%;
+    background-color: #f0f0f0;
+    margin-left: 10px;
+}
+
+.my-message {
+    justify-content: flex-end;
+    align-self: flex-end;
+    
+    position: relative;
+}
+
+.other-message {
+    justify-content: flex-start; /* Align messages to the left */
+    align-self: flex-start;
+}
+
+
+.other-message .user {
+    margin-right: 10px; /* 调整用户名与气泡之间的间距 */
+}
+
+.my-message .text {
+    background-color: #e0e0e0;
+    margin-right: 20px;
+    order: 1; /* 调整元素顺序，使气泡在前 */
+    text-align: right;
+    margin-left: auto; /* 将我的发言推到最右侧 */
+    border-top-left-radius: 0; /* 左上角圆角改为0 */
+    border-bottom-left-radius: 0; /* 左下角圆角改为0 */
+    border-top-right-radius: 15px; /* 右上角圆角保持不变 */
+    border-bottom-right-radius: 15px; /* 右下角圆角保持不变 */
+}
+.my-message .user {
+    
+    order:2;
+}
+
+.other-message .text {
+    background-color: #f0f0f0;
+    margin-left: 10px;
+    text-align: left;
+    border-top-left-radius: 15px; /* 左上角圆角保持不变 */
+    border-bottom-left-radius: 15px; /* 左下角圆角保持不变 */
+    border-top-right-radius: 0; /* 右上角圆角改为0 */
+    border-bottom-right-radius: 0; /* 右下角圆角改为0 */
+}
+
+.message-form {
+    position: fixed; /* 固定定位 */
+    bottom: 0; /* 固定在底部 */
+    width: 100%;
+    background: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+textarea {
+    width: 75%; /* 减小宽度，增加聊天界面的可视区域 */
+    padding: 8px; /* 减小内边距 */
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+button {
+    padding: 8px 15px; /* 减小按钮的内边距 */
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

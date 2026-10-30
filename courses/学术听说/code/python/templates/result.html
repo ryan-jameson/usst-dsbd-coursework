@@ -1,0 +1,20 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>营养食谱结果</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>营养食谱结果</h1>
+        <p>早餐：{{ meal_plan.breakfast }}</p>
+        <p>午餐：{{ meal_plan.lunch }}</p>
+        <p>晚餐：{{ meal_plan.dinner }}</p>
+        <p>零食：{{ meal_plan.snack }}</p>
+        <p>BMI: {{ bmi }}</p>
+        <p>营养状况: {{ status }}</p>
+        <a href="/">返回</a>
+    </div>
+</body>
+</html>

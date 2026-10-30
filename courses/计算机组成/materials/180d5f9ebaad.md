@@ -1,0 +1,25 @@
+# InterruptSystemImplementatin_Extended
+
+整理：ryan-jameson。上海理工大学（经管实验班—数据科学与大数据技术专业）。
+
+本文为脱敏文字版。原文中的图片、截图、批注、演讲者备注及嵌入对象未随公开版提供；图示、公式或表格的文字抽取可能不完整。
+
+## 原幻灯片 1
+
+SweRV EH1
+IRQ4
+IRQ3
+
+GPIO1 LED开关
+gpio_irq
+SweRVolf定时器和软件中断
+
+定时器
+ptc_irq
+irq_gpio_enable
+irq_ptc_enable
+1
+0
+0
+1
+GPIO2-PushBtns

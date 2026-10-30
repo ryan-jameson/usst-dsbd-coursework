@@ -1,0 +1,17 @@
+package homework0409;
+
+import java.util.Scanner;
+
+public class IF1 {
+	public static void main(String args[]){
+		Scanner sc=new Scanner(System.in);
+		double a=sc.nextDouble();
+		double b=sc.nextDouble();
+		sc.close();
+		
+		double sum=a+b;
+		
+		if(a>10.0 && b<20.0) System.out.println("两数字之和为"+sum);
+		else System.out.println("不符合要求，第一个数大于10.0，第二个数小于20.0");
+	}
+}

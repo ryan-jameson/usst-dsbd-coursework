@@ -1,0 +1,13 @@
+numpy
+pandas
+torch
+torchvision
+wfdb
+opencv-python
+pillow
+openai>=1.0.0
+scikit-learn
+matplotlib
+seaborn
+transformers
+ipykernel

@@ -1,0 +1,10 @@
+video: match.mp4
+transport: tcp
+host: 0.0.0.0
+port: 5055
+usb_port: COM7
+fps_sample: 10
+max_events: 0
+protocol_version: 1
+event_type: football_event
+checksum: ""

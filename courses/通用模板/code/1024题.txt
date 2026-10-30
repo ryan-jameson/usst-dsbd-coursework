@@ -1,0 +1,101 @@
+第一题
+for i in range(1,100): #从1到100的循环
+    if i%13==0 and i%10==4:#两个条件 个位数4且能被13整除
+        print(i) #没有这样的数
+第二题
+for i in range(101,200): #因为是100到两百之间 所有从101开始 到199结束
+    if i%2==0: #偶数就是能被2整除
+        print(i)
+第三题
+num=0 #计数器 用来计算输出了多少个偶数 输出到了10个就结束
+for i in range(101,200):
+    if i%2==0:
+        num+=1 #发现是偶数 输出的数量＋1
+        print(i)
+    if num>=10: #输出的数量大于等于10的时候 用break结束这个循环
+        break
+
+第四题
+a=int(input())#输入整数
+b=int(input())
+c=int(input())
+
+numbers=[a,b,c] #把a b c放到列表里
+numbers_sorted=sorted(numbers)  #把列表里的元素升序排一下
+print(numbers_sorted)
+
+第五题
+a=int(input())#输入整数
+b=int(input())
+c=int(input())
+d=int(input())
+
+numbers=[a,b,c,d] #把a b c d放到列表里
+numbers_sorted=sorted(numbers)  #把列表里的元素升序排一下
+print(numbers_sorted)
+
+#思考题 如何n个整数排序 直接用sorted语句就行了 多少个整数都能用 3个4个5个6个都可以
+
+第六题
+import random #要导入一个random的库 不然不能生成随机数
+randnum=[random.randint(1,100) for _ in range(30)] 
+#randint后面会跟一个范围 用来生成1到100的随机整数 后面的代码是用来设置这个列表的大小（30个）
+
+oushu=0 #用来给偶数下标元素求和
+jishu=[] #设置一个列表来存放奇数下标元素
+for i in range(30):
+    if i%2==0:
+        oushu+=randnum[i] #如果下标是偶数 那就把这个元素加到sum里 循环结束以后sum就是求和的值
+    else:
+        jishu.append(randnum[i])#把下标是奇数的元素加入到列表当中
+
+jishu_sorted=sorted(jishu,reverse=True) #这个语句可以倒序排列表 如果想顺序排就不加后面的reverse=True
+
+print(oushu)
+print(jishu_sorted)
+
+第七题
+dic_list=[{"name":"rjx","age":18},{"name":"why","age":19},{"name":"zqy","age":20},{"name":"cr","age":21},{"name":"sn","age":22}]
+#这是一个字典列表 包含了五个字典 一组name和age是一个字典
+for dic in dic_list: #第一个循环 遍历字典列表当中的每个字典
+    for k,v in dic.items():#第二个循环 遍历字典当中的每个元素
+        print(f"{k}:{v}")#打印一个字典当中的元素
+    print("________________")#分割线捏
+第八题
+for dic in dic_list: #用循环遍历字典列表当中的每个字典
+    dic["age"]+=2 #将每个字典当中的age元素加2
+
+print(dic_list)
+
+第九题
+students =[{"name":"张三","age": 23,"score": 88,"tel":"23423532","gender":"男"},
+           {"name":"李四","age": 26,"score": 80,"tel":"12533453","gender":"女"},
+           {"name":"王五","age": 15,"score": 58,"tel":"56453453","gender":"男"},
+           {"name":"赵六","age": 16,"score": 57,"tel":"86786785","gender":"不明"},
+           {"name":"小明","age": 18,"score": 98,"tel":"23434656","gender":"女"},
+           {"name":"小红","age": 23,"score": 72,"tel":"67867868","gender":"女"}]
+
+bujige=0 #不及格的个数
+weichengnian=0 #未满18岁数量
+chengji=[] #成绩列表
+best="" #设置一个未知名字 用来标记成绩最高的人 以便最后输出
+maxscore=0 #用来判断最高成绩
+
+for stu in students:
+    chengji.append(stu["score"]) #把每个人的成绩都添加到列表里
+    if stu["score"]>maxscore:
+        best=stu["name"] #将该学生的名字输入到best里
+        maxscore=stu["score"] #将该学生成绩输入到最高成就
+        #这个其实就是类似于打擂台 一个一个循环下来如果这位同学的成绩高 那他就暂时被认为是成绩最高 循环结束以后最高成绩自然就统计出来了
+    if stu["score"]<60:
+        print(f"{'name'}:{stu['name']},{'score'}:{stu['score']}")
+        bujige+=1
+    if stu["age"]<18:
+        weichengnian+=1
+
+print(f"不及格数量：{bujige}") #这个print（f“”）语句和正常print不同的是 它可以同时把文字和数字一起输出
+print(f"未成年数量：{weichengnian}")
+print(f"最高分姓名：[已匿名]
+
+chengji_sorted=sorted(chengji,reverse=True) #倒序一下
+print(chengji_sorted)

@@ -1,0 +1,474 @@
+\documentclass[UTF8,fontset=windows,10pt,a4paper]{ctexart}
+\usepackage[margin=0.85cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small 数学建模公式速查}
+\lhead{\small 两份复习 PPT 公式整理}
+\cfoot{\small \thepage}
+
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{0.65cm}
+\setlist[itemize]{leftmargin=1.1em,itemsep=1pt,topsep=2pt,parsep=0pt}
+\titleformat{\section}{\bfseries\large\color{blue!55!black}}{\thesection}{0.4em}{}
+\titlespacing*{\section}{0pt}{4pt}{2pt}
+\titleformat{\subsection}{\bfseries\normalsize\color{black}}{\thesubsection}{0.4em}{}
+\titlespacing*{\subsection}{0pt}{3pt}{1pt}
+
+\newcommand{\tagline}[1]{\textbf{\color{blue!60!black}#1：}}
+
+\begin{document}
+\begin{center}
+{\Large \bfseries 数学建模考试公式速查表}\\
+{\small 目标：考场看到题型时能马上想起公式。}
+\end{center}
+
+\begin{multicols}{2}
+
+\section{建模与优化}
+\begin{itemize}
+  \item \tagline{建模流程} 现实问题 $\to$ 假设 $\to$ 变量/参数 $\to$ 模型 $\to$ 求解 $\to$ 检验。
+  \item \tagline{数学规划}
+  \[
+    \max/\min f(x),\quad
+    \text{s.t. } g_i(x)\le 0,\ h_j(x)=0,\ a_i\le x_i\le b_i .
+  \]
+  \item \tagline{多目标加权}
+  \[
+    F(x)=w_1 f_1(x)+w_2 f_2(x)+\cdots+w_k f_k(x).
+  \]
+  \item \tagline{边界约束}
+  \[
+    a_i\le x_i\le b_i
+    \Longleftrightarrow
+    x_i-b_i\le0,\quad a_i-x_i\le0.
+  \]
+\end{itemize}
+
+\section{线性规划与 0-1 规划}
+\begin{itemize}
+  \item \tagline{LP 标准形}
+  \[
+    \max z=c^T x,\quad Ax\le b,\quad x\ge0.
+  \]
+  \item \tagline{奶制品生产计划}
+  \[
+  \begin{aligned}
+    \max\quad & z=72x_1+64x_2\\
+    \text{s.t.}\quad & x_1+x_2\le 50,\\
+    &12x_1+8x_2\le 480,\\
+    &3x_1\le100,\quad x_1,x_2\ge0.
+  \end{aligned}
+  \]
+  \item \tagline{奶制品最优解}
+  \[
+    x_1=20,\quad x_2=30,\quad z=3360.
+  \]
+  \item \tagline{影子价格}
+  \[
+    \text{shadow}_i=\frac{\Delta z^*}{\Delta b_i}.
+  \]
+  课件值：牛奶 $48$，时间 $2$，加工能力 $0$。
+  \item \tagline{0-1 变量} $x_i\in\{0,1\}$。
+  \item \tagline{逻辑约束}
+  \[
+    x\Rightarrow y:\ x\le y,\qquad
+    x\Rightarrow \neg y:\ x+y\le1.
+  \]
+  \[
+    \text{至多一： }x+y\le1,\quad
+    \text{至少一： }x+y\ge1,\quad
+    \text{恰一： }x+y=1.
+  \]
+  \item \tagline{指派模型}
+  \[
+    \sum_i x_{ij}=1 \quad(\text{每任务一人}),\qquad
+    \sum_j x_{ij}\le1 \quad(\text{每人至多一任务}).
+  \]
+  \item \tagline{类别最低要求}
+  \[
+    \sum_{i\in C}x_i\ge k.
+  \]
+  \item \tagline{可分离规划折线}
+  若 $b_k\le x\le b_{k+1}$，
+  \[
+    x=z_kb_k+z_{k+1}b_{k+1},\quad
+    z_k+z_{k+1}=1,
+  \]
+  \[
+    c(x)=z_kc(b_k)+z_{k+1}c(b_{k+1}).
+  \]
+\end{itemize}
+
+\section{初等模型与库存}
+\begin{itemize}
+  \item \tagline{匀加速}
+  \[
+    v=at,\qquad s=\frac12 at^2.
+  \]
+  \item \tagline{减速带间距}
+  \[
+    s\approx \frac{v_{\max}^2}{2a_1}
+      +\frac{v_{\max}^2}{2|a_2|},\qquad a=\frac1c.
+  \]
+  课件：$v_{\max}=40\text{ km/h}=11.1\text{ m/s}$，$s\approx66.5\text{ m}$。
+  \item \tagline{连续编号抽样估计}
+  样本数 $n$，最大编号 $m$：
+  \[
+    \hat N\approx \frac{(n+1)m}{n}-1.
+  \]
+  \item \tagline{库存函数}
+  \[
+    q(t)=Q-rt,\qquad Q=rT.
+  \]
+  \item \tagline{平均日费用}
+  \[
+    C(T)=\frac{c_1}{T}+\frac{c_2rT}{2}.
+  \]
+  \item \tagline{最优周期/批量}
+  \[
+    T^*=\sqrt{\frac{2c_1}{c_2r}},\qquad Q^*=rT^*.
+  \]
+  \item \tagline{敏感度}
+  \[
+    S(T,c_1)=\frac12,\quad
+    S(T,c_2)=-\frac12,\quad
+    S(T,r)=-\frac12.
+  \]
+\end{itemize}
+
+\section{森林救火}
+\begin{itemize}
+  \item \tagline{目标函数}
+  \[
+    \min C(x)=f_1(x)+f_2(x).
+  \]
+  \item \tagline{常用表达}
+  \[
+    C(x)=c_1B(t_2)+c_2x(t_2-t_1)+c_3x.
+  \]
+  \item \tagline{火势控制} 救火后火势速度系数约为 $\beta-\lambda x$。
+  \item \tagline{临界人数}
+  \[
+    x_{\min}\approx \frac{\beta}{\lambda}.
+  \]
+\end{itemize}
+
+\section{Logistic / 传染病 / 信息传播}
+\begin{itemize}
+  \item \tagline{Logistic 增长}
+  \[
+    \frac{dx}{dt}=rx\left(1-\frac{x}{N}\right).
+  \]
+  \item \tagline{捕捞模型}
+  \[
+    \frac{dx}{dt}=rx\left(1-\frac{x}{N}\right)-Ex,\qquad h(x)=Ex.
+  \]
+  \item \tagline{最大持续产量}
+  \[
+    x^*=\frac N2,\qquad h_{\max}\approx \frac{rN}{4}.
+  \]
+  \item \tagline{SI}
+  \[
+    s+i=1,\qquad \frac{di}{dt}=\lambda si=\lambda i(1-i).
+  \]
+  $i=1/2$ 时每日新增最多。
+  \item \tagline{SIS}
+  \[
+    \frac{di}{dt}=\lambda si-\mu i.
+  \]
+  若 $\lambda>\mu$，$i(\infty)=1-\mu/\lambda$；若 $\lambda<\mu$，$i\to0$。
+  \item \tagline{SIR}
+  \[
+    \frac{ds}{dt}=-\lambda si,\quad
+    \frac{di}{dt}=\lambda si-\mu i,\quad
+    \frac{dr}{dt}=\mu i.
+  \]
+  \item \tagline{基本感染数}
+  \[
+    \sigma=\frac{\lambda}{\mu}=\lambda\cdot\frac1\mu.
+  \]
+  $\sigma s>1$ 患者增，$\sigma s<1$ 患者减。
+  \item \tagline{信息传播差分}
+  \[
+    p_{k+1}-p_k=cp_k(N-p_k),\qquad
+    c=\frac{\Delta p_k}{p_k(N-p_k)}.
+  \]
+\end{itemize}
+
+\section{状态决策与遗传}
+\begin{itemize}
+  \item \tagline{状态转移}
+  \[
+    s_{i+1}=T(s_i,d_i).
+  \]
+  商人过河可写：
+  \[
+    s_{i+1}=s_i+(-1)^i d_i.
+  \]
+  \item \tagline{商人过河状态}
+  \[
+    s=(x,y),\qquad d=(u,v),\qquad 1\le u+v\le2.
+  \]
+  \item \tagline{容许状态}
+  \[
+    S=\{(3,y),(0,y)\mid y=0,1,2,3\}\cup\{(1,1),(2,2)\}.
+  \]
+  \item \tagline{概率转移矩阵}
+  \[
+    P=(p_{ij}),\qquad p_{ij}=P(\text{下一状态 }j\mid \text{当前状态 }i).
+  \]
+  \item \tagline{遗传状态} $D=dd,\ H=dr,\ R=rr$。
+  \item \tagline{与 H 繁殖}
+  \[
+    D\!-\!H=(1/2,1/2,0),\quad
+    H\!-\!H=(1/4,1/2,1/4),\quad
+    R\!-\!H=(0,1/2,1/2).
+  \]
+  \item \tagline{条件概率例}
+  \[
+    P(D\mid DH)=1\cdot\frac12=\frac12,\qquad
+    P(R\mid HH)=\frac12\cdot\frac12=\frac14.
+  \]
+\end{itemize}
+
+\section{席位分配与投票}
+\begin{itemize}
+  \item \tagline{Hamilton 法}
+  \[
+    q_i=\frac{Np_i}{P}.
+  \]
+  先给 $\lfloor q_i\rfloor$；余席按 $r_i=q_i-\lfloor q_i\rfloor$ 从大到小补。
+  \item \tagline{公平度思想} 每席代表人数
+  \[
+    \frac{p_i}{n_i}
+  \]
+  越接近越公平。
+  \item \tagline{EP 相等比例法}
+  \[
+    Q_i=\frac{p_i}{\sqrt{n_i(n_i+1)}}.
+  \]
+  下一席给 $Q_i$ 最大者。
+  \item \tagline{Borda 计数} $m$ 个候选：第一名 $m$ 分，第二名 $m-1$ 分，最后 $1$ 分。
+\end{itemize}
+
+\section{多属性决策}
+\begin{itemize}
+  \item \tagline{决策矩阵} $D=(d_{ij})$，行是方案，列是属性。
+  \item \tagline{费用型转效益型}
+  \[
+    d'_{ij}=\frac1{d_{ij}}.
+  \]
+  \item \tagline{标准化}
+  \[
+    r_{ij}=\frac{d_{ij}}{\max_i d_{ij}},\qquad
+    r_{ij}=\frac{d_{ij}}{\sum_i d_{ij}},\qquad
+    r_{ij}=\frac{d_{ij}}{\sqrt{\sum_i d_{ij}^2}}.
+  \]
+  \item \tagline{信息熵权重}
+  \[
+    E_j=-k\sum_i r_{ij}\ln r_{ij},\qquad k=\frac1{\ln m}.
+  \]
+  \[
+    F_j=1-E_j,\qquad w_j=\frac{F_j}{\sum_jF_j}.
+  \]
+  \item \tagline{SAW}
+  \[
+    v_i=\sum_j w_jr_{ij}.
+  \]
+  \item \tagline{WP}
+  \[
+    v_i=\prod_j d_{ij}^{w_j}.
+  \]
+  费用型属性权重取负。
+  \item \tagline{TOPSIS}
+  \[
+    v_{ij}=w_jr_{ij}.
+  \]
+  \[
+    S_i^+=\sqrt{\sum_j(v_{ij}-v_j^+)^2},\qquad
+    S_i^-=\sqrt{\sum_j(v_{ij}-v_j^-)^2}.
+  \]
+  \[
+    C_i=\frac{S_i^-}{S_i^+ + S_i^-}.
+  \]
+  $C_i$ 越大越优。
+\end{itemize}
+
+\section{AHP 层次分析}
+\begin{itemize}
+  \item \tagline{成对比较矩阵}
+  \[
+    A=(a_{ij}),\qquad a_{ij}=\frac{w_i}{w_j},\quad
+    a_{ji}=\frac1{a_{ij}},\quad a_{ii}=1.
+  \]
+  \item \tagline{权重}
+  \[
+    Aw=\lambda_{\max}w.
+  \]
+  取最大特征根对应特征向量并归一化。
+  \item \tagline{一致性指标}
+  \[
+    CI=\frac{\lambda_{\max}-n}{n-1}.
+  \]
+  \item \tagline{一致性检验}
+  \[
+    CR=\frac{CI}{RI}<0.1.
+  \]
+\end{itemize}
+
+\section{二项分布与超额售票}
+\begin{itemize}
+  \item \tagline{不登机人数}
+  \[
+    r\sim \mathrm{Bin}(n+q,p).
+  \]
+  \item \tagline{概率}
+  \[
+    f(r)=\binom{n+q}{r}p^r(1-p)^{n+q-r}.
+  \]
+  \item \tagline{收益函数}
+  \[
+    S(r,q)=
+    \begin{cases}
+    s_1n-s_2(q-r), & r\le q,\\
+    s_1(n+q-r), & r>q.
+    \end{cases}
+  \]
+  \item \tagline{期望收益}
+  \[
+    E(q)=\sum_{r=0}^{n+q}S(r,q)f(r).
+  \]
+  \item \tagline{最优 q 判据}
+  \[
+    P(r\le q)=\sum_{r=0}^{q}\binom{n+q}{r}p^r(1-p)^{n+q-r}
+    \ge \frac{s_1}{s_1+s_2}=\frac1{1+s}.
+  \]
+  \item \tagline{声誉约束}
+  \[
+    P_j(q)=P(q-r>j)=\sum_{r=0}^{q-j-1}f(r)\le \alpha.
+  \]
+\end{itemize}
+
+\section{概率与贝叶斯}
+\begin{itemize}
+  \item \tagline{加法公式}
+  \[
+    P(A\cup B)=P(A)+P(B)-P(A\cap B).
+  \]
+  \item \tagline{乘法公式}
+  \[
+    P(A\cap B)=P(A)P(B\mid A)=P(B)P(A\mid B).
+  \]
+  \item \tagline{独立事件}
+  \[
+    P(B\mid A)=P(B),\qquad P(A\cap B)=P(A)P(B).
+  \]
+  \item \tagline{全概率}
+  \[
+    P(B)=\sum_i P(A_i)P(B\mid A_i).
+  \]
+  \item \tagline{贝叶斯公式}
+  \[
+    P(A_i\mid B)=
+    \frac{P(A_i)P(B\mid A_i)}
+    {\sum_kP(A_k)P(B\mid A_k)}.
+  \]
+  \item \tagline{朴素贝叶斯}
+  \[
+    P(X\mid C_i)=\prod_jP(x_j\mid C_i).
+  \]
+  \[
+    \mathrm{score}(i)=P(C_i)\prod_jP(x_j\mid C_i).
+  \]
+  \item \tagline{拉普拉斯修正}
+  \[
+    P(x=\text{是}\mid C)=\frac{\text{次数}+1}{\text{该类样本数}+2}.
+  \]
+  \item \tagline{Warner 模型}
+  \[
+    P(C)=pP(A)+(1-p)(1-P(A)).
+  \]
+  \[
+    p=\frac{P(C)+P(A)-1}{2P(A)-1}.
+  \]
+  \item \tagline{Simmons 模型}
+  \[
+    P(C)=pP(A)+p_0(1-P(A)).
+  \]
+  \[
+    p=\frac{P(C)-p_0(1-P(A))}{P(A)}.
+  \]
+\end{itemize}
+
+\section{统计回归与检验}
+\begin{itemize}
+  \item \tagline{一元线性回归}
+  \[
+    y=b_0+b_1x+\varepsilon,\qquad \varepsilon\sim N(0,\sigma^2).
+  \]
+  \item \tagline{多元线性回归}
+  \[
+    y=b_0+b_1x_1+\cdots+b_kx_k+\varepsilon.
+  \]
+  \item \tagline{交互项}
+  \[
+    y=b_0+b_1x_1+b_2x_2+b_3x_1x_2+\varepsilon.
+  \]
+  \item \tagline{决定系数}
+  \[
+    R^2=1-\frac{SSR}{SST}
+    =1-\frac{\sum_i(y_i-\hat y_i)^2}{\sum_i(y_i-\bar y)^2}.
+  \]
+  \item \tagline{相关系数}
+  \[
+    r_{XY}=\frac{\operatorname{Cov}(X,Y)}
+    {\sqrt{\operatorname{Var}(X)\operatorname{Var}(Y)}}.
+  \]
+  \item \tagline{假设检验} 若 $p<\alpha$ 或统计量落入拒绝域 $W$，拒绝 $H_0$。
+  \item \tagline{残差自相关} $e_t$ 与 $e_{t-1}$ 同号多：正自相关；异号多：负自相关。
+\end{itemize}
+
+\section{PCA 与博弈}
+\begin{itemize}
+  \item \tagline{PCA 标准化} 每变量均值 $0$，方差 $1$。
+  \item \tagline{相关矩阵}
+  \[
+    R_{ij}=\frac{\operatorname{Cov}(X_i,X_j)}{\sigma_i\sigma_j}.
+  \]
+  \item \tagline{特征方程}
+  \[
+    \det(R-\lambda I)=0,\qquad (R-\lambda_iI)v_i=0.
+  \]
+  \item \tagline{累计贡献率}
+  \[
+    \frac{\sum_{i=1}^k\lambda_i}{\sum_i\lambda_i}.
+  \]
+  \item \tagline{博弈四要素} 参与人 $N$，策略 $A_i$，收益 $u_i$，均衡。
+  \item \tagline{零和博弈}
+  \[
+    u_2(a_1,a_2)=-u_1(a_1,a_2).
+  \]
+  \item \tagline{纯策略 Nash 均衡}
+  \[
+    u_i(a_i^*,a_{-i}^*)\ge u_i(a_i,a_{-i}^*).
+  \]
+  \item \tagline{报价博弈}
+  若 $p_b\ge p_s$，成交价
+  \[
+    p=\frac{p_b+p_s}{2}.
+  \]
+  收益：
+  \[
+    U_s=p-v_s,\qquad U_b=v_b-p.
+  \]
+\end{itemize}
+
+\end{multicols}
+\end{document}

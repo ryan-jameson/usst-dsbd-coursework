@@ -1,0 +1,26 @@
+package homework0524;
+
+import java.util.Scanner;
+
+public class Fine {
+	public static double fine(int m,int s) {
+		if(m<=10) return 0;
+		else {
+			if(m<=30) return 100;
+			else {
+				if(m<=60) return 0.5*s;
+				else return 3*s;
+			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("请输入迟到时间及日薪，如果旷工则时间请输入10000");
+		Scanner sc=new Scanner(System.in);
+		int m=sc.nextInt();
+		int s=sc.nextInt();
+		double f=fine(m,s);
+		sc.close();
+		System.out.println("将被罚款"+f+"元");
+	}
+}

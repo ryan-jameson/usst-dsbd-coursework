@@ -1,0 +1,31 @@
+package 上机作业1;
+
+public class For {
+	public static void main(String args[]) {
+		int n=0;
+		long sum=0;
+		for(int i=1;i<=100;i++) {
+			if(i%9==0) {
+				System.out.println(i+"是9的倍数");
+				sum+=i;
+				n++;
+			}
+		}
+		System.out.println("有"+n+"个9的倍数");
+		System.out.println("他们的总和是"+sum);
+	}
+}
+
+9是9的倍数
+18是9的倍数
+27是9的倍数
+36是9的倍数
+45是9的倍数
+54是9的倍数
+63是9的倍数
+72是9的倍数
+81是9的倍数
+90是9的倍数
+99是9的倍数
+有11个9的倍数
+他们的总和是594

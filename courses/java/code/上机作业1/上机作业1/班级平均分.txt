@@ -1,0 +1,56 @@
+package 上机作业1;
+
+import java.util.Scanner;
+
+public class Banji {
+	public static void main(String args[]) {
+		System.out.println("请输入班级平均分");
+		Scanner sc=new Scanner(System.in);
+		float a1=0,a2=0,a3=0,a=0;
+		
+		for(int i=1;i<=3;i++) {
+			float n1=sc.nextFloat();
+			float n2=sc.nextFloat();
+			float n3=sc.nextFloat();
+			float n4=sc.nextFloat();
+			float n5=sc.nextFloat();
+			
+			if(i==1)
+				a1=(n1+n2+n3+n4+n5)/5;
+			else {
+				if(i==2)
+					a2=(n1+n2+n3+n4+n5)*1/5;
+				else
+					a3=(n1+n2+n3+n4+n5)/5;
+			}
+		}
+		sc.close();
+		
+		a=(a1+a2+a3)/3;
+		System.out.println("第一个班级的平均分是"+a1);
+		System.out.println("第二个班级的平均分是"+a2);
+		System.out.println("第三个班级的平均分是"+a3);
+		System.out.println("三一个班级的平均分是"+a);
+	}
+}
+
+请输入班级平均分
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+第一个班级的平均分是3.0
+第二个班级的平均分是8.0
+第三个班级的平均分是13.0
+三一个班级的平均分是8.0

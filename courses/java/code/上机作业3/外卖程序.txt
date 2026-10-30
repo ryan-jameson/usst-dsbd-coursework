@@ -1,0 +1,51 @@
+package classlearn;
+
+class Weborder1{
+	private String Dishname;//货名
+	private int quantity;//数量
+	private double price;//价格
+	private boolean ispaid;//付款状态
+	
+	public Weborder1(String dn,int q,double p) {
+		this.Dishname=dn;
+		this.quantity=q;
+		this.price=p;
+	}
+	
+	public void adddish(int numtoadd) {
+		this.quantity+=numtoadd;
+	}//添加份数
+	
+	public void setispaid(boolean paid){
+		this.ispaid=paid;
+	}//付账状态
+	
+	public double getpirce() {
+		return this.price*this.quantity;
+	}
+	
+	public String getdishname() {
+		return this.Dishname;
+	}
+	
+	public String tosrting() {
+		if(ispaid) return this.Dishname+":"+this.price+"*"+this.quantity+"，总计"+this.getpirce()+" 已付款";
+		else return this.Dishname+":"+this.price+"*"+this.quantity+"，总计"+this.getpirce()+" 未付款";
+		
+	}
+}
+public class Weborder {
+	public static void main(String[] args) {
+		Weborder1 o1,o2;
+		o1= new Weborder1("生煎馒头", 1, 8);
+		o2=new Weborder1("菜肉馄饨", 1, 10);
+		o1.adddish(1);
+		o2.adddish(3);
+		o1.adddish(1);
+		o1.setispaid(true);
+		o2.setispaid(false);
+		System.out.println(o1.tosrting());
+		System.out.println(o2.tosrting());
+		System.out.println("总价:"+(o1.getpirce()+o2.getpirce()));
+	}
+}

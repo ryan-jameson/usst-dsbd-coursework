@@ -1,0 +1,92 @@
+/* admin-style.css */
+/* admin-style.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4; /* 浅灰色背景 */
+    width: 100%; /* 确保 body 和 html 元素填充整个视口 */
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #ffffff; /* 白色背景 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微阴影 */
+    width: 100%; /* 使 .container 撑满整个屏幕宽度 */
+}
+
+.user-list, .product-list {
+    flex: 1; /* 让列表填充剩余空间 */
+    margin: 1%;
+    padding: 10px;
+    background-color: #e9ecf0; /* 米色背景 */
+    border-radius: 8px;
+}
+
+/* 其他样式保持不变 */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50; /* 绿色表头背景 */
+    font-weight: bold;
+}
+
+.product-name {
+    font-size: 1.1em; /* 商品名称字体稍大 */
+    font-weight: bold; /* 加粗 */
+}
+
+.product-description {
+    font-size: 0.9em; /* 商品描述字体稍小 */
+    color: #666; /* 商品描述颜色 */
+}
+
+.product-price {
+    font-size: 1em; /* 商品价格字体稍大 */
+    color: #e60000; /* 商品价格颜色 */
+}
+
+form {
+    margin-top: 20px;
+}
+
+input[type="text"], input[type="password"], input[type="number"] {
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+img {
+    width: 60px; /* 图片大小 */
+    height: 60px;
+    border-radius: 5px; /* 圆角图片 */
+}

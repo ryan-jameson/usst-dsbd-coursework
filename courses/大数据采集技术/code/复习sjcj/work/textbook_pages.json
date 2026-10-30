@@ -1,0 +1,335 @@
+[
+ {
+  "group": "第1章",
+  "printed_page": 1,
+  "pdf_page": 14,
+  "reason": "大数据概念与章节入口",
+  "image": "work/assets/textbook/printed-001_pdf-014.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第1章",
+  "printed_page": 3,
+  "pdf_page": 16,
+  "reason": "大数据关键技术",
+  "image": "work/assets/textbook/printed-003_pdf-016.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第1章",
+  "printed_page": 6,
+  "pdf_page": 19,
+  "reason": "采集与预处理技术总览",
+  "image": "work/assets/textbook/printed-006_pdf-019.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第1章",
+  "printed_page": 7,
+  "pdf_page": 20,
+  "reason": "大数据采集技术",
+  "image": "work/assets/textbook/printed-007_pdf-020.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第1章",
+  "printed_page": 8,
+  "pdf_page": 21,
+  "reason": "数据预处理技术",
+  "image": "work/assets/textbook/printed-008_pdf-021.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第2章",
+  "printed_page": 10,
+  "pdf_page": 23,
+  "reason": "传统数据采集概述",
+  "image": "work/assets/textbook/printed-010_pdf-023.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第2章",
+  "printed_page": 14,
+  "pdf_page": 27,
+  "reason": "传统数据采集关键技术",
+  "image": "work/assets/textbook/printed-014_pdf-027.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第2章",
+  "printed_page": 18,
+  "pdf_page": 31,
+  "reason": "大数据采集基础",
+  "image": "work/assets/textbook/printed-018_pdf-031.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第2章",
+  "printed_page": 21,
+  "pdf_page": 34,
+  "reason": "大数据来源",
+  "image": "work/assets/textbook/printed-021_pdf-034.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第2章",
+  "printed_page": 26,
+  "pdf_page": 39,
+  "reason": "大数据采集技术",
+  "image": "work/assets/textbook/printed-026_pdf-039.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第2章",
+  "printed_page": 27,
+  "pdf_page": 40,
+  "reason": "日志、ETL 与网络采集",
+  "image": "work/assets/textbook/printed-027_pdf-040.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第2章",
+  "printed_page": 30,
+  "pdf_page": 43,
+  "reason": "大数据采集方法整理",
+  "image": "work/assets/textbook/printed-030_pdf-043.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第2章扩展定位",
+  "printed_page": 139,
+  "pdf_page": 152,
+  "reason": "HDFS（教材第7章）",
+  "image": "work/assets/textbook/printed-139_pdf-152.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第2章扩展定位",
+  "printed_page": 149,
+  "pdf_page": 162,
+  "reason": "HBase（教材第7章）",
+  "image": "work/assets/textbook/printed-149_pdf-162.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第2章扩展定位",
+  "printed_page": 152,
+  "pdf_page": 165,
+  "reason": "Hive（教材第7章）",
+  "image": "work/assets/textbook/printed-152_pdf-165.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第3章",
+  "printed_page": 34,
+  "pdf_page": 47,
+  "reason": "大数据采集架构概述",
+  "image": "work/assets/textbook/printed-034_pdf-047.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第3章",
+  "printed_page": 37,
+  "pdf_page": 50,
+  "reason": "Flume",
+  "image": "work/assets/textbook/printed-037_pdf-050.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第3章",
+  "printed_page": 38,
+  "pdf_page": 51,
+  "reason": "Flume 架构与流程",
+  "image": "work/assets/textbook/printed-038_pdf-051.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第3章",
+  "printed_page": 40,
+  "pdf_page": 53,
+  "reason": "Scribe",
+  "image": "work/assets/textbook/printed-040_pdf-053.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第3章",
+  "printed_page": 41,
+  "pdf_page": 54,
+  "reason": "Kafka 与章节衔接",
+  "image": "work/assets/textbook/printed-041_pdf-054.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第5章",
+  "printed_page": 66,
+  "pdf_page": 79,
+  "reason": "网络爬虫概念",
+  "image": "work/assets/textbook/printed-066_pdf-079.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第5章",
+  "printed_page": 67,
+  "pdf_page": 80,
+  "reason": "抓取策略",
+  "image": "work/assets/textbook/printed-067_pdf-080.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第5章",
+  "printed_page": 69,
+  "pdf_page": 82,
+  "reason": "常用网络爬虫方法",
+  "image": "work/assets/textbook/printed-069_pdf-082.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第5章",
+  "printed_page": 71,
+  "pdf_page": 84,
+  "reason": "聚焦网络爬虫",
+  "image": "work/assets/textbook/printed-071_pdf-084.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第5章",
+  "printed_page": 73,
+  "pdf_page": 86,
+  "reason": "分布式网络爬虫",
+  "image": "work/assets/textbook/printed-073_pdf-086.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第5章",
+  "printed_page": 75,
+  "pdf_page": 88,
+  "reason": "网络爬虫工具",
+  "image": "work/assets/textbook/printed-075_pdf-088.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第5章",
+  "printed_page": 81,
+  "pdf_page": 94,
+  "reason": "Python 爬虫技术入口",
+  "image": "work/assets/textbook/printed-081_pdf-094.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第5章",
+  "printed_page": 83,
+  "pdf_page": 96,
+  "reason": "Python 爬虫基础",
+  "image": "work/assets/textbook/printed-083_pdf-096.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第5章",
+  "printed_page": 91,
+  "pdf_page": 104,
+  "reason": "Python 爬虫实例",
+  "image": "work/assets/textbook/printed-091_pdf-104.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第6章",
+  "printed_page": 104,
+  "pdf_page": 117,
+  "reason": "数据对象与属性类型",
+  "image": "work/assets/textbook/printed-104_pdf-117.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第6章",
+  "printed_page": 106,
+  "pdf_page": 119,
+  "reason": "统计描述",
+  "image": "work/assets/textbook/printed-106_pdf-119.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第6章",
+  "printed_page": 113,
+  "pdf_page": 126,
+  "reason": "数据预处理与数据质量",
+  "image": "work/assets/textbook/printed-113_pdf-126.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第6章",
+  "printed_page": 115,
+  "pdf_page": 128,
+  "reason": "数据清洗",
+  "image": "work/assets/textbook/printed-115_pdf-128.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第6章",
+  "printed_page": 118,
+  "pdf_page": 131,
+  "reason": "数据集成",
+  "image": "work/assets/textbook/printed-118_pdf-131.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第6章",
+  "printed_page": 122,
+  "pdf_page": 135,
+  "reason": "数据规约",
+  "image": "work/assets/textbook/printed-122_pdf-135.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第6章",
+  "printed_page": 128,
+  "pdf_page": 141,
+  "reason": "数据变换",
+  "image": "work/assets/textbook/printed-128_pdf-141.jpg",
+  "width": 1012,
+  "height": 1432
+ },
+ {
+  "group": "第6章",
+  "printed_page": 129,
+  "pdf_page": 142,
+  "reason": "规范化",
+  "image": "work/assets/textbook/printed-129_pdf-142.jpg",
+  "width": 1012,
+  "height": 1432
+ }
+]

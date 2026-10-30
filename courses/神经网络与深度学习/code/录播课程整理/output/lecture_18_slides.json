@@ -1,0 +1,55 @@
+{
+ "lecture": "第18讲",
+ "total_frames": 1650,
+ "slide_count": 6,
+ "slides": [
+  {
+   "slide_no": 1,
+   "time_s": 0,
+   "time_str": "00:00",
+   "frame_file": "000001.jpg",
+   "text": "教132课件\n2026-04-08-11:29-59",
+   "lines_count": 2
+  },
+  {
+   "slide_no": 2,
+   "time_s": 1696,
+   "time_str": "28:16",
+   "frame_file": "000849.jpg",
+   "text": "教132课件\n2026-04-08 11:58:16",
+   "lines_count": 2
+  },
+  {
+   "slide_no": 3,
+   "time_s": 1714,
+   "time_str": "28:34",
+   "frame_file": "000858.jpg",
+   "text": "教132课件\n2026-04-08 -11:58:34",
+   "lines_count": 2
+  },
+  {
+   "slide_no": 4,
+   "time_s": 1742,
+   "time_str": "29:02",
+   "frame_file": "000872.jpg",
+   "text": "教132课件\n2026-04-08-11-59-02-",
+   "lines_count": 2
+  },
+  {
+   "slide_no": 5,
+   "time_s": 2256,
+   "time_str": "37:36",
+   "frame_file": "001129.jpg",
+   "text": "教132课件\n2026-04-08-12-07-36",
+   "lines_count": 2
+  },
+  {
+   "slide_no": 6,
+   "time_s": 3032,
+   "time_str": "50:32",
+   "frame_file": "001517.jpg",
+   "text": "一教132课件\n2026-04-08 12:20:32",
+   "lines_count": 2
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+package homework0409;
+
+import java.util.Scanner;
+
+public class If2 {
+	public static void main(String args[]) {
+		System.out.println("请输入比赛选手性别（男为1，女为2）、成绩");
+		Scanner sc=new Scanner(System.in);
+		int sex=sc.nextInt();
+		float s=sc.nextFloat();
+		
+		if(s>8.0) System.out.println("进入决赛");
+		else System.out.println("淘汰");
+		
+		if(sex==1) System.out.println("男子组");
+		else {
+			if(sex==2) System.out.println("女子组");
+			else System.out.println("请按格式输入性别（男为1/女为2）");
+		}
+	}
+}

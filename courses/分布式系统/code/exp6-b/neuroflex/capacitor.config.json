@@ -1,0 +1,41 @@
+{
+ "appId": "com.neuroflex.app",
+ "appName": "NeuroFlex",
+ "webDir": "dist",
+ "server": {
+  "androidScheme": "https"
+ },
+ "plugins": {
+  "StatusBar": {
+   "style": "DEFAULT",
+   "backgroundColor": "#FFFFFF"
+  },
+  "SplashScreen": {
+   "launchShowDuration": 0,
+   "launchAutoHide": true,
+   "backgroundColor": "#0f0f1e",
+   "showSpinner": false,
+   "splashFullScreen": false,
+   "splashImmersive": false
+  },
+  "Keyboard": {
+   "resize": "ionic",
+   "style": "dark",
+   "resizeOnFullScreen": true
+  }
+ },
+ "android": {
+  "buildOptions": {
+   "releaseType": "APK"
+  },
+  "webContentsDebuggingEnabled": false,
+  "allowMixedContent": false,
+  "captureInput": true
+ },
+ "ios": {
+  "scheme": "NeuroFlex",
+  "contentInset": "automatic",
+  "scrollEnabled": true,
+  "backgroundColor": "#0f0f1e"
+ }
+}

@@ -1,0 +1,28 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>儿童营养配餐</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>儿童营养配餐</h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li style="color: red;">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <form method="post">
+            年龄：<input type="number" name="age" required><br>
+            体重（kg）：<input type="number" name="weight" required><br>
+            身高（cm）：<input type="number" name="height" required><br>
+            <input type="submit" value="生成食谱">
+        </form>
+    </div>
+</body>
+</html>

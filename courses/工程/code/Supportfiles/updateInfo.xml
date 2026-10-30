@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-16" standalone="no" ?>
+<updateInfo>
+  <server version="1.6">
+    <products>
+      <!--The following is the list of all the UPCs and UpgradeCodes in the distribution. Products that are primary update source have UPCs, and those that are not primary update source have UpgradeCodes.-->
+      <product ProductVersion="14.0.5" UPC="{80E262AF-3B89-4EBA-AD9B-80F2FC66B495}" UPV="14.0.0" UpgradeCode="{1038A887-23E1-4289-B0BD-0C4B83C6BA21}"/>
+      <product ProductVersion="13.0.2278" UPC="{CA021939-E0DC-4919-9C72-265568997B6E}" UPV="13.0.2278" UpgradeCode="{80D3D303-75B9-4607-9312-E5FC68E5BFD2}"/>
+      <product ProductVersion="13.0.2278" UPC="{CF103ACD-97FB-4488-B4D0-FA30B5830DBC}" UPV="13.0.2278" UpgradeCode="{C6F76062-CDCB-4931-8580-012AF2152602}"/>
+      <product ProductVersion="13.0.2278" UPC="{7649C99C-FAE5-4451-9BC9-AA86989F2B35}" UPV="13.0.2278" UpgradeCode="{86208B51-159E-4F6F-9C62-0D5EFC9324D8}"/>
+      <product ProductVersion="13.0.2278" UPC="{06E26C3D-E6C6-4610-A038-258CAD1F6A27}" UPV="13.0.2278" UpgradeCode="{0DDB211A-941B-4125-9518-E81E10409F2E}"/>
+      <product ProductVersion="13.0.2278" UPC="{2423B94D-3F80-4ACF-8A70-6F915686A010}" UPV="13.0.2278" UpgradeCode="{20931852-6AA9-4918-926B-130D07A4CF8B}"/>
+      <product ProductVersion="13.0.2278" UPC="{4694420A-B354-4158-B50D-796AA0FE9954}" UPV="13.0.2278" UpgradeCode="{40A5AD7F-4BAF-4A5C-8B56-426B84F75C05}"/>
+      <product ProductVersion="13.0.2278" UPC="{2D07DEBE-F8D7-4324-879F-AACAD0EDB107}" UPV="13.0.2278" UpgradeCode="{15CE39FE-1354-484D-B8CA-459077449FB3}"/>
+      <product ProductVersion="13.0.2278" UPC="{14D76B65-E5A7-4550-8185-44CD8378D968}" UPV="13.0.2278" UpgradeCode="{5A8AF88D-486D-4E30-A7A5-8D8A039BBEBF}"/>
+      <product ProductVersion="5.2.218" UPC="{DFF23744-E06E-4984-8160-7439424B9145}" UPV="5.2.0" UpgradeCode="{81A7E53E-9524-41CE-90D3-7DD3D90B6C58}"/>
+      <product ProductVersion="4.01.49152" UPC="{C0E6F5E5-6EB8-4FBB-A1C4-A707D5FA7B1A}" UPV="4.01.49152" UpgradeCode="{BA13BC17-0A77-40FB-8066-58B4266B153C}"/>
+      <product ProductVersion="2.0.3" UPC="{3CAF4A2C-C24B-4915-82DD-B2364BF2C0E2}" UPV="2.0.3" UpgradeCode="{B16EFD90-0A78-4C21-B8AC-C8D77A650D05}"/>
+      <product ProductVersion="14.0.390" UPC="{DEF62E86-0CD9-4F2A-AF2C-433315E336C4}" UPV="14.0.0" UpgradeCode="{838942E4-B73C-492E-81A3-AA1E291FD0DC}"/>
+      <product ProductVersion="14.0.379" UPC="{D93B1C0B-35E1-4F3E-7994-D41D561E495D}" UPV="14.0.0" UpgradeCode="{42E818C6-2B08-4DE7-BD91-B0FD704C119A}"/>
+      <product ProductVersion="13.0.336" UPC="{F79021AC-51E7-4E1B-B6FF-FDABD12C7851}" UPV="13.0.0" UpgradeCode="{76E4763E-0DC4-4195-BC50-084193FFA84B}"/>
+      <product ProductVersion="14.0.386" SxSUpgradeMin="14.0.0" UPC="{F79021AC-51E7-4E1B-B6FF-FDABD12C7851}" UPV="14.0.0" UpgradeCode="{4372F3E3-5935-4012-93AB-B6710CE24920}"/>
+      <product ProductVersion="13.1.125" UPC="{99D796C3-2E53-4839-A25B-22C26B029103}" UPV="13.1.6" UpgradeCode="{A661D981-0A3B-4081-A5B5-1FAA03CFAF84}"/>
+      <product ProductVersion="14.1.101" SxSUpgradeMin="14.0.0" UPC="{99D796C3-2E53-4839-A25B-22C26B029103}" UPV="14.1.0" UpgradeCode="{4722F14B-8434-468D-840D-2B0CD8CBD5EA}"/>
+      <product ProductVersion="13.1.99" UPC="{C7BECC19-BF54-4D30-AB46-36CB0F132A95}" UPV="13.1.0" UpgradeCode="{DDE96050-C9ED-4EAC-B310-5EA217776FEA}"/>
+      <product ProductVersion="14.1.96" SxSUpgradeMin="14.0.0" UPC="{C7BECC19-BF54-4D30-AB46-36CB0F132A95}" UPV="14.1.0" UpgradeCode="{CAC8FA79-6D3D-4263-BB7B-1A706EF87C08}"/>
+      <product ProductVersion="14.1.7" UPC="{EBFB4A39-BA18-46ED-8BD8-B68329AE6C63}" UPV="14.1.0" UpgradeCode="{FDC8FE32-3BF5-4005-A21C-CC9A9E4B3B58}"/>
+      <product ProductVersion="13.5.27" UPC="{29D354D8-3E7C-4C8F-B47C-40FEFC6518EB}" UPV="13.5.1" UpgradeCode="{A66A5CC8-EEB5-4982-8B92-F591AF36060E}"/>
+      <product ProductVersion="14.5.5" SxSUpgradeMin="14.5.0" UPC="{29D354D8-3E7C-4C8F-B47C-40FEFC6518EB}" UPV="14.5.0" UpgradeCode="{4A8BDBBB-DA1C-45C9-8563-74C034FBD357}"/>
+      <product ProductVersion="14.50.214" UPC="{D5EA3A08-AD02-47C3-929E-7285BE9122B7}" UPV="14.50.214" UpgradeCode="{BE400A3D-E9D6-48D9-AF14-337722A11D40}"/>
+      <product ProductVersion="13.0.13" UPC="{969970C9-8D34-471B-BFCE-582A529D7F9C}" UPV="13.0.0" UpgradeCode="{EA05DCF9-F239-4387-8904-04D678031F6B}"/>
+      <product ProductVersion="14.0.6" SxSUpgradeMin="14.0.0" UPC="{969970C9-8D34-471B-BFCE-582A529D7F9C}" UPV="14.0.0" UpgradeCode="{3BDD0408-2F90-4B42-9777-5ED1D4BE67A8}"/>
+      <product ProductVersion="8.6.10603" UPC="{603648C2-F0DE-4202-AB79-F5A5573BE1BC}" UPV="8.6.10603" UpgradeCode="{578B3422-EAE6-428C-A17A-7549578FE2C1}"/>
+      <product ProductVersion="8.6.10603" UPC="{4AB5C609-E6BD-49D8-ADA6-7C277964E037}" UPV="8.6.10603" UpgradeCode="{249F796D-F8DA-49FF-89C5-BE2D582FC277}"/>
+      <product ProductVersion="3.30.282" UPC="{F4E16C1F-B3DF-41F8-91F9-89ECBFF985B9}" UPV="3.30.282" UpgradeCode="{BF53D0A8-30A2-4A7D-ACB7-698FCB601295}"/>
+      <product ProductVersion="14.50.214" UPC="{CAE83C10-10F4-49EC-BC36-28CB5E064EB7}" UPV="14.50.214" UpgradeCode="{5B0CB826-E499-4E6B-94F0-75B6327ED934}"/>
+      <product ProductVersion="13.0.3" UPC="{55EB9A01-5527-417E-D085-2AD662D3CE7D}" UPV="13.0.0" UpgradeCode="{5D6378B2-B24D-4AD6-5DA2-FAEFDB81A250}"/>
+      <product ProductVersion="5.5.2018" UPC="{6785DFE6-F236-4D0A-957D-7C6AE8E75386}" UPV="5.5.2" UpgradeCode="{7A1377CA-3A2C-4126-9703-0DC509D50C5B}"/>
+      <product ProductVersion="14.00.49152" UPC="{03B4905D-37CC-4BA0-AE3D-829F7BE8A1CA}" UPV="14.00.49152" UpgradeCode="{AF18EA03-B657-11D4-AB19-00104B6CE75A}"/>
+      <product ProductVersion="14.0.05640" UPC="{69AB2A93-E9BA-46B8-ABA3-52BEB90D4DEA}" UPV="14.0.05640" UpgradeCode="{D1EDC484-7B17-11D7-83CE-00C0F03EBEBE}"/>
+      <product ProductVersion="14.0.241" UPC="{F9E80395-3126-43EC-814B-E5A747BF9A05}" UPV="14.0.0" UpgradeCode="{393B07F1-F53F-4411-AB84-8EF109C5B5D7}"/>
+      <product ProductVersion="3.30.282" UPC="{11DB38BB-D297-46A8-AE8A-89926768EBCD}" UPV="3.30.282" UpgradeCode="{7FB990C5-1A51-4C1D-99C4-C6E50368E105}"/>
+      <product ProductVersion="14.0.217" UPC="{87E2F050-5707-4237-8E95-2EC14D5C62EF}" UPV="14.0.0" UpgradeCode="{B235B862-6A92-4A04-A8B2-6D71F777DE67}"/>
+      <product ProductVersion="14.0.302" UPC="{69CD3987-B5D3-4BE5-A59E-346C07B1A21A}" UPV="14.0.0" UpgradeCode="{98AE360D-A9E4-48E2-9AB0-C1E1A7200CAD}"/>
+      <product ProductVersion="14.5.5" UPC="{D71C1D03-CA8F-4545-BDB5-103E99C719AE}" UPV="14.5.0" UpgradeCode="{45A00BB2-279D-4935-1EBD-572DB1E1E48C}"/>
+      <product ProductVersion="14.0.295" UPC="{4AC897D8-117B-4076-C0BF-2932EAB6BB5A}" UPV="14.0.0" UpgradeCode="{F8DDB933-6A5D-4518-AEA1-F251411ED98A}"/>
+      <product ProductVersion="14.0.133" UPC="{36D12883-82A6-4BE5-82DD-7FCBC50D2AEF}" UPV="14.0.0" UpgradeCode="{36D12883-82A6-4BE5-82DD-7FCBC50D2AEF}"/>
+      <product ProductVersion="3.7.73" UPC="{CBA7EDB3-A142-43B6-B68B-A723624F1375}" UPV="3.7.0" UpgradeCode="{CBA7EDB3-A142-43B6-B68B-A723624F1375}"/>
+      <product ProductVersion="5.6.257" UPC="{6277CED1-7132-453B-B536-A52712CEC5A7}" UPV="5.6.1" UpgradeCode="{5E4A4CE3-4D06-11D4-8B22-006008C16337}"/>
+      <product ProductVersion="5.6.253" UPC="{A3842A3B-E327-4F68-BEFF-552BE6206AA4}" UPV="5.6.0" UpgradeCode="{177ED463-0E03-4F4A-A725-5F5DF2C78E47}"/>
+      <product ProductVersion="13.5.27" UPC="{73661077-6E79-4C84-99E5-EB0924AB36B7}" UPV="13.5.1" UpgradeCode="{F0D4C598-EA6D-49AE-B8FB-EC2F7181842C}"/>
+      <product ProductVersion="14.0.376" SxSUpgradeMin="14.0.0" UPC="{73661077-6E79-4C84-99E5-EB0924AB36B7}" UPV="14.0.0" UpgradeCode="{462253B7-D267-45C6-8110-938A0F30601E}"/>
+      <product ProductVersion="14.5.10" UPC="{5AEFE368-A98F-4907-95F8-0990C94D577D}" UPV="14.5.0" UpgradeCode="{65409FDA-16DE-4703-96D1-D7DEF33B60ED}"/>
+      <product ProductVersion="14.5.8" UPC="{540F6FCD-9570-43E6-9B0D-FB788B78DD98}" UPV="14.5.0" UpgradeCode="{F546FD4F-ADC2-4933-BC31-9CAE6C1A8685}"/>
+      <product ProductVersion="14.5.6" UPC="{58118D91-FC4E-431F-418B-95E29A058B64}" UPV="14.5.0" UpgradeCode="{45241DC9-827A-403E-579A-EEBCF1E74F9C}"/>
+      <product ProductVersion="14.0.177" UPC="{FB99B180-68F3-4D20-A3B7-CABFEDAB7F59}" UPV="14.0.0" UpgradeCode="{FB99B180-68F3-4D20-A3B7-CABFEDAB7F59}"/>
+      <product ProductVersion="14.00.49152" UPC="{5FA25D7B-C3EF-4735-B79C-58FA0C13454C}" UPV="14.00.49152" UpgradeCode="{DA6BBF6F-0910-4860-AD46-F14DADF645E9}"/>
+      <product ProductVersion="1.0.29.0" UPC="{D842EF4D-FD3E-41EA-8F6D-4A597CE0D6CC}" UPV="1.0.1" UpgradeCode="{C91AA89D-93FD-4194-A4D3-0C2F44196890}"/>
+      <product ProductVersion="14.5.9" UPC="{FCF64B73-B7D4-4971-8F11-24BAF7CC3E6C}" UPV="14.5.0" UpgradeCode="{FCF64B73-B7D4-4971-8F11-24BAF7CC3E6C}"/>
+      <product ProductVersion="14.0.43" UPC="{4CD11BE6-6BB7-4082-8A27-C13771BC309B}" UPV="14.0.0" UpgradeCode="{4CD11BE6-6BB7-4082-8A27-C13771BC309B}"/>
+      <product ProductVersion="14.0.34" UPC="{11D580A9-CAA9-4FAE-ACCE-008751A7AE9F}" UPV="14.0.0.59" UpgradeCode="{11D580A9-CAA9-4FAE-ACCE-008751A7AE9F}"/>
+      <product ProductVersion="9.0.401" UPC="{8839DD59-B53B-4B86-8C5C-DDB219F9EB3A}" UPV="9.0.401" UpgradeCode="{FDA3F8BB-BAA9-45D7-8DC7-22E1F5C76315}"/>
+      <product ProductVersion="9.00.49152" UPC="{9087D044-6BFC-48E7-8B60-4E427CC83B05}" UPV="9.00.49152" UpgradeCode="{BD1E864A-2ACC-4F7E-9A7D-977C39952A52}"/>
+      <product ProductVersion="10.0.100" UPC="{68C3AC19-656F-4216-8335-4A938FCF5201}" UPV="10.0.100" UpgradeCode="{EFBA6F9E-F934-4BD7-AC51-60CCA480489C}"/>
+      <product ProductVersion="10.10.16385" UPC="{64C67AFA-DC20-4BC4-B9DB-B0A98D8210F5}" UPV="10.10.16385" UpgradeCode="{3109870C-C165-4896-AC99-AFDD3CA3304A}"/>
+      <product ProductVersion="14.0.593" SxSUpgradeMin="14.0.0" UPC="{F3B227A0-2DD3-41EA-AC35-CD80CE6B6C65}" UPV="14.0.593" UpgradeCode="{47D6A603-1F1F-4B46-8E73-357C11BB3375}"/>
+      <product ProductVersion="14.0.593" SxSUpgradeMin="14.0.0" UPC="{F57F2EE3-EC06-4FED-8F7D-D37725F3AA3C}" UPV="14.0.593" UpgradeCode="{6FEEBFE0-9C32-4209-8586-AD83B3A30A1D}"/>
+      <product ProductVersion="14.0.593" SxSUpgradeMin="14.0.0" UPC="{7493CB29-D55D-4626-983E-7D80A02A405C}" UPV="14.0.593" UpgradeCode="{E56D737E-42DA-4A5A-8AE1-8EC8A7EAB29E}"/>
+      <product ProductVersion="14.0.593" SxSUpgradeMin="14.0.0" UPC="{66738ACD-B9E9-477D-9FF3-DBEF5091BD1E}" UPV="14.0.593" UpgradeCode="{ABEE3C0C-F7C3-442A-AA4F-59F479B8258E}"/>
+      <product ProductVersion="14.0.593" SxSUpgradeMin="14.0.0" UPC="{6CA34787-0B51-4876-8141-F04CE4D57FA9}" UPV="14.0.593" UpgradeCode="{62D0DACD-2763-478E-83A0-7FF790189DDC}"/>
+      <product ProductVersion="14.0.593" SxSUpgradeMin="14.0.0" UPC="{7AF40953-21E6-418A-9354-FE2FE41951A9}" UPV="14.0.593" UpgradeCode="{0BEDC4D1-4507-4B73-863D-A2965F6D23F7}"/>
+      <product ProductVersion="14.0.593" SxSUpgradeMin="14.0.0" UPC="{E7B9453C-C3B9-46AA-AE54-1B1752121768}" UPV="14.0.593" UpgradeCode="{C3E1AF3D-F643-446E-8BAE-9AD48C09C7F5}"/>
+      <product ProductVersion="14.0.593" SxSUpgradeMin="14.0.0" UPC="{FA03926B-195B-426E-8D46-09965A03E1B8}" UPV="14.0.593" UpgradeCode="{44D032CF-3AE5-425B-AB48-88454470C554}"/>
+      <product ProductVersion="14.0.593" SxSUpgradeMin="14.0.0" UPC="{98063228-26C7-4DCA-93F7-3DF65D8E4891}" UPV="14.0.593" UpgradeCode="{1A54BB48-7C9A-4CB9-B313-266546BC3604}"/>
+      <product ProductVersion="14.00.49152" UPC="{5D79C0C9-A15B-4A9B-AACF-1A2CF7761B70}" UPV="14.00.49152" UpgradeCode="{9607874B-4BB3-42CB-B450-A2F5EF60BA3B}"/>
+      <product ProductVersion="14.0.5" UPC="" UPV="" UpgradeCode="{C1EF7A68-D0A5-4EF8-8AB8-F89BEDF0D79B}"/>
+      <product ProductVersion="13.0.2278" UPC="" UPV="" UpgradeCode="{5CF04E1E-F5D2-43AB-B9F1-5DCFB0DF6CB6}"/>
+      <product ProductVersion="13.0.2278" UPC="" UPV="" UpgradeCode="{6A61602B-C99A-49C8-A607-7FADD5124218}"/>
+      <product ProductVersion="13.0.2278" UPC="" UPV="" UpgradeCode="{DEA0FF7B-E7F3-45A4-80EA-CD21AAD8B94E}"/>
+      <product ProductVersion="13.0.2278" UPC="" UPV="" UpgradeCode="{F8D3F894-F912-4A7E-9318-0C547D37D033}"/>
+      <product ProductVersion="13.0.2278" UPC="" UPV="" UpgradeCode="{1AB6D8FF-2C26-4BC0-B35B-AFC94D6B0F0B}"/>
+      <product ProductVersion="13.0.2278" UPC="" UPV="" UpgradeCode="{F31A3240-633D-4040-AC85-0168D0F48B5F}"/>
+      <product ProductVersion="13.0.2278" UPC="" UPV="" UpgradeCode="{D14439A1-CE0E-49DE-9BED-1D89C532F9E4}"/>
+      <product ProductVersion="5.2.218" UPC="" UPV="" UpgradeCode="{6D47A181-7CE8-4DB2-92BC-521FF4BB5567}"/>
+      <product ProductVersion="4.01.49152" UPC="" UPV="" UpgradeCode="{22A7C1E9-D26D-4226-86C0-BFAD27D9365A}"/>
+      <product ProductVersion="2.0.3" UPC="" UPV="" UpgradeCode="{0058F63B-2BD1-4BEF-89BC-DAA74C726870}"/>
+      <product ProductVersion="13.1.125" UPC="" UPV="" UpgradeCode="{6ADA60B9-1FA4-433B-A1C2-59D9A4545BAA}"/>
+      <product ProductVersion="14.1.101" UPC="" UPV="" UpgradeCode="{979409AA-4856-4752-8983-29242317A254}"/>
+      <product ProductVersion="14.1.7" UPC="" UPV="" UpgradeCode="{9BC48AFE-B8CC-4C96-B90F-C6C08ED52465}"/>
+      <product ProductVersion="14.50.214" UPC="" UPV="" UpgradeCode="{1BEBED5E-7F4F-4C30-8C65-B0000000000A}"/>
+      <product ProductVersion="1.0.861.0" UPC="" UPV="" UpgradeCode="{54809C09-9598-43F3-8056-A7E634605F67}"/>
+      <product ProductVersion="13.0.13" UPC="" UPV="" UpgradeCode="{2B2874AB-9AE8-456C-B6DB-DA1B3F7F09E1}"/>
+      <product ProductVersion="14.0.6" UPC="" UPV="" UpgradeCode="{0EE2FD57-43C0-49AD-9515-E6D895F45F35}"/>
+      <product ProductVersion="13.0.3" UPC="" UPV="" UpgradeCode="{EAD464C4-8204-47D3-96E9-B7F2C42BCA6A}"/>
+      <product ProductVersion="14.00.49152" UPC="" UPV="" UpgradeCode="{ABA7D958-8704-4395-9F06-A6F3AC59E948}"/>
+      <product ProductVersion="14.0.05640" UPC="" UPV="" UpgradeCode="{EF495A29-3F84-4E8B-A0ED-B9DE58B80033}"/>
+      <product ProductVersion="14.0.241" UPC="" UPV="" UpgradeCode="{F43EAC0A-56BD-4C51-86E5-2AA91DD7EC78}"/>
+      <product ProductVersion="14.0.302" UPC="" UPV="" UpgradeCode="{80521318-1367-47B5-B3AC-BDE66CDF9A2C}"/>
+      <product ProductVersion="14.5.5" UPC="" UPV="" UpgradeCode="{E250781F-9252-44B1-9482-EBBCE06C9BE1}"/>
+      <product ProductVersion="14.0.294" UPC="" UPV="" UpgradeCode="{879F6C7B-F80A-4224-80EE-A2D7D6A2A8BB}"/>
+      <product ProductVersion="5.6.257" UPC="" UPV="" UpgradeCode="{BA8875A0-3767-46E7-B3DE-09275F2716A0}"/>
+      <product ProductVersion="5.6.253" UPC="" UPV="" UpgradeCode="{DBF9AE3A-A372-4A5A-B473-CC37A0F607F4}"/>
+      <product ProductVersion="14.5.10" UPC="" UPV="" UpgradeCode="{E8A4850C-5FDA-4C58-BE1D-68DCA120D0BB}"/>
+      <product ProductVersion="14.5.8" UPC="" UPV="" UpgradeCode="{8ED4296D-1D1E-47F8-9F06-25E2A4450F60}"/>
+      <product ProductVersion="14.5.6" UPC="" UPV="" UpgradeCode="{5B17EDE1-E298-4505-A15F-5D3C42078A5E}"/>
+      <product ProductVersion="14.0.177" UPC="" UPV="" UpgradeCode="{9F41DEC8-7BC2-46BC-BB86-BD76FA24AB3A}"/>
+      <product ProductVersion="14.00.49152" UPC="" UPV="" UpgradeCode="{7F1AD3C9-7C3F-4F28-9361-F009C4708B20}"/>
+      <product ProductVersion="1.0.29.0" UPC="" UPV="" UpgradeCode="{1D29F576-DD70-4519-9E7D-08E895F409A4}"/>
+      <product ProductVersion="14.0.43" UPC="" UPV="" UpgradeCode="{69DC1832-0E76-4A9E-AE7F-825A202F6784}"/>
+      <product ProductVersion="14.0.34" UPC="" UPV="" UpgradeCode="{E14C752C-9307-4A71-B65E-E7B9CE0D063C}"/>
+      <product ProductVersion="9.0.401" UPC="" UPV="" UpgradeCode="{C7ED6025-78DA-40E3-913B-310610D5C7AB}"/>
+      <product ProductVersion="10.0.100" UPC="" UPV="" UpgradeCode="{CE498322-C378-4658-BA31-2E893787DE28}"/>
+      <product ProductVersion="14.00.49152" UPC="" UPV="" UpgradeCode="{62A55332-6B77-48C2-BA40-AD1E9694B2B3}"/>
+    </products>
+    <packageType>MSI</packageType>
+    <supportedHardware>
+</supportedHardware>
+    <licensedProducts>
+      <licensedProduct ProductName="NI Circuit Design Suite 14.0 Pro Licenses" ProductVersion="14.0.593" isCore="true" version="14.0.0">Multisim_ProBase_PKG</licensedProduct>
+      <licensedProduct ProductName="NI Circuit Design Suite 14.0 Pro Licenses" ProductVersion="14.0.593" isCore="true" version="14.0.0">Multisim_ProFull_PKG</licensedProduct>
+      <licensedProduct ProductName="NI Circuit Design Suite 14.0 Pro Licenses" ProductVersion="14.0.593" isCore="true" version="14.0.0">Multisim_ProPower_PKG</licensedProduct>
+      <licensedProduct ProductName="NI Circuit Design Suite 14.0 Pro Licenses" ProductVersion="14.0.593" isCore="true" version="14.0.0">Ultiboard_ProFull_PKG</licensedProduct>
+      <licensedProduct ProductName="NI Circuit Design Suite 14.0 Pro Licenses" ProductVersion="14.0.593" isCore="true" version="14.0.0">Ultiboard_ProPower_PKG</licensedProduct>
+    </licensedProducts>
+  </server>
+  <client version="1.8">
+    <nidistid DistPackageGUID="{419B5A71-79C0-45D6-94EF-0CFAE3A13812}" DistributionGUID="{AD4A148D-8A5B-44D8-9F3E-6827F7C7420A}" DistributionLanguage="9,7" DistributionVersion="14.0"/>
+    <eulaDepot relativePathToZip="Products\MDF\MDF\NIYouLAs.bin" version="14.50.214"/>
+    <distributionType>Application</distributionType>
+    <requireSerialNumber>true</requireSerialNumber>
+    <installDirectory>NIDIR</installDirectory>
+    <licenseFiles group="Microchip" isDisplayedAlone="false" isThirdParty="true">
+      <licenseFile language="0009">Licenses\NI CDS - Combined License Agreement - English.rtf</licenseFile>
+    </licenseFiles>
+    <licenseFiles group="NI" isDisplayedAlone="false" isThirdParty="false">
+      <licenseFile language="0009">Licenses\NI Released License Agreement - English.rtf</licenseFile>
+      <licenseFile language="0010">Licenses\NI Released License Agreement - Spanish.rtf</licenseFile>
+      <licenseFile language="0016">Licenses\NI Released License Agreement - Italian.rtf</licenseFile>
+      <licenseFile language="0007">Licenses\NI Released License Agreement - German.rtf</licenseFile>
+      <licenseFile language="0012">Licenses\NI Released License Agreement - French.rtf</licenseFile>
+      <licenseFile language="0017">Licenses\NI Released License Agreement - Japanese.rtf</licenseFile>
+      <licenseFile language="0018">Licenses\NI Released License Agreement - Korean.rtf</licenseFile>
+      <licenseFile language="2052">Licenses\NI Released License Agreement - Simplified Chinese.rtf</licenseFile>
+    </licenseFiles>
+    <licenseFilesType type="Apache20"/>
+    <licenseFilesType type="BSD3Clause"/>
+    <licenseFilesType type="BSD3ClauseModified"/>
+    <licenseFilesType type="BSIM"/>
+    <licenseFilesType type="Boost"/>
+    <licenseFilesType type="CPOL"/>
+    <licenseFilesType type="CryptoPP"/>
+    <licenseFilesType type="DotNet40"/>
+    <licenseFilesType type="FreeType"/>
+    <licenseFilesType type="GPL"/>
+    <licenseFilesType type="HDF5"/>
+    <licenseFilesType type="ICU"/>
+    <licenseFilesType type="LGPL"/>
+    <licenseFilesType type="LLVM"/>
+    <licenseFilesType type="LibPNG"/>
+    <licenseFilesType type="Libtiff"/>
+    <licenseFilesType type="MARS"/>
+    <licenseFilesType type="MIT"/>
+    <licenseFilesType type="MIT-LibXML"/>
+    <licenseFilesType type="MIT-Spice"/>
+    <licenseFilesType type="MIT-X"/>
+    <licenseFilesType type="MIT-X-LibXML"/>
+    <licenseFilesType type="MIT-X-YAJL"/>
+    <licenseFilesType type="Mesa"/>
+    <licenseFilesType type="MicrochipHiTechCombined"/>
+    <licenseFilesType type="MicrosoftPlatformSDKServer2003SP1"/>
+    <licenseFilesType type="MicrosoftPublicLicense"/>
+    <licenseFilesType type="Mozilla20"/>
+    <licenseFilesType type="NICTA"/>
+    <licenseFilesType type="NIStandardReleased"/>
+    <licenseFilesType type="OPCClassicCOM"/>
+    <licenseFilesType type="OpenSSL"/>
+    <licenseFilesType type="PDFsharp"/>
+    <licenseFilesType type="STLPort"/>
+    <licenseFilesType type="Strtod"/>
+    <licenseFilesType type="TaskScheduler"/>
+    <licenseFilesType type="UPX"/>
+    <licenseFilesType type="WordNet21"/>
+    <licenseFilesType type="wxWindows"/>
+    <licenseFilesType type="zlib"/>
+    <longestPath>70</longestPath>
+    <distributionTitles>
+      <distributionTitle language="0007">NI Circuit Design Suite 14.0</distributionTitle>
+      <distributionTitle language="0009">NI Circuit Design Suite 14.0</distributionTitle>
+    </distributionTitles>
+    <distributionSize>848632881</distributionSize>
+    <minimumRequiredVersionOfMetaSuiteBuilder>3.2.1</minimumRequiredVersionOfMetaSuiteBuilder>
+    <dotNetPreinstall>
+      <key item="DotNet40Path">Products\DotNet40\dotNetFx40_Full_x86_x64.exe</key>
+      <key item="DotNet40Preinstall">1</key>
+      <key item="DotNet40ProductCode">{C08402F7-5396-4A53-B585-0C3A74406C14}</key>
+      <key item="DotNet40Version">4.0.30319.1</key>
+    </dotNetPreinstall>
+  </client>
+
+</updateInfo>

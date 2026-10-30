@@ -1,0 +1,11 @@
+package homework0409;
+
+public class While1 {
+	public static void main(String args[]) {
+		int n=42;
+		while (n>40 && n<200) {
+			System.out.println(n+"是40-200之间的偶数");
+			n+=2;
+		}
+	}
+}

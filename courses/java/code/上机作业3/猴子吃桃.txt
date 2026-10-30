@@ -1,0 +1,23 @@
+package classlearn;
+
+import java.util.Scanner;
+
+public class Monkey {
+	public static int peach(int n) {
+		int p=1;
+		for(int i=n;i>1;i--) {
+			p+=1;
+			p*=2;
+		}
+		return p;
+	}
+	
+	public static void main(String[] args) {
+		int N;
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		N=peach(n);
+		sc.close();
+		System.out.println("猴子一共摘了"+N+"个桃子");
+	}
+}

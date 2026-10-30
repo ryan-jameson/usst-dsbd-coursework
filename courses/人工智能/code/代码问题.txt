@@ -1,0 +1,205 @@
+多模态心力衰竭再入院预测框架HyCF：实验完整性审计、数据标准化与可视化策略深度研究报告
+执行摘要
+随着精准医疗的推进，基于电子健康记录（EHR）、医学影像（CXR）及生理信号（ECG）的多模态数据融合已成为预测心力衰竭（HF）患者30天再入院风险的前沿方向。然而，多模态数据的异构性与复杂的临床时序逻辑，使得实验设计面临极高的“数据泄露”风险，这种风险往往表现为验证集指标的虚高（如AUC接近1.0），从而掩盖了模型的真实泛化能力。
+本报告针对用户提供的名为HyCF-TFM（Hybrid Clinical Framework Transformer Fusion Model）的实验代码、流程及初步结果进行了法医级的深度审计。基于对代码逻辑的逐行排查，并结合MIMIC-IV、MIMIC-IV-ECG及MIMIC-CXR等国际权威数据库的最新处理标准（SOTA），本研究揭示了导致当前实验指标异常完美的四大核心漏洞：标签依赖型文本生成、影像代理指标泄露、受试者身份污染以及合成数据回退机制。
+报告不仅详尽剖析了上述问题的根源，还针对文本、结构化数据、心电图及影像四种模态建立了严格的输入标准化流程，并重构了HyCF框架的意图树（Intent Tree）逻辑以确保因果完整性。最后，报告提出了一套基于Transformer注意力机制与SHAP值的多维可视化方案，旨在将模型从“黑盒”转化为临床可解释的决策支持工具。
+1. 实验代码与流程的法医级审计：解构“完美指标”的假象
+在复杂的临床预测任务中，观察到曲线下面积（AUC）达到1.0且验证损失（Validation Loss）收敛至0.0，在统计学上几乎是不可能的事件。心力衰竭再入院预测涉及极高的随机不确定性（Aleatoric Uncertainty），即便是当前最先进的（SOTA）多模态模型，在MIMIC-IV数据集上的AUC通常也仅分布在 0.72至0.79 之间 1。当前实验结果的异常“完美”，实际上是预测目标（Label）在特征工程阶段发生泄露的直接证据。
+通过对 HyCF_TFM_Experiment.ipynb 及其相关模块的深度代码审查，我们定位了四个导致数据泄露的关键向量。
+1.1 泄露向量一：基于标签的确定性文本生成（语义泄露）
+在多模态融合中，非结构化文本（如出院小结）通常被视为蕴含丰富临床表型信息的“金矿”。然而，代码审计显示，本实验中的文本数据并非来自真实的临床记录，而是通过一个名为 generate_clinical_text 的函数合成生成的。
+代码逻辑缺陷分析
+在 MultimodalDataset 类的预处理逻辑中，临床文本的生成直接依赖于 nyha（纽约心脏病协会分级）变量 2。这一 nyha 变量的赋值逻辑存在致命的逻辑倒置：
+●若 label == 1（高风险/再入院），代码强制将 nyha 赋值为 3。
+●若 label == 0（低风险），代码强制将 nyha 赋值为 1。
+随后，generate_clinical_text 函数基于该变量构建描述性文本，例如“Patient presents with NYHA Class III symptoms...”。当Transformer模型处理这段文本时，它实际上不需要理解任何医学语义，只需学习一个简单的字符串匹配规则：if "Class III" in text, then predict 1 2。
+深层影响
+这种设计构建了一个完美的“作弊特征”（Cheat Feature）。模型在训练过程中会迅速发现文本特征与标签之间的确定性映射关系，从而将权重完全倾斜于文本模态，忽略ECG和影像数据中的复杂模式。这解释了为何Loss能迅速降至0：模型本质上是在拟合一个恒等映射函数，而非学习疾病进展的概率分布。这种泄露使得文本模态失去了作为独立预测变量的价值，彻底破坏了多模态融合的初衷。
+1.2 泄露向量二：影像元数据的代理指标泄露
+在影像模态的处理中，实验代码并未基于未来的再入院事件来定义风险标签，而是利用了过去的干预措施作为“高风险”的定义标准。
+代码逻辑缺陷分析
+代码中对 chexchonet 数据集的解析逻辑显示，样本被标记为“高风险”的依据是元数据（metadata.csv）中包含以下字段 2：
+●pacemaker_or_icd == 1（植入起搏器或除颤器）
+●heart_transplant == 1（心脏移植）
+●composite_slvh_dlv == 1（心室辅助装置）
+这种标签定义方式引入了严重的代理泄露（Proxy Leakage）。在胸部X光片（CXR）中，起搏器、除颤器导线或心室辅助装置（LVAD）表现为极高对比度的金属异物，其视觉特征与周围的生物组织截然不同。对于任何卷积神经网络（CNN）或视觉Transformer（ViT）而言，检测这些金属物体是一个极其简单的任务，远比识别肺水肿或心脏扩大的细微纹理要容易得多。
+深层影响
+模型在训练过程中实际上退化为了一个“医疗器械检测器”。虽然植入器械的患者在临床上确实属于重症，但这并不等同于预测其未来30天内的再入院风险。模型学会的是“看到起搏器就报警”，而不是“看到病情恶化就报警”。这导致模型在面对那些病情危重但尚未接受器械植入的患者时，将完全丧失预测能力，从而产生极高的假阴性率，但在当前的测试集（同样基于规则生成）上却能表现完美。
+1.3 泄露向量三：全局混洗导致的身份污染
+在处理纵向医疗数据时，数据划分（Splitting）必须严格遵循受试者独立性原则。
+代码逻辑缺陷分析
+实验代码在 MultimodalDataset 初始化末尾执行了全局混洗操作：np.random.shuffle(self.samples) 2。
+在MIMIC-IV、PhysioNet Challenge或CPSC等数据集中，同一个患者通常拥有多条记录（例如多次就诊的ECG或多张不同时间的CXR）。全局混洗将这些记录打散混合，然后按比例（80/20）切割。
+深层影响
+这种操作导致了身份泄露（Identity Leakage）。假设患者A有5条ECG记录，混洗后极有可能4条进入训练集，1条进入测试集。由于同一个人的生理信号（如QRS波群形态、背景噪声指纹）具有高度的特异性，深度学习模型（尤其是过参数化的Transformer）能够轻易“记住”患者A的生理特征。当模型在测试集中遇到患者A的第5条记录时，它实际上是在进行“身份再识别”（Re-identification），直接调用记忆中的标签，而非根据病理特征进行预测。这种机制使得测试集失去了评估泛化能力的意义，导致指标虚高。
+1.4 泄露向量四：合成数据的静默回退机制
+代码中包含一个旨在防止程序崩溃的“鲁棒性”设计，但这在科学实验中构成了致命的隐患。
+代码逻辑缺陷分析
+当代码检测到样本列表为空（例如路径配置错误）时，会自动触发回退逻辑，生成100个“Dummy Samples”（虚拟样本）2。这些虚拟样本的生成逻辑通常极其简单（如标签按奇偶交替），且未在日志中发出强烈的警告中断实验。
+深层影响
+鉴于实验日志中出现了“Total Combined Samples: 0”的记录，随后模型却能正常训练并输出结果，这强烈暗示当前的“完美结果”完全是基于这100个线性可分的虚拟数据跑出来的。模型拟合的是一个简单的人工规则（如 y = x % 2），这与真实的心力衰竭预测毫无关系。这解释了为何AUC能达到1.0——对于这种简单的数学规则，神经网络在几个epoch内即可实现零误差拟合。
+2. 三种数据源的输入标准与预处理规范
+为了修正上述根本性错误，必须建立符合医学信息学标准的数据输入管道。以下基于MIMIC-IV及其衍生数据库（MIMIC-IV-ECG, MIMIC-CXR）的SOTA处理流程 3，为HyCF框架定义严格的输入标准。
+2.1 文本模态：临床笔记与出院小结
+非结构化文本蕴含了关于患者病情进展、社会决定因素及医生主观判断的关键信息，是结构化数据的重要补充。
+2.1.1 数据源选择与过滤
+●黄金数据源： 应直接锁定MIMIC-IV note 模块中的 discharge 表 6。出院小结（Discharge Summary）是整个住院过程的总结，对预测再入院最具价值。
+●时序过滤（防泄露）： 必须严格筛选 charttime 早于或等于索引入院（Index Admission）dischtime 的笔记。严禁使用出院后生成的随访笔记或再入院时的入院记录。
+●内容分段： 完整的出院小结平均长度超过2000个Token，包含大量行政冗余。SOTA方法建议利用正则表达式提取核心段落：“现病史”（History of Present Illness）、“住院经过”（Hospital Course）及“出院诊断”（Discharge Diagnosis） 7。
+2.1.2 预处理与向量化标准
+●去隐私化（De-identification）： 尽管MIMIC已脱敏，但任何额外处理步骤均需确保符合HIPAA标准，去除或掩码姓名、日期等PHI信息 9。
+●分块策略（Chunking Strategy）： 针对BERT类模型512 Token的输入限制，单纯截断会导致信息丢失。标准做法是采用重叠滑动窗口（Overlapping Sliding Window），将长文本切分为多个512 Token的片段，分别编码后通过最大池化（Max-Pooling）或注意力加权池化（Attention-Pooling）聚合成文档级向量 10。
+●编码器选择： 推荐使用在MIMIC-III笔记上预训练的 ClinicalBERT 或 BioClinicalBERT，而非通用的BERT，以确保对医学术语（如 "HFrEF", "CABG"）的语义理解 12。
+2.2 结构化数据模态：生理指标与实验室检查
+结构化数据提供了患者生理状态的量化快照，对捕捉急性加重具有不可替代的作用。
+2.2.1 变量选择标准
+基于心力衰竭领域的特征工程文献 14，必须构建包含以下维度的特征集：
+●人口统计学： 年龄、性别、保险类型（社会经济地位代理变量）。
+●生命体征（Vitals）： 收缩压/舒张压（反映灌注）、心率（反映代偿）、呼吸频率、血氧饱和度（SpO2）、尿量（反映肾灌注及液体潴留，HF关键指标）。
+●实验室指标（Labs）： NT-proBNP（心衰金标准）、血清肌酐（肾功能）、尿素氮（BUN）、血钠（低钠血症提示预后不良）、血红蛋白、白细胞计数 16。
+●共病指数： 基于ICD-10编码计算的Charlson共病指数（CCI），以及高血压、糖尿病、COPD、肾衰竭的二值化特征 17。
+2.2.2 预处理规范
+●缺失值处理与不规则采样： 临床时序数据本质上是稀疏和非对齐的。
+○方案A（离散化）： 将时间轴划分为固定窗口（如每小时），在窗口内进行聚合（均值/最大值）。缺失窗口采用前向填充（Forward-Fill）后接均值填充 18。
+○方案B（连续时间）： 采用神经偏微分方程（Neural ODEs）或时间感知LSTM（Time-Aware LSTM），直接将观测时间间隔 $\Delta t$ 作为输入，避免插值带来的偏差 20。
+●归一化（严防泄露）： 所有连续变量必须进行Z-score标准化。关键在于：Scaler的均值和方差必须仅从训练集计算，然后应用到验证集和测试集。严禁使用全量数据的统计特征 22。
+2.3 心电图模态（ECG）：高频时序信号
+ECG数据捕捉心脏电生理活动，对于识别房颤（AFib）、心肌缺血等再入院高危因素至关重要。
+2.3.1 数据源与链接
+●应使用 MIMIC-IV-ECG 模块，该数据集包含采样率为500Hz的12导联标准心电图 4。
+●链接逻辑： 通过 subject_id 和时间戳将ECG与住院记录匹配。必须选择 出院前24小时内 或 入院初始 的记录，以反映特定的临床状态 25。
+2.3.2 信号预处理标准
+●滤波降噪： 原始信号包含基线漂移和工频干扰。
+○基线漂移： 使用截止频率为0.5Hz的高通滤波器 26。
+○工频干扰： 使用50Hz/60Hz的陷波滤波器（Notch Filter）。
+○肌电干扰： 使用40Hz低通滤波器。
+●张量形状： 输入应标准化为 $(N, 12, L)$ 或 $(N, L, 12)$，其中12为导联数，$L$ 为序列长度（例如10秒数据对应5000个采样点）5。
+2.4 影像模态：胸部X光片（CXR）
+CXR直观反映了肺淤血、胸腔积液及心脏结构改变，是评估心衰容量负荷的关键。
+2.4.1 预处理标准
+●视图选择： 优先选择正位片（PA/AP），侧位片需单独处理或剔除。
+●尺寸与归一化： 图像需Resize至 $224 \times 224$ 或 $320 \times 320$ 以适配主流Vision Transformer架构。像素值需归一化至 $$ 或基于ImageNet的均值/方差进行标准化 5。
+●数据增强： 为防止过拟合，训练集需应用随机旋转（$\pm 10^\circ$）、水平翻转、对比度微调。需注意，垂直翻转在CXR中缺乏解剖学意义，应禁用 27。
+3. 实验环境、流程与操作的系统性重构
+基于上述审计与标准，我们需要将HyCF实验从一个包含逻辑漏洞的原型重构为一个严谨的科学实验。以下是修正后的全流程整理。
+3.1 实验环境与基础设施
+●软件栈： Python 3.9+, PyTorch 2.x (CUDA 11.8+)。
+●核心库：
+○wfdb: 用于解析ECG信号。
+○pydicom / opencv: 用于处理DICOM/JPG影像。
+○transformers (HuggingFace): 用于调用ClinicalBERT和ViT。
+○scikit-learn: 用于严谨的数据划分与指标计算。
+●硬件要求： 由于涉及多路Transformer（ViT + BERT + Time-Series Transformer）的并发计算，建议配置大显存GPU（如NVIDIA A100或V100）。
+3.2 队列定义（The Golden Cohort）
+实验的第一步是清洗出一个干净、无偏的患者队列。
+●纳入标准（Inclusion）：
+○年龄 $\ge 18$ 岁。
+○主要诊断为心力衰竭（ICD-10代码 I50.x）28。
+○在单次住院期间，同时拥有出院小结、ECG记录和CXR影像（多模态交集）16。
+●排除标准（Exclusion）：
+○院内死亡（In-hospital mortality）：死亡患者无再入院风险，包含此类样本会引入竞争风险偏差 29。
+○住院时长（LOS） $< 24$ 小时：数据积累不足，且多为观察留观，噪音大。
+○自动出院（LAMA）：结果不可控。
+○转院至其他急症护理机构：结局追踪不完整。
+3.3 修正后的实验操作流程（Pipeline）
+步骤一：数据摄取与对齐（Data Ingestion & Alignment）
+1.加载 admissions 表，根据ICD-10筛选HF患者。
+2.通过 hadm_id 关联 discharge.csv。
+3.通过 subject_id 和时间窗口关联 mimic-iv-ecg 和 mimic-cxr。
+4.关键操作： 对于拥有多份记录的患者，选择 出院前最后一次 有效记录。这不仅不仅统一了时间点，而且最能反映患者回归社区时的生理状态，具有最强的预测逻辑。
+步骤二：分层患者级划分（Stratified Patient-Level Splitting）
+1.机制： 废弃 np.random.shuffle，改用 GroupShuffleSplit 或 GroupKFold，以 subject_id 作为分组键（Group Key）30。
+2.比例： 训练集 70% / 验证集 15% / 测试集 15%。
+3.验证： 编写断言代码，确保 set(train_patients) & set(test_patients) == empty，彻底杜绝身份泄露。
+步骤三：多模态特征提取（Feature Extraction）
+1.文本支路： ClinicalBERT处理分块后的出院小结，输出上下文嵌入向量 $E_{text} \in \mathbb{R}^{768}$。
+2.影像支路： 使用在CheXpert上预训练的DenseNet-121或ViT-B/16处理CXR，提取视觉特征 $E_{img} \in \mathbb{R}^{d}$。
+3.心电支路： 使用1D-ResNet或专门的时序Transformer处理12导联ECG，提取电生理特征 $E_{ecg} \in \mathbb{R}^{d}$。
+4.结构化支路： 多层感知机（MLP）处理归一化后的实验室/生命体征向量，输出 $E_{struct} \in \mathbb{R}^{d}$。
+步骤四：HyCF核心融合机制（Multimodal Fusion）
+1.意图树（Intent Tree）的正确实现： 依据HyCF的设计理念 2，不应简单拼接特征。应构建一个分层结构：
+○意图解析层： 使用LLM分析患者的综合画像，分解出子任务（例如：“检查肺部是否淤血”、“检查心律是否异常”）。
+○路由层： 根据子任务权重，动态调整各模态特征的注意力权重。
+2.跨模态注意力（Cross-Modal Attention）： 将各模态嵌入投影到公共维度，输入Transformer Encoder。利用自注意力机制，让模型自动学习模态间的互补性（例如：当CXR显示“肺水肿”时，增加文本中“呼吸困难”Token的权重）23。
+步骤五：输出与优化
+1.任务： 二分类（30天内是否再入院）。
+2.损失函数： 考虑到正负样本比例可能失衡（再入院率通常约20%），应使用 加权二元交叉熵（Weighted BCE） 或 Focal Loss 1。
+3.优化器： AdamW，配合学习率预热（Warmup）和余弦衰减（Cosine Decay）。
+4. 实验总结与HyCF框架核心价值重述
+经过审计与重构，我们可以对整个HyCF实验进行如下总结：
+原始实验的失败本质：
+原始实验是一个典型的“过拟合于数据泄露”的案例。其通过合成文本直接注入标签信息，并利用影像中的医疗器械作为代理标签，构建了一个在数学上闭环但在临床上无效的映射系统。由此产生的AUC 1.0是统计学上的假象，不具备任何外部有效性。
+重构后的HyCF价值：
+修正后的HyCF框架将回归医疗AI的本质——在不确定性中寻找规律。通过集成大语言模型（LLM）的推理能力与专用诊断引擎（专有CNN/ViT模型）的精度，HyCF旨在解决传统“黑盒”融合模型可解释性差的痛点。
+●意图树结构 2 将复杂的再入院预测任务分解为可解释的临床子问题（如“容量负荷评估”、“心律失常风险”、“合并症负担”）。
+●混合驱动： LLM负责高层语义推理与报告生成，而专用模型负责从原始像素和波形中提取硬证据，两者在Transformer层进行有机融合。
+预期在修正后的框架下，模型在MIMIC-IV上的AUC应回归到 0.75 - 0.82 的合理区间。这一性能虽然看似不如1.0“完美”，但却代表了真实的、具有临床转化潜力的预测能力。
+5. 高维医疗数据可视化方案推荐
+为了解决“指标虚高”带来的信任危机，并满足临床医生对决策依据的探究需求，建议放弃简单的ROC/Loss曲线，转而采用一套多层次、全维度的可视化系统。
+5.1 全局模型解释性（Global Interpretability）
+1. 单模态 vs. 多模态性能增益图 (Performance Lift Bar Chart)
+●设计： 绘制柱状图，分别展示仅使用文本、仅使用影像、仅使用ECG以及全模态融合时的AUC/F1分数。
+●价值： 量化多模态融合带来的边际收益（通常为5-10%的提升）。这是证明HyCF框架有效性的最有力证据 27。
+2. 概率校准曲线 (Calibration Curve with Brier Score)
+●设计： 绘制“预测概率”与“实际发生频率”的关系图。理想模型应贴合对角线。
+●价值： 临床决策更关注概率的可靠性而非单纯的排序。如果模型预测80%的风险，实际上应有80%的患者再入院。这是评估模型是否“过度自信”（Overconfident）的关键工具 19。
+5.2 局部（患者级）归因分析 (Local Attribution)
+3. 跨模态注意力热力图 (Cross-Modal Attention Maps)
+●设计： 构建一个矩阵热力图，X轴为文本Token（如 "shortness", "breath"），Y轴为CXR图像的网格区域。
+●原理： 可视化Fusion Transformer中的Attention Weights。
+●洞察： 如果模型在文本“pleural effusion”（胸腔积液）和CXR的“肺底”区域之间显示出高注意力权重，则证明模型真正理解了跨模态的病理对应关系，而非死记硬背 33。
+4. 纵向风险轨迹图 (Longitudinal Risk Trajectory)
+●设计： 不要仅输出单一的预测值。利用模型对患者住院期间每一天的数据进行推断，绘制一条随时间变化的“风险评分曲线”。
+●价值： 展示患者风险的动态演变。如果经过治疗后风险评分不降反升，这将是比静态预测更强烈的临床预警信号。可以在曲线上标注关键事件（如“使用利尿剂”、“转入ICU”），形成“数字孪生”般的监控视图 35。
+5. 结构化特征的SHAP力导向图 (SHAP Force Plot)
+●设计： 针对实验室指标，使用SHAP值展示各特征如何将基准风险“推高”或“拉低”。
+●价值： 直观告诉医生：“该患者风险高达0.85，主要是因为NT-proBNP极高（推高0.3）且血钠偏低（推高0.1），尽管年龄较轻（拉低0.05）” 37。
+5.3 潜在空间可视化 (Latent Space Visualization)
+6. 融合嵌入的t-SNE/UMAP投影
+●设计： 将融合层的高维向量投影到2D平面。点颜色映射为（a）真实结局（再入院/未再入院），（b）临床亚型（HFrEF/HFpEF）。
+●价值： 验证模型是否学习到了具有判别力的语义流形。如果图呈现清晰的聚类结构，说明模型成功提取了深层的病理特征；如果是一团混沌，则说明融合失败或特征提取无效 39。
+结论
+本次审计揭示，原始实验中的“完美指标”是代码逻辑缺陷导致的虚假繁荣。通过实施本报告提出的数据标准化流程——特别是基于患者ID的数据划分、严格的时序过滤以及去除代理泄露——实验将回归科学的正轨。结合HyCF独特的意图树架构与推荐的跨模态注意力可视化方案，您的研究有望从一个存在方法学漏洞的原型，蜕变为具有高度临床可解释性和鲁棒性的前沿科研成果。
+引用来源说明：
+本文中引用的 为用户上传的代码/文档片段， 为基于搜索的外部文献片段。所有引用均用于支撑审计发现、SOTA标准定义及方法学建议。
+引用的著作
+1.Prediction of 30-day hospital readmission with clinical notes and EHR information - arXiv, 访问时间为 一月 9, 2026， https://arxiv.org/html/2503.23050v1
+2.HyCF_TFM_Experiment.ipynb
+3.MIMIC-IV-Ext-22MCTS: A 22 Million-Event Temporal Clinical Time-Series Dataset for Risk Prediction - arXiv, 访问时间为 一月 9, 2026， https://arxiv.org/html/2505.00827v1
+4.MIMIC-IV-ECG: Diagnostic Electrocardiogram Matched Subset v1.0 - PhysioNet, 访问时间为 一月 9, 2026， https://physionet.org/content/mimic-iv-ecg/
+5.Symile-MIMIC: a multimodal clinical dataset of chest X-rays, electrocardiograms, and blood labs from MIMIC-IV - PhysioNet, 访问时间为 一月 9, 2026， https://physionet.org/content/symile-mimic/
+6.MIMIC-IV-Note: Deidentified free-text clinical notes v2.2 - PhysioNet, 访问时间为 一月 9, 2026， https://www.physionet.org/content/mimic-iv-note/2.2/
+7.A Day-to-Day Approach for Automating the Hospital Course Section of the Discharge Summary - PMC - PubMed Central, 访问时间为 一月 9, 2026， https://pmc.ncbi.nlm.nih.gov/articles/PMC9285173/
+8.MIMIC-IV-Ext-BHC: Labeled Clinical Notes Dataset for Hospital Course Summarization v1.2.0 - PhysioNet, 访问时间为 一月 9, 2026， https://physionet.org/content/labelled-notes-hospital-course/
+9.ClinicalBERT-Deep-Learning--Predicting-Hospital-Readmission-Using-Transformer/README.md at master - GitHub, 访问时间为 一月 9, 2026， https://github.com/nwams/ClinicalBERT-Deep-Learning--Predicting-Hospital-Readmission-Using-Transformer/blob/master/README.md
+10.ClinicalBERT: A Deep Dive into the AI Model Revolutionizing Clinical NLP - Dr7.ai, 访问时间为 一月 9, 2026， https://dr7.ai/blog/technology/this-will-fundamentally-change-the-way-you-look-at-technology/
+11.Hospital Re-Admission Prediction Using Named Entity Recognition and Explainable Machine Learning - PMC - NIH, 访问时间为 一月 9, 2026， https://pmc.ncbi.nlm.nih.gov/articles/PMC11475863/
+12.ClinicalBERT: Modeling Clinical Notes and Predicting Hospital Readmission - arXiv, 访问时间为 一月 9, 2026， https://arxiv.org/pdf/1904.05342
+13.Enhancing mortality prediction in cardiac arrest ICU patients through meta-modeling of structured clinical data from MIMIC-IV - arXiv, 访问时间为 一月 9, 2026， https://arxiv.org/html/2510.18103v1
+14.(PDF) Machine learning in predicting heart failure survival: a review of current models and future prospects - ResearchGate, 访问时间为 一月 9, 2026， https://www.researchgate.net/publication/386642957_Machine_learning_in_predicting_heart_failure_survival_a_review_of_current_models_and_future_prospects
+15.MIMIC-IV-Ext Cardiac Disease v1.0.0 - PhysioNet, 访问时间为 一月 9, 2026， https://physionet.org/content/mimic-iv-ext-cardiac-disease/
+16.Predicting 30-Days Hospital Readmission for Patients with Heart Failure Using Electronic Health Record Embeddings: Comparative Evaluation - NIH, 访问时间为 一月 9, 2026， https://pmc.ncbi.nlm.nih.gov/articles/PMC12646029/
+17.Influencing factors of 90-day readmission of patients with heart failure based on the MIMIC-IV database - Journal of Thoracic Disease, 访问时间为 一月 9, 2026， https://jtd.amegroups.org/article/view/98136/html
+18.Arbitrary Data as Images: Fusion of Patient Data Across Modalities and Irregular Intervals with Vision Transformers - arXiv, 访问时间为 一月 9, 2026， https://arxiv.org/html/2501.18237v1
+19.Deployable Machine Learning on MIMIC-IV: Leakage-Safe Prediction and Calibration for Incident Diabetes - MDPI, 访问时间为 一月 9, 2026， https://www.mdpi.com/2079-9292/14/22/4415
+20.ContiFormer: Continuous-Time Transformer for Irregular Time Series Modeling - OpenReview, 访问时间为 一月 9, 2026， https://openreview.net/pdf?id=YJDz4F2AZu
+21.Time-Aware Attention for Enhanced Electronic Health Records Modeling - arXiv, 访问时间为 一月 9, 2026， https://arxiv.org/html/2507.14847v1
+22.Robust Fusion of Time Series and Image Data for Improved Multimodal Clinical Prediction - IEEE Xplore, 访问时间为 一月 9, 2026， https://ieeexplore.ieee.org/iel8/6287639/6514899/10752509.pdf
+23.Fusion-driven multimodal learning for biomedical time series in surgical care - Frontiers, 访问时间为 一月 9, 2026， https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2025.1605406/full
+24.MEETI: A Multimodal ECG Dataset from MIMIC-IV-ECG with Signals, Images, Features and Interpretations - arXiv, 访问时间为 一月 9, 2026， https://arxiv.org/html/2507.15255v1
+25.MIMIC-IV-ECG-Ext-ICD: Diagnostic labels for MIMIC-IV-ECG - PhysioNet, 访问时间为 一月 9, 2026， https://physionet.org/content/mimic-iv-ecg-ext-icd-labels/
+26.Minimal Preprocessing of ECG Signals for Deep Learning-Based Biometric Systems, 访问时间为 一月 9, 2026， https://piurilabs.di.unimi.it/Papers/CIVEMSA_2024___DeepECG_web.pdf
+27.Multimodal Deep Learning for Integrating Chest Radiographs and Clinical Parameters: A Case for Transformers - RSNA Journals, 访问时间为 一月 9, 2026， https://pubs.rsna.org/doi/abs/10.1148/radiol.230806
+28.Predicting 30 Days Hospital Readmission for Heart Failure patients using word embeddings | medRxiv, 访问时间为 一月 9, 2026， https://www.medrxiv.org/content/10.1101/2025.02.07.25321871v1.full-text
+29.Deep learning models for ICU readmission prediction: a systematic review and meta-analysis - PMC - NIH, 访问时间为 一月 9, 2026， https://pmc.ncbi.nlm.nih.gov/articles/PMC12535055/
+30.SurvBench: A Standardised Preprocessing Pipeline for Multi-Modal Electronic Health Record Survival Analysis - arXiv, 访问时间为 一月 9, 2026， https://arxiv.org/pdf/2511.11935
+31.GroupShuffleSplit — scikit-learn 1.8.0 documentation, 访问时间为 一月 9, 2026， https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GroupShuffleSplit.html
+32.Multimodal Health Risk Prediction System for Chronic Diseases via Vision-Language Fusion and Large Language Models - ChatPaper, 访问时间为 一月 9, 2026， https://chatpaper.com/paper/190912
+33.Visualizations of the attention maps in the Ada-focus decoder. Two... - ResearchGate, 访问时间为 一月 9, 2026， https://www.researchgate.net/figure/Visualizations-of-the-attention-maps-in-the-Ada-focus-decoder-Two-crosssectional_fig3_384913692
+34.Multimodal artificial intelligence models for radiology | BJR - Oxford Academic, 访问时间为 一月 9, 2026， https://academic.oup.com/bjrai/article/2/1/ubae017/7959794
+35.Towards modeling evolving longitudinal health trajectories with a transformer-based deep learning model - PubMed, 访问时间为 一月 9, 2026， https://pubmed.ncbi.nlm.nih.gov/40945546/
+36.Temporal Modeling of Longitudinal Patient Trajectories Using Recurrent Neural Architectures for Prognostic Risk Stratification i - Scholar9, 访问时间为 一月 9, 2026， https://scholar9.com/publication/e98cf97f3dd0fae0a4752f1c1d2709a9.pdf
+37.Practical guide to SHAP analysis: Explaining supervised machine learning model predictions in drug development - NIH, 访问时间为 一月 9, 2026， https://pmc.ncbi.nlm.nih.gov/articles/PMC11513550/
+38.An introduction to explainable AI with Shapley values — SHAP latest documentation, 访问时间为 一月 9, 2026， https://shap.readthedocs.io/en/latest/example_notebooks/overviews/An%20introduction%20to%20explainable%20AI%20with%20Shapley%20values.html
+39.Identification of heart failure subtypes using transformer-based deep learning modelling, 访问时间为 一月 9, 2026， https://pmc.ncbi.nlm.nih.gov/articles/PMC11979478/
+40.SOM2LM: Self-Organized Multi-Modal Longitudinal Maps - PMC - NIH, 访问时间为 一月 9, 2026， https://pmc.ncbi.nlm.nih.gov/articles/PMC12254005/

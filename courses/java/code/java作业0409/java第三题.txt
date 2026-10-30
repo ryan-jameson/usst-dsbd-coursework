@@ -1,0 +1,40 @@
+package homework0409;
+
+import java.util.Scanner;
+
+public class Switch1 {
+	public static void main(String args[]) {
+		System.out.println("今天是周几？(请输入阿拉伯数字1234567）");
+		Scanner sc=new Scanner(System.in);
+		int d=sc.nextInt();
+		sc.close();
+		
+		char result='*';
+		switch(d){
+			case 1: 
+				result='a';
+				break;
+			case 2:
+				result='b';
+				break;
+			case 3:
+				result='c';
+				break;
+			case 4:
+				result='d';
+				break;
+			case 5:
+				result='e';
+				break;
+			case 6:
+				result='f';
+				break;
+			case 7:
+				result='g';
+				break;
+			default:
+				System.out.println("请输入正确格式（阿拉伯数字）");
+		}
+		System.out.println("您得到的结果是"+result);
+	}
+}

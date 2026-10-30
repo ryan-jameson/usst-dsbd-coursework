@@ -1,0 +1,79 @@
+{
+ "lecture": "第02讲",
+ "total_frames": 1650,
+ "slide_count": 9,
+ "slides": [
+  {
+   "slide_no": 1,
+   "time_s": 0,
+   "time_str": "00:00",
+   "frame_file": "000001.jpg",
+   "text": "教课课程概括\n2026-03-04 10:39:58\n玻尔兹曼机无向图近似推断深度信念网络有向图精确推断\nEM算法生成对抗网络模型推断学习变分自编码器卷积网络密度估计全连接网络无监督学习概率图模型自编码器前馈网络聚类模型图网络类型神经网络机器学习强化学习记忆网络分类监督学习循环网络回归模型要素学习准则记忆增强网络结构化学习线性模型结构风险最小化非线性模型最大对数似然优化算法最大后验估计随机梯度下降",
+   "lines_count": 45
+  },
+  {
+   "slide_no": 2,
+   "time_s": 1574,
+   "time_str": "26:14",
+   "frame_file": "000788.jpg",
+   "text": "132课件\n2026-03-04 11:06:12\n章节内容\n>概述\n>进阶模型\n1. 绪论[ppt]\n2.机器学习概述[ppt]\n机器学习概述\n>概率图模型\n3.线性模型[ppt]\n>线性模型玻尔兹曼机\n4.前馈神经网络[ppt]\n5.卷积神经网络[ppt]\n>基础网络模型深度信念网络\n6.循环神经网络[ppt]\n深度生成模型前馈神经网络\n7.网络优化与正则化【ppt]\n>深度强化学习\n8.注意力机制与外部记忆[ppt]\n>卷积神经网络\n9.无监督学习[ppt]\n>序列生成模型\n>循环神经网络\n10.模型独立的学习方式[ppt]\n11.概率图模型[ppt]\n√网络优化与正则化\n12.深度信念网络[ppt]\n记忆与注意力机制\n13.深度生成模型[ppt]\n无监督学习\n14.深度强化学习[ppt]\n15.序列生成模型[ppt]\n一个过时版本：词嵌入与语言模型激洁windows\n16.数学基础转到\"设置\"以激活Windows。\n《神经网络与深度学习》",
+   "lines_count": 40
+  },
+  {
+   "slide_no": 3,
+   "time_s": 1950,
+   "time_str": "32:30",
+   "frame_file": "000976.jpg",
+   "text": "教132课件\n2026-03-04 11:12:30\n>线性代数\n>微积分数学优化\nNeural Neworks and\nNeural Networks\n>概率论\nDeep L.carning in Practice\nand Deep Learning\n神经网络与神经网络与信息论深度学习深度学习案例与实践\nhttps://nndl.github.io/\n《数学基础》\n激活Windows\n转到”设置\"以激活Windows。\n《神经网络与深度学习》",
+   "lines_count": 21
+  },
+  {
+   "slide_no": 4,
+   "time_s": 2230,
+   "time_str": "37:10",
+   "frame_file": "001116.jpg",
+   "text": "教2课件\n2026-03-04 11:17:10\nNeural Networks\nand Deep Learning\n神经网络与\n>邱锡鹏，神经网络与深度学习，机械工业出版社，2020\n深度学习\nISBN9787111649687\nhttps://nndl.github.io/\n动手学\n>提供配套练习重手学深度学习深度学习\n>阿斯顿张等，动手学深度学习，ISBN：9787115505835\nDIVE\nLEARNIN\n>https://d21.ai/\n√有PyTorch版\nPATTERN RECOGNITION\nAND MACHINE LEARNING\nBishop, C.M. (2006). Pattern recognition and Machine\nCHRISTOPHERM.BISHOP\nLearning.Springer.ISBN9780387310732.\n√网上有中文版by马春鹏\n《神经网络与深度学习》",
+   "lines_count": 26
+  },
+  {
+   "slide_no": 5,
+   "time_s": 2364,
+   "time_str": "39:24",
+   "frame_file": "001183.jpg",
+   "text": "教艺课件\n2026-03-04 11:19:24\nWright, S., & Nocedal, J. (1999). Numerical optimization.\nSpringer Science, 35(67-68), 7.\nBoyd, S., & Vandenberghe, L. (2004). Convex optimization.\nCambridge university press.\n激活Windows\n转到设置\"以激活Windows。\n《神经网络与深度学习》",
+   "lines_count": 9
+  },
+  {
+   "slide_no": 6,
+   "time_s": 2974,
+   "time_str": "49:34",
+   "frame_file": "001488.jpg",
+   "text": "教32课件\n2026-03-04 11:29:34\n机器学习基石林轩田机器学习技法\nhttps:/www.csie.ntu.edu.tw/~htlin/mooc/\n李宏毅\n“1天搞懂深度学习\n>http://speech.ee.ntu.edu.tw/~tlkagk/slide/Tutorial_HYLee_Deep.pptx\n李宏毅“机器学习2020”\nhttps://www.bilibili.com/video/av94519857/\n激活Windows\n转到设置\"以激活Windows\n《神经网络与深度学习》",
+   "lines_count": 14
+  },
+  {
+   "slide_no": 7,
+   "time_s": 3052,
+   "time_str": "50:52",
+   "frame_file": "001527.jpg",
+   "text": "教32课件\n2026-03-04 11:30:52\nNeurIPS、ICLR、ICML、AAAI、IJCAI\nACL、EMNLP\nCVPR、ICCV\n激活Windows\n转到”设置\"以激活Windows。\n《神经网络与深度学习》\n10",
+   "lines_count": 9
+  },
+  {
+   "slide_no": 8,
+   "time_s": 3146,
+   "time_str": "52:26",
+   "frame_file": "001574.jpg",
+   "text": "Product\nResources\nSolutions\nEnterprise\nOpenSourcev\nPricing\nSea\n教32课伴生）\n2026-03-04 11:32:26\nnndi\n神经网络与课度学习\n522followers\nxpqiufudan.edu.cn\n课程作业\nOverview\n田Projects\nPackages\nRepositories5\n8 People 2\nPopular repositories\nPeople\n20%\nPublie\nexercise\nnndl.github.o\nPublle\n神经网缩导保度学习》留弱智NeuratNetworkandDeep Learning\nexercise for nndl\nOHTML\n☆17.7k\nY3.6k\n3.2k\nJupyter Notebook\nY1.4k\n期末作业\nTop languages\nJupyter Notebook\nHTML\npractice-in-paddle\nPublic\nsolutions\nPublic\n弹适网结与保度学习》室得与实我\n80%\n☆884\nY188\n☆724\nJupyter Notebook\nY81\nnndl-exercise-ans\nPublic\nSolutions for nndl/exercise\nJupyter Notebook\nY45\n2人一组\nRepositories\nQ Find a repository..\nLanguage\nType\nSort\n>编程语言：Python\nexercise Publice\nexercise for nndl\n☆3,210\n学1402\nJupyter Notebook\n311UpdatedonJul192024\npractice-in-paddle Public\n《神经网络与深度学习》案例与实践\n☆884\n Jupyter Notebook\n Apache-2.0\nY188\nO9130UpdatedonNov23,2022\nnndl.github.ioPubilc\n神经网络与深度学习》邵锡翻著NeuralNetworkand DeepLearning\n☆17.698\nY3596\n083\nHTML\nno\nUpdatedonOct72022\nPublic\n激活Windows\nnndl-exercise-ans\n《神经网络与深度学习》",
+   "lines_count": 86
+  },
+  {
+   "slide_no": 9,
+   "time_s": 3226,
+   "time_str": "53:46",
+   "frame_file": "001614.jpg",
+   "text": "那得先说说python和anaconda的来龙去脉\nANACONDA.NAVIGATOR\npython教132课件\n2026-03-04-11:33:46\n者吉多觉得当时的编程的语言都很繁琐还不易懂，就希望有一门编写简单，看起来容易懂的编程语言\nCommunty\nPyViz\nPyechDsmertaton\nOrange totumertation\n然后哒哒哒两年，终于发明出来python这门编程语言\nlean\nupyter\n虽然python语言简单易懂，但刚出生的python语言还有很多东西不会，所以各路程序员就日夜编\nCondaTeage\nogeuurooggnintdn\n写代码，为python写了很多好用的库，你可以理解成给python这个小家伙打磨了好多好用的武器\nANACONDA\nOANACONDA\n因此日后，人们每每学习python，都要去学习对应的库，就要去一个个下载对应的武器，拿过来使用\nANACONDA\nANACONDA\n直到有一天，有家数据公司受不了了，因为每每重新下载python都要去下载上百个武器浪费大量时间，所以这家公司就发明了anconda，可以理解成运输车，每当下载anconda的时候，里面不仅\nAnaconda（官方网站）就是可以便捷获取包且对包能够进行管理，同时对环境可以统一管理的发行版本。Anaconda包含了conda、Python在内的超过180个科学包及其依赖项。\nAnaconda具有如下特点：\n·开源下载完anconda之后，再也不用一个个下载那些库了。\n，安装过程简单\n·高性能使用Python和R语言\n·免费的社区支持这就是python和anaconda的故事，你懂了吗～\n其特点的实现主要基于Anaconda拥有的：\n·conda包\n·环境管理器激活Windows\n转到设置\"以激活Windows。\n，1,000+开源库\n《神经网络与深度学习》\n13",
+   "lines_count": 42
+  }
+ ]
+}

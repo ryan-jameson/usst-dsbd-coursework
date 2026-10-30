@@ -1,0 +1,63 @@
+{
+ "lecture": "第09讲",
+ "total_frames": 1651,
+ "slide_count": 7,
+ "slides": [
+  {
+   "slide_no": 1,
+   "time_s": 0,
+   "time_str": "00:00",
+   "frame_file": "000001.jpg",
+   "text": "教132课学习框架\n2026-03-18 11:29:57\n>简易和快速的原型设计\n>自动梯度计算\n√无缝CPU和GPU切换\n PaddlePaddle\nMicrosoft\nCNTK\nChainer\nTensorFlow\nCaffe2\nKeras\nAPACHE\nPYTORCH\ntheano\nmxnet\n《神经网络与深度学习》\n55",
+   "lines_count": 18
+  },
+  {
+   "slide_no": 2,
+   "time_s": 1026,
+   "time_str": "17:06",
+   "frame_file": "000514.jpg",
+   "text": "教132课件thon和opencv搭建一个老人跌02鮮03监測系统7源0码）\n老人监测系统是一种智能检测系统，可以检测老人是否躺在床上或是否跌倒在地。这是一个解决实际问题的程序，可用于在您外出工作或外出时监控家中的老人，以便在出现任何问题时通知您。\nConditior Colculoting Angles\nimport cv2\nSTAGE:\nimportmediapipeasmp\nimport numpy as np\nfallen:(\ndef calculate_angle(a,b,c):\na=np.array(a)First\nb=np.array(b)#Mid\nc=np.array(c)#End\nradians =np.arctan2(c[1]-b[1],c[0]-b[o])-np\nangle=np.abs(radians*180.0/np.pi)\n171897679708744\nif angle>180.0:\nangle = 360-angle\nreturn angle\n《神经网络与深度学习》\n57",
+   "lines_count": 22
+  },
+  {
+   "slide_no": 3,
+   "time_s": 1294,
+   "time_str": "21:34",
+   "frame_file": "000648.jpg",
+   "text": "此电脑微信教132课件\n2026-03-1811:51:31\n0搜素\nchap2-机器学习概述,pptxPowerPoint\n登录回收\nPowerPc\n文件开始录制录制插入绘图设计动画幻灯片放映审阅视图帮助切换共享回版式形状填充形状轮廊新建排列快速样式粘贴\nAay\nAdobe\n幻灯片选择形状效果\nAcrobat\n幻灯片字体段落绘图剪贴板编辑加载项课后作业\nFlash中心\nExcel\n复习数学知识模器学习模型和致学知识\nhttps://nndl.github.com/附录《数学基础》\nMicrosoft\nWPS协\nchap2-机器安装学习环境：ubantuLinux、Win、Macos\nEdge\n学习概述.\n课后作业\nAnacoda,Pyhon\n编程练习一网畅学目\nVLC media\n熟悉基本的Numpy操作\nplayer\n考勤\nNumpy是Python中对于矩阵处理很实用的工具包\nhttps://github.com/nnd//exercise\n实战|用Python和opencv结建一个老人肤智能监建统国码）\nchapl warmup\nWPS Office\nallen\n《神经网络与深度学习》\n火绒安全软件单击此处添加备注教学内容腾讯QQ\n兰备注口批注回品豆灰辅助功能：调查简体中文(中国大陆)\n幻灯片第2张，共118张\n+ 58%\n腾讯会议\n11:51\n2026/3/18",
+   "lines_count": 82
+  },
+  {
+   "slide_no": 4,
+   "time_s": 1620,
+   "time_str": "27:00",
+   "frame_file": "000811.jpg",
+   "text": "一教132课件\n2026-03-18 11:56:57\n1.2 What is Neural Network\n《神经网络与深度学习》",
+   "lines_count": 4
+  },
+  {
+   "slide_no": 5,
+   "time_s": 2218,
+   "time_str": "36:58",
+   "frame_file": "001110.jpg",
+   "text": "一教132课件\n2026-03-18 12:06:55\n1.3 Supervised Learning with Neural Networks\n《神经网络与深度学习》\n13",
+   "lines_count": 5
+  },
+  {
+   "slide_no": 6,
+   "time_s": 2760,
+   "time_str": "46:00",
+   "frame_file": "001381.jpg",
+   "text": "一教132课件\n2026-03-18 12:15:57\n1.4 Why is Deep Learning taking off?\n《神经网络与深度学习》\n18",
+   "lines_count": 5
+  },
+  {
+   "slide_no": 7,
+   "time_s": 3032,
+   "time_str": "50:32",
+   "frame_file": "001517.jpg",
+   "text": "此电脑微信教132课件\n2026-03-1812:20:30\n回收站\nPowerPoint\nAdobe\nPIOM\nAcrobat\nFlash中心\nExcel\n网络购物类诈骗\nMicrosoft\nWPS协作那是骗子的圈套\nchap2-机器\nEdge\n学习概述.\n转让抢手演艺票私下转账风险高量少速订定是坑\nVLC media\n网畅学电子\ncha多考勤\nplayer\n网购交易要惕一脱离平台不能信\nWPS office\n统开官方平台监管，私下交易演唱是作编保卫处宣火绒安全软件腾讯QQ\n腾讯会议\n12:20\n2026/3/18",
+   "lines_count": 36
+  }
+ ]
+}

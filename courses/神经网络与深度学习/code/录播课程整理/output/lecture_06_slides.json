@@ -1,0 +1,119 @@
+{
+ "lecture": "第06讲",
+ "total_frames": 1650,
+ "slide_count": 14,
+ "slides": [
+  {
+   "slide_no": 1,
+   "time_s": 0,
+   "time_str": "00:00",
+   "frame_file": "000001.jpg",
+   "text": "教132课件个人工智能系统？\n2026-03-11 11:30:00\n知道聚系统怎么做图像识别知识自然语言处容易做机器学习不知道语音识别怎么做不容易做强化学习围棋\n《神经网络与深度学习》\n23",
+   "lines_count": 18
+  },
+  {
+   "slide_no": 2,
+   "time_s": 94,
+   "time_str": "01:34",
+   "frame_file": "000048.jpg",
+   "text": "一教132课件\n2026-03-11 11:31:34\n深度学习",
+   "lines_count": 3
+  },
+  {
+   "slide_no": 3,
+   "time_s": 370,
+   "time_str": "06:10",
+   "frame_file": "000186.jpg",
+   "text": "教3课件\n2026-03-11 11:36:10\n当我们用机器学习来解决一些模式识别任务时，一般的流程包含以下几个步骤：\n原始数据预测特征提取特征转换数据预处理结果特征处理浅层学习\n《神经网络与深度学习》\n25",
+   "lines_count": 14
+  },
+  {
+   "slide_no": 4,
+   "time_s": 1192,
+   "time_str": "19:52",
+   "frame_file": "000597.jpg",
+   "text": "教32课件\n2026-03-11 11:49:52\n当我们用机器学习来解决一些模式识别任务时，一般的流程包含以下几个步骤：\n预测特征提取特征转换原始数据数据预处理结果特征处理浅层学习特征工程（FeatureEngineering）\n>浅层学习（ShallowLearning）：不涉及特征学习，其特征主要靠人工经验或特征转换方法来抽取。\n《神经网络与深度学习》\n25",
+   "lines_count": 17
+  },
+  {
+   "slide_no": 5,
+   "time_s": 1214,
+   "time_str": "20:14",
+   "frame_file": "000608.jpg",
+   "text": "教3课件人工智能的挑战之一\n2026-03-11 11:50:14\n底层特征VS高层语义人们对文本、图像的理解无法从字符串或者图像的底层特征直接获\n《神经网络与深度学习》\n26",
+   "lines_count": 6
+  },
+  {
+   "slide_no": 6,
+   "time_s": 1702,
+   "time_str": "28:22",
+   "frame_file": "000852.jpg",
+   "text": "教3课件人工智能的挑战之一\n2026-03-11 11:58:22\n底层特征VS高层语义人们对文本、图像的理解无法从字符串或者图像的底层特征直接获\n《神经网络与深度学习》\n26",
+   "lines_count": 6
+  },
+  {
+   "slide_no": 7,
+   "time_s": 1778,
+   "time_str": "29:38",
+   "frame_file": "000890.jpg",
+   "text": "教3课件人工智能的挑战之一\n2026-03-11 11:59:39\n底层特征VS高层语义人们对文本、图像的理解无法从字符串或者图像的底层特征直接获床前明月光，\n疑是地上霜。\n举头望明月，\n低头思故乡。\n《神经网络与深度学习》\n26",
+   "lines_count": 10
+  },
+  {
+   "slide_no": 8,
+   "time_s": 2048,
+   "time_str": "34:08",
+   "frame_file": "001025.jpg",
+   "text": "Bengio,Yoshua,AaronCourville,andPascalVincent.\"Representationlearning:Areview\n教下3课件\nand new perspectives: EE transactions on p2026-03-1ne i1204:08\n35.8（2013）:1798-1828\n数据表示是机器学习的核心问题。\n特征工程：需要借助人类智能\n《神经网络与深度学习》\n27",
+   "lines_count": 8
+  },
+  {
+   "slide_no": 9,
+   "time_s": 2250,
+   "time_str": "37:30",
+   "frame_file": "001126.jpg",
+   "text": "教132课件\n2026-03-11 12:07:30\n如何在计算机中表示语义？\n局部（符号）表示分布式表示知识库、规则嵌入：压缩、低维、稠密向量\nW2\n嵌入空间\nOne-Hot向量\nW3\n《神经网络与深度学习》\n29",
+   "lines_count": 13
+  },
+  {
+   "slide_no": 10,
+   "time_s": 2302,
+   "time_str": "38:22",
+   "frame_file": "001152.jpg",
+   "text": "一教132课件的例子：颜色识别\n2026-03-1112:08:22\n颜色局部表示分布式表示琥珀色\n[1, 0, 0, 0]T\n[1.00, 0.75, 0.00]\n天蓝色\n[0, 1, 0, 0]T\n[0.00, 0.5, 1.00]T\n中国红\n[0, 0, 1, 0]\n[0.67, 0.22, 0.12]\n咖啡色\n[0, 0, 0, 1]T\n[0.44,0.310.22]\n据不完全统计，现有的颜色命名已经有1300多种即神经元和颜色名字是“多对多”关系。\n中国红”、\n《神经网络与深度学习》\n30",
+   "lines_count": 22
+  },
+  {
+   "slide_no": 11,
+   "time_s": 2406,
+   "time_str": "40:06",
+   "frame_file": "001204.jpg",
+   "text": "教132课件\n2026-03-11 12:10:06\n局部表示局部表示分布式表示离散表示、符号表示\n[1 0 0 0]\n[0.250.5]\nvOne-Hot向量-“独热编码\n[0 1 0 0]\n[0.2 0.9]\nhttps://zhuanlan.zhihu.com/p/634296763思考?\n[0 0 1 0]\n[0.8 0.2]\n[0001]\n[0.9 0.1]\n分布式(distributed)表示压缩、低维、稠密向量\n>用O(N)个参数表示O(2k)区间\n>k为非0参数，k<N\n分布式表示\n《神经网络与深度学习》\n31",
+   "lines_count": 23
+  },
+  {
+   "slide_no": 12,
+   "time_s": 2482,
+   "time_str": "41:22",
+   "frame_file": "001242.jpg",
+   "text": "教课件ordEmbeddings)\n2026-03-11 12:11:23\nbody part\n上海\nfood\n北京\ncity\ntravel\nfeeling\n高兴难过一\nrelative\nhttps://indico.io/blog/visualizing-with-t-sne/\n《神经网络与深度学习》\n32",
+   "lines_count": 15
+  },
+  {
+   "slide_no": 13,
+   "time_s": 2520,
+   "time_str": "42:00",
+   "frame_file": "001261.jpg",
+   "text": "教3课伟深度学习\n2026-03-11 12:12:00\n一个好的表示学习策略必须具备一定的深度\n\\特征重用指数级的表示能力抽象表示与不变性抽象表示需要多步的构造\nRepresenatiomal\nconcrete\nAbsract\n口口口\nb=G+H\nhttps://mathteachingstrategies.wordpress.com/2008/11/24/concrete-and-abstract-representations-using\nmathematical-tools/\n《神经网络与深度学习》\n33",
+   "lines_count": 16
+  },
+  {
+   "slide_no": 14,
+   "time_s": 3006,
+   "time_str": "50:06",
+   "frame_file": "001504.jpg",
+   "text": "教132课件提取\n2026-03-11 12:20:07\n>特征提取线性投影 (子空间)\nPCA、LDA\n>非线性嵌入\n>LLE、Isomap、谱方法\n√自编码器\n《神经网络与深度学习》\n34",
+   "lines_count": 10
+  }
+ ]
+}

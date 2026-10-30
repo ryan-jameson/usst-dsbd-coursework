@@ -1,0 +1,127 @@
+{
+ "lecture": "第45讲",
+ "total_frames": 1650,
+ "slide_count": 15,
+ "slides": [
+  {
+   "slide_no": 1,
+   "time_s": 0,
+   "time_str": "00:00",
+   "frame_file": "000001.jpg",
+   "text": "一教132课件\n2026-06-10 11:29:58\n感知图像哈希中的相似图像语义检索哈希中的相似图像原图色彩增强图像旋转感知相似图像就是原始图像经过合理的内容局部遮挡灰度化人为添加噪声（加噪）\n保留操作生成的图像副本，感知相似图像与原语义图像检索更关注图像的语义信息，而感始图像都来自同一数字图像。而其他图像则都被认定为感知不相似图像，即使与原始图像有知图像哈希更关注图像的感知内容着相同的语义特征，或者同一个物体的不同视语义哈希找同一个物体，感知哈希找同一张角图像。\n原图；目标是图像版权认证与篡改检测，因此选择感知图像哈希作为研究对象。",
+   "lines_count": 17
+  },
+  {
+   "slide_no": 2,
+   "time_s": 674,
+   "time_str": "11:14",
+   "frame_file": "000338.jpg",
+   "text": "感知图像哈希认证系统一教132课件\n2026-06-10值学412久模型：\nTMCIH:Perceptual Robust\nImage Hashingwith\nTransformer-basedMulti-layer\nConstraints\n原始输出窗口\n[-3.23166-0.04//90.16642 0.04142 0.20913-5.36801-0.21/8/ 0.23255-0.24965-6.89329 0.19092-0.100//-0.13083-0.11221 0.13999-0.03567\n3.49310-2.04985-0.23244-0.322600.231440.015835.304813.759600.18856-0.15052-0.190970.188580.11119-0.151410.236340.15224 0\n与原图的哈希距离为：10.25790\n认证结果：感知不相似图像×\n认证文件：023278.jpg\n27°℃\nQ 搜索\n11:41\n晴朗\n2026/6/10",
+   "lines_count": 20
+  },
+  {
+   "slide_no": 3,
+   "time_s": 702,
+   "time_str": "11:42",
+   "frame_file": "000352.jpg",
+   "text": "一教132课件\n2026-06-10\n011:41:40",
+   "lines_count": 3
+  },
+  {
+   "slide_no": 4,
+   "time_s": 752,
+   "time_str": "12:32",
+   "frame_file": "000377.jpg",
+   "text": "Wwpsoffice\n稻壳AI模板演示pptx\nIntention-Guided Cross-Modal T\n工具会员专享放映视图\nAWPSAI\nQ设量选明色三文件设计切换动画审阅开始插入巴分享教132课件\n2026-06-10 11:42:30\n形状”\n格式刷\nab\n因文本框大纲幻灯片工程开发基于RT-Thread系统的手势监测设备：\nEdat-Telk Henltor\n部分数据集数据，部分来自自行收集\nmoperaturie\n24.10\nIMU动作识别轻量级CNN模型框架输入2秒IMU数据，输出动作类别始入致据\nMui Movement Detection\n动作炎利辅出看积块特征集台\nCircle\n对园室口：2卷-130个时用卡\ntationary\nSethiamleu\nMuPoel2-1]\nMaeoi(2-11\n悉信（如何在达缘读宽好地做好模重郁毒）\nIEdnodoie\n+GyroX/Y/Z\n性用说明作用说明进一步学习编出：3奥招率输入形联：100×6×1\nTotat32\n多透透关系神经网络角度理牌一包话总结把100×6的 IMU时序数指当作小型二维输入。\n22第三期33卷机：李习多通通之间腔联台运动限式通过轻量级CNN规取时序与持透通特证。\n3、地化：封网方向压维库码，降低计道菜最终完成动作分类。\n4.5ofmax：始出导个动作要别的得率这是一个面向嵌入式IMU动作识别的轻量级2D-CNN时序分类模型，把2秒的6轴IMU数据当作100×6的“小图像”，用卷积提取局部时序和跨通道运动模式，最后用Softmax分类，\n并通过INT8量化部署到MCU\n单击此处添加备注国AI演讲精\nWPS\n校对国智能美化幻灯片1/3\n兰备注评批注当前幻灯片开始播放（Shift+F5)\n搜索\n11:42\n2026/6/10",
+   "lines_count": 77
+  },
+  {
+   "slide_no": 5,
+   "time_s": 974,
+   "time_str": "16:14",
+   "frame_file": "000488.jpg",
+   "text": "轻量模型普通CNN与边缘端轻量CNN结构对比\n①深度可分离卷积（每个通道单独提取特征再融合通道，将卷积通道拆开）\n②1×1Conv（减少通道数量，牺牲模型精度以保证边缘端计算速度)\n轻量CNN\n③全局平均池化（每张特征图求一个平均值，将特征图压缩成小特征向量）\n1x1卷积全局平均池化深度可分离卷积深度可分离卷积输入48x48\n分类输出\n④小输入尺寸 (丢失细节)\n小输入轻量卷积少参数\n③减少全连接层（过多大型全连接层会带来更多的参数计算）\nINT8量化：模型推理时其中的参数计算都要普通从FP32->INT8\nCNN\n（真实小数缩放系数~整数）=>让模型更小、\n更快标准卷积标准卷积池化展平全连接层输入224×224\n分类输出\n·高效预处理->减少重复数据拷贝与频繁内存申大输入标准卷积参数更多真实设备测试",
+   "lines_count": 40
+  },
+  {
+   "slide_no": 6,
+   "time_s": 1168,
+   "time_str": "19:28",
+   "frame_file": "000585.jpg",
+   "text": "WWPS Office\nD稻壳AI模板演示pptx\nIntention-GuidedCross-ModalT\n设计切换动画放映视图工具会员专享\nAWPSAI\nQ红灯片母版三文件开始插入巴分享教132课件\n2026-06-10 11:49:26\n格式刷国文本框~\n大钢幻灯片感悟 (如何在边缘端更好地做好模型部署)\n·轻量模型普通CNN与边缘端轻量CNN结构对比\n①深度可分离卷积（每个通道单独提取特征再融合通道，将卷积通道拆开）\n②1×1Conv（减少通道数量，牺模型精度以保证边缘端计算速度)\n轻量CNN\n③全局平均池化（每张特征图求一个平均值，将特\n1×1卷积全局平均池化分类输出征图压缩成小特征向量）\n输入48x48\n深度可分需卷积深度可分离卷积看借（如何在边景决更好地敏好模型都香）\n④小输入尺寸（丢失细节）\n小龄入轻营卷机\n③减少全连接层（过多大型全连接层会带来更多的参数计算)\n·INT8量化：模型推理时其中的参数计算都要普通从FP32->INT8\nCNN\n（真实小数缩放系数整数）=>让模型更小、\n更快标准卷积池化展平输入224×224\n全连接屋标准卷积分类输出高效预处理>减少重复数据拷贝与频繁内存申大入梦数更多标准移租真实设备测试单击此处添加蜜注园AI演讲精段校对兰备注国智能美化红灯片3/3\n管WPS\n104%\n搜索\n11:49\n2026/6/10",
+   "lines_count": 73
+  },
+  {
+   "slide_no": 7,
+   "time_s": 1214,
+   "time_str": "20:14",
+   "frame_file": "000608.jpg",
+   "text": "edgi - Xshell & (Free for Hame/Schcol)\n文件(F）编辑(E)查看（V)工具(T选项卡(B)窗口(W)帮助（H)\n教132课件\n2026-06-10 11:50:12\nFrameIndex:12\nwwidth:800.wHeight:600,fps:20\nFomatIndex:2\nFomatType:mjpeg\nbNumFrames:12\nResolution:\nFrameIndex:1\nwwidth:640,wHeight:480.\nfps: 30\nFrameIndex:2\nwwidth:160,wHeight:120,fps:30\nFrameIndex:3\nwwidth:176.wHeight;144,fps:30\nFrameIndex:4\nwwidth:320.wHeight:176,fps:30\nFrameIndex:5\nwidth:320,wHeight:240,fps:30\nFrameIndex:6\nwwidth:352.WHeight: 288, fps: 30\nFrameIndex:7\nwwidth:432,wHeight:240,fps:30\nFrameIndex:8\nwwidth:544, wHeight:288,fps:30\nFrameIndex:9\nwidth: 640, wHeight: 360, fps: 30\nFrameIndex:10\nwwidth:752.wHeight:416,fps:30\nFrameIndex:11\nwwidth:800,wHeight;448,\nfps:30\nFrameIndex:12\nwwidth: B00, wHeight: 600, fps:30\nFormatIndex:3\nFormatType:uncompressed\nbNumFrames:0\nResolution:\nVide devicennfamlatien\ndevrdent\n[W/uvc_app] uvc filter empty fomat:3->2\nLoadinedeoatreainiclaseAaveronmniterfae\n[2400] WLANMAC AddresS:9C:C7:D3:EI:B3:54\n[2401] wLANFimware\n:wlo:Jul25202408:20:41version.28.10.301(aede64b)FwID 01-8cf4\n5cc8\n[2402] WLANCLM\n:API:20.0Data:IFX.5551xCompiler:1.49.5ClmImport:1.48.0Custo\nmizat1on:v224/86/28Creation:2024-07-0203:05:22\n[2414]WHDVERSION\n:4,1.0.24264[2414]:11axv4.1.0[2414]：GCC13.3[2414]：2024-0\n7-2522:34:24+0000\n[2437] Disabled scanmac randomisation for 55500\nt/aNlwipl ethdevace init oknameewo\n[TwwLwaplethdeviceinitok hame-w!\nserial://:22\nF 270x54\n 17,1\n1会话\nxterm\nCAPNUM\n搜索\n11:50\n2026/6/10",
+   "lines_count": 66
+  },
+  {
+   "slide_no": 8,
+   "time_s": 1288,
+   "time_str": "21:28",
+   "frame_file": "000645.jpg",
+   "text": "gepke\nPT TGIEI\n一教132课件\n2026-06-10\n011:51:26\nWiDi..\ntheme.\n11:50\nMleNk weige\nWEIS Ufive\nEnome.\nMoilnsTc..\nPAN\nTAO\nLle\n搜索\n11:51\n2026/6/10",
+   "lines_count": 18
+  },
+  {
+   "slide_no": 9,
+   "time_s": 1356,
+   "time_str": "22:36",
+   "frame_file": "000679.jpg",
+   "text": "EDGI LVGL Screen Viewer\nBoard 1p192.168.228.3d\nPort 9000\nStap\nIntervalms33\nStan\nSnapshot\n一教132课件\n2026-06-1011:52:34\nTapCaimeraorFocus\nCAMERA\nFOCUS\nFrame512x800,2.2fps, transfer485ms; refreshed11:52:34\n搜索\n11:52\n2026/6/10",
+   "lines_count": 16
+  },
+  {
+   "slide_no": 10,
+   "time_s": 1696,
+   "time_str": "28:16",
+   "frame_file": "000849.jpg",
+   "text": "此电脑微信设置教132课件\n2026-06-10 11:58:15\n价主页背景直找设置相关的设置回收站\nPowerPoint\n键重启电脑高对比度设置个性化同步你的设置\nAdobe\nPIOM\n背景\nAcrobat\n获取帮助颜色提供反馈\nFlash中心\nExcel\n锁屏界面背景主题幻灯片放映\nAA字体\nMicrosoft\nWPS协作为幻灯片选择相册品开始反诈2\n任务栏\nVIC media\n网畅学电子浏览\nplayer\n考勤图片切换频率\nWPS office\n1 小时无序播放火绒安全软件选契合度居中腾讯QQ\n选择你的背景色腾讯会议\n11:58\n2026/6/10",
+   "lines_count": 52
+  },
+  {
+   "slide_no": 11,
+   "time_s": 1718,
+   "time_str": "28:38",
+   "frame_file": "000860.jpg",
+   "text": "EPET-S-Edgi_TalkM55_WIFI/libraries/components/mtb-device-support-pse8xgp/pdl/drivers/source/cy_tcpwm_pwm,c- RT-Thread Studio\n文件编精间码(S)导N）项目(P）运存(R）童口W翻勒（H作教132课件\nRT thuuadSattgjs\ncpwmpwm.e\n2026-06-1011:58:37\n Edoi Talk M33\nEdglTalkM\ncyen_tepm statue_t statusaCY_ToPhntsuccEss;\nEdguTalk_M55WiEi[Acthve-Delug!\nFRT-Tweadf Seningt\nif((NUUL1-hase)&&(MUUL=Comfie))\nBoodlnfcmation\naBinories\n+(EYIP MXTEPMMVERSION-IU)\nincludes\n_pyoachie\nTLPWM_ENTCTRE(baseyentNum)\napplications\n((comfig-enableCompareSiwap?TCeMMCHI_CIRLAIOuRELOAD_CEMsk:BL.)I\ndnozhl\n(contie-sengblePerlodswaP?TEPUM CMTCTRLALTa RELeAD PERTOO Msk:SUL)I\n3  board_link servefic\nVAL2FUD(TOPMN CNT_CTRL_ONE SHOT,Eamfig-SrunMode)\ns@emodanmodele\nVAL2FLD(TCPWACNT_CIRL_UF BOWN MCnE,COnFig->PWALignment)1\n6omobon_modelh\nVALZFLD(TCPWM_CNT_ETRLNODE,COnFig->pMMode)\nIs tocunc\nVAL ZELD(TCEWN CNT ETRL_QUADRATURE MDGE\n国sonutil\n(config->lnvertPwMGut!(oonfie-xinvertPwMoutNtu)))!\n92\naisonutiln\n(COnfLE-SkIIIOdeeEY_TEPUn_PMCIRLSYNCKILLOR_STOPONKILL_POIS)1\nVALZELDCTCPUMLCNLCIRL GENEMIC,((EY_TLFWM_PU_MCUE,HEADTEHECOnfie-pWmMOde)?\n国m dlentc\nconfig->deadTimetiockscanfig-xeTockprescaler)));\n>[a m_dlienth\ntin configth\nE(CY_TCPWNLPWMLMODEPSEUDORANOOM=eOnfIg->PWMode)\n ll speech_clente\nTCPWM_CNT_COUNTER(baEE,CntHU)-CY_TCPMM_CNT_LPDOWNINTT_VAL:\n国speohclenth\nTLPWM_CNT_TR_CTRL2(BaE,CNENUM)CY_TCPUM PWMMOOEPR;\nausth_como.h\nscorsenpe\nRPTO\n board\nDebug\n103\nf(CY_TCPwMPWM_LEFT ALIEN sConfig->pwmAlignment)\ndousep\n104\nefiguces\nTCPNM CNI EOUNIER(baSE, CHEMUm) = CY TOPMN CNI UP NII VAL;\nlbrarles\nTEPWMNT_IR_CTRL2(base,CntNUm)=CY_TCPWHPU HODELEFT\nCommon\ncamponents\nelse if.(CY_TCPM PwiLRIGHT ALIGN s Config->pumAligmment)\nEHAL Drivers\n2M33 Config\n2eM55_Config\nelbs\nepackages\nLog Console\n［91%][#############################\nJ【programing]\n[94%]\n thread 5d]\nprogranming]\n【%26】\nEtools\nProgramtingJ\n[100x]\ndcanfigh\ni findings:md\nwrote6307840bytes from f11e Bt/RT-ThreadStudio/EnET-S/Edg1_Talk_m55_WIFr/Debug/rEthread.hexin51.380009s (119.891KiB/s)\n国notas,md\n-Programming Finishrmt **\npmgiessmd\nshuitdown Catmmnd invoked\nDI README_zh.md\nInfo : catid.dap: powering dowin debug domain...\nDREADMEmd\nBnt-thread.elf\nrtthread_studio_ink.rsp\nErtthread.hex\n国rtthread.map\n可写\n100:14\nGBK\nLF\n11:58\n2026/6/10",
+   "lines_count": 97
+  },
+  {
+   "slide_no": 12,
+   "time_s": 1920,
+   "time_str": "32:00",
+   "frame_file": "000961.jpg",
+   "text": "workspace-Rt-Thread Studio\n文街F）绿道（E）避码（S）号航（N)项目（P)运行(R）\n教132课件\n2026-06-10 12:01:59\naphanse\ncapsense\nlidgi TelkeMasBlinkED\nEdgt TalkM3aWavPla ar\nEdgi_Talk-MagWavPlaar\nMoidgi Talk_M55 BlinkE0\nDdgi TatkMBsMiPiLCD\n Tdgi Talk_ IM5_XieoZm/1\npat\nCPET-B\nFROTOBLINK\n搜索\n12:01\n2026/6/10",
+   "lines_count": 18
+  },
+  {
+   "slide_no": 13,
+   "time_s": 1958,
+   "time_str": "32:38",
+   "frame_file": "000980.jpg",
+   "text": "workspace -RT-Thread Studio\n文件(F)编辑(E)源码(S）导航(N)项目(P)运行(R)窗(W)帮助(H)\n快速访问\n++\n教132课件非调试\n2026-06-1012:02:37\narduino_main.cpp\nel mainc\n项目资源理\n slider_sample.c X\n290\ncapsense\nrt_thread_mdelay(100);\nR RT-Thread Settings\nBoard Information\n292）\nBinaries\n每日提示\nIncludes\napplications\n>linker_scripts\n创建\neports\n>fal_cfg.h\n问题择\n>slider_sample.c\n>board.c\n确定\n>board.h\nKconfig\n连接\nSConscript\n>board\n取消\n>Debug\n>figures\n>libraries\nlibs\n>packages\n>ert-thread\n》rtconfig.h\n自LICENSE\n>capsense_teach\n>Edgi_TalkM33_BlinkLED\n解决\n>Edgi_TalkM33_Key_Irq\n>Edgi_TalkM33_WavPlayer\n>Edgi_TalkM33_WavPlayer_1\n>EdgiTalkM55_BlinkLED\n>Edgi,TalkM55_EPET\n>EdgiTalkM55,LVGL\n>Edgi_TalkM55_LVGL_test\n每次\n>Edgi_Talk_M55_MIPI_LCD\n>EdgiTalk_M55_NPUAl\n>Edgi_TalkM55_USB_D\n>Edgi_TalkM55_XiaoZhi\n>Edgi_Talk_M55_XiaoZhi_1\n>EPET-B\n>PROTO_BLINK\nshe\n1设2社3涉4射5舍《）\n/capsense/board/ports/slider_sample.c\noearerng for Binaries (capsense)\nAGBK\nCRLF\nQ shl\n12:02\n2026/6/10",
+   "lines_count": 70
+  },
+  {
+   "slide_no": 14,
+   "time_s": 2432,
+   "time_str": "40:32",
+   "frame_file": "001217.jpg",
+   "text": "PC\nDEEPCRA..\nBaDownlo...\nRTThnead\ngetbexe-\nToLesk\nIra nsosle\n教132课件\nmalnot\nAadio E...\n2026-06-10\nPack...\n快捷厅式\nSrudro\nTebe\n0-12:10:31\nCAL\nGA\nWir20is..\nImpwppyi..\nOpenCode\nMsbaxoer...\nSetup\nPremE..\n8.1\n快建万式\n12:10\nGA\nModus To...\nFA\nAdobe Afer \nClashi Vetge\nKeil\nnefA...\n全国学生数\n3.7 Dast...\nILM Tes\nElferls 2024\nGA\nDEERCRA..\n指江厂\nModllsta...\nModusta...\nTeta Term. 5\nTelegram\nWpsOllee\n1126t\npwnload\nAdabe\nCAPSENS...\nAuio yi..\nSetip\nLghfroo..\nWslinaper\nGFor\nEclipselor\nGenentA...\nDEEPCRA..\nEngme....\nModus To...\nPralessical\nModusTo..\nContexi ...\nMorlel Go.\nPhotosh.\nMedusTo...\nTree LCN\nFI20\nLaser\nSslio Code\nALRV\nProglamm..\nCheal\nASIDSALL\nv2 neitu..\nBlualoalnu\n搜索\n12:10\n2026/6/10",
+   "lines_count": 79
+  },
+  {
+   "slide_no": 15,
+   "time_s": 2530,
+   "time_str": "42:10",
+   "frame_file": "001266.jpg",
+   "text": "workspace - RT-Thread Studio\n文件(F)编辑(E)源码(S)导航(N)项目(P)运行(R)窗口(W)帮助(H)\nmainc\n项目资源管理器8\n搜素\n slidersample.cX\n教132课件\n lic lE arduino_mainicpp\n2026-06-10 12:12:09\nLe mainsc\n项目资源通\nLe slider sample.c X\ncapsense\ncapsenseteach\n299\nrt_thread_mdelay(100)\n290\nrt_thread_mdelay(100);\n>EdgiTalkExtendScreen\n291\n291\nEdgi_TalkMaa_BlinkLED\n292\n292 )\nEdgi_TalkM33_Key_lrq\n293\n293\n29aint Slider_ctrl_sample(void)\nEdgiTalkM33WavPlayer\n294-int Slider_ctrl sample(void)\n295\n>Edgi_TalkM33_WayPlayer1\n295 \n296\nrt_err_t ret = RT_EOK;\n296\nEdgi_TalkM55_Blink_LED\nrt_enr_t ret - RT_EOK;\n297\nEdgi.TalkM55_5PET\n297\n298\n298\nsld thread = rt_thread_cr\nsld_thread = pt_thread_create(\"slider_th,\nEdgiTalkM55_EVGL\n299\n299\nSlider_thread_entry,\nEdgi_Talk_M55_LVGLtest\nRT_NULL,\nEdgiTalkM55_MIPL_LCD\n381\nTOE\n1024,\nEdgi_TalkM55_NPUAl\n302\n302\n25,\nEdgi_TalkM55_USBD\nSOE\n10);\n304\n>Edgi_TalkM55_XiaoZhi\nif (sld_threadI= RT NULI\n384\nif (sId_thread I= RT NULL)\nL385\n365\nEdgi_TalkM55_XiaoZhi1\n308\n306\nrt_thread_startup(slc\nepet\nrt_thread_startup(sld_thread);\n30\n307\nIS EPET-B\n308\nelse\n806\nPROTO_BLINK\nelse\n682\nret -RT_ERROR;\n310\n310\nret -RT_ERROR;\n311\n311\n312\n312\n313\n313\nreturn ret;\nreturn ret;\n314 \n314 \n315 MSH_CMD_EXPORT(Slider_ctrl_sa\n3153\nMSH_CMD_EXPORT(Slider_ctrl_sample,Slider sampleto ctrl led);\n316 #endif\n316 #endif\n317\n317\n问题任务旦控制台×屋性电进此时没有要显示的控制台。\n此时没有要显示的控制台。\n搜索\n12:12\n2026/6/10",
+   "lines_count": 111
+  }
+ ]
+}

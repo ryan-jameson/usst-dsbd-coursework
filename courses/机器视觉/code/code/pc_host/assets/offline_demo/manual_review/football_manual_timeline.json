@@ -1,0 +1,123 @@
+{
+ "timeline_version": 1,
+ "annotation_source": "human_review",
+ "source_video": "933971fb-7024-4d9d-9246-df321b8a2bf7.mp4",
+ "team_mapping": {
+  "home": "Argentina",
+  "away": "France"
+ },
+ "events": [
+  {
+   "protocol_version": 1,
+   "message_id": 1,
+   "event_type": "football_event",
+   "timestamp": 1350,
+   "event": "foul_committed",
+   "team": "home",
+   "confidence": 0.97,
+   "danger": 2,
+   "ball_x": -1,
+   "ball_y": -1,
+   "checksum": "",
+   "note": "Argentina commits a foul on France near the touchline; France receives the free kick."
+  },
+  {
+   "protocol_version": 1,
+   "message_id": 2,
+   "event_type": "football_event",
+   "timestamp": 20500,
+   "event": "free_kick_restart",
+   "team": "away",
+   "confidence": 0.91,
+   "danger": 1,
+   "ball_x": -1,
+   "ball_y": -1,
+   "checksum": "",
+   "note": "France restarts play after the foul."
+  },
+  {
+   "protocol_version": 1,
+   "message_id": 3,
+   "event_type": "football_event",
+   "timestamp": 34350,
+   "event": "ball_out_touchline",
+   "team": "away",
+   "confidence": 0.65,
+   "danger": 1,
+   "ball_x": -1,
+   "ball_y": -1,
+   "checksum": "",
+   "note": "Likely touchline stoppage during the Dembele close-up; team attribution requires a second review."
+  },
+  {
+   "protocol_version": 1,
+   "message_id": 4,
+   "event_type": "football_event",
+   "timestamp": 36350,
+   "event": "throw_in_restart",
+   "team": "away",
+   "confidence": 0.65,
+   "danger": 1,
+   "ball_x": -1,
+   "ball_y": -1,
+   "checksum": "",
+   "note": "Probable restart from the touchline; attribution is medium-confidence."
+  },
+  {
+   "protocol_version": 1,
+   "message_id": 5,
+   "event_type": "football_event",
+   "timestamp": 39600,
+   "event": "attacking_phase",
+   "team": "home",
+   "confidence": 0.94,
+   "danger": 3,
+   "ball_x": -1,
+   "ball_y": -1,
+   "checksum": "",
+   "note": "Argentina begins a sustained attack toward the France penalty area."
+  },
+  {
+   "protocol_version": 1,
+   "message_id": 6,
+   "event_type": "football_event",
+   "timestamp": 53450,
+   "event": "pass_into_penalty_area",
+   "team": "home",
+   "confidence": 0.91,
+   "danger": 4,
+   "ball_x": -1,
+   "ball_y": -1,
+   "checksum": "",
+   "note": "Argentina plays the ball into the penalty area."
+  },
+  {
+   "protocol_version": 1,
+   "message_id": 7,
+   "event_type": "football_event",
+   "timestamp": 54950,
+   "event": "shot_on_target",
+   "team": "home",
+   "confidence": 0.88,
+   "danger": 5,
+   "ball_x": -1,
+   "ball_y": -1,
+   "checksum": "",
+   "note": "Argentina produces a close-range attempt directed at goal."
+  },
+  {
+   "protocol_version": 1,
+   "message_id": 8,
+   "event_type": "football_event",
+   "timestamp": 55550,
+   "event": "goalkeeper_save",
+   "team": "away",
+   "confidence": 0.93,
+   "danger": 5,
+   "ball_x": -1,
+   "ball_y": -1,
+   "checksum": "",
+   "note": "France goalkeeper saves/collects the attempt and play stops briefly."
+  }
+ ]
+}

@@ -1,0 +1,500 @@
+{
+ "problems": {
+  "D1-01": {
+   "attempts": 2,
+   "best_seconds": 0.10357520000252407,
+   "hint_level": 0,
+   "last_attempt": "2026-09-02T19:07:57+08:00",
+   "solution_viewed": true,
+   "solved": true,
+   "statuses": {
+    "AC": 2
+   }
+  },
+  "D1-02": {
+   "attempts": 3,
+   "best_seconds": 0.11046999999962281,
+   "hint_level": 0,
+   "last_attempt": "2026-09-02T19:12:47+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 2,
+    "WA": 1
+   }
+  },
+  "D1-03": {
+   "attempts": 5,
+   "best_seconds": 0.11755100000300445,
+   "hint_level": 0,
+   "last_attempt": "2026-09-02T19:20:49+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 2,
+    "RE": 3
+   }
+  },
+  "D1-04": {
+   "attempts": 1,
+   "best_seconds": 0.20176429999992251,
+   "hint_level": 0,
+   "last_attempt": "2026-09-02T19:29:43+08:00",
+   "solution_viewed": true,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D1-05": {
+   "attempts": 8,
+   "best_seconds": 0.20578519999980927,
+   "hint_level": 0,
+   "last_attempt": "2026-09-02T19:44:19+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 7
+   }
+  },
+  "D1-06": {
+   "attempts": 2,
+   "best_seconds": 0.2062974000000395,
+   "hint_level": 0,
+   "last_attempt": "2026-09-02T19:58:21+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 1
+   }
+  },
+  "D1-07": {
+   "attempts": 4,
+   "best_seconds": 0.20321199999307282,
+   "hint_level": 0,
+   "last_attempt": "2026-09-03T17:38:03+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 3
+   }
+  },
+  "D1-08": {
+   "attempts": 1,
+   "best_seconds": 0.1851602999959141,
+   "hint_level": 0,
+   "last_attempt": "2026-09-03T17:42:17+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D1-09": {
+   "attempts": 3,
+   "best_seconds": 0.19499550000182353,
+   "hint_level": 0,
+   "last_attempt": "2026-09-03T17:54:21+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 1,
+    "WA": 1
+   }
+  },
+  "D1-10": {
+   "attempts": 10,
+   "best_seconds": 0.18918329999723937,
+   "hint_level": 0,
+   "last_attempt": "2026-09-03T18:16:13+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 9
+   }
+  },
+  "D1-11": {
+   "attempts": 3,
+   "best_seconds": 0.20742999999492895,
+   "hint_level": 0,
+   "last_attempt": "2026-09-03T18:25:31+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "WA": 2
+   }
+  },
+  "D1-12": {
+   "attempts": 1,
+   "best_seconds": 0.19734719999541994,
+   "hint_level": 0,
+   "last_attempt": "2026-09-03T18:34:29+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D2-01": {
+   "attempts": 20,
+   "best_seconds": 0.10282319999532774,
+   "hint_level": 3,
+   "last_attempt": "2026-09-04T15:05:15+08:00",
+   "solution_viewed": true,
+   "solved": true,
+   "statuses": {
+    "AC": 3,
+    "RE": 4,
+    "WA": 13
+   }
+  },
+  "D2-02": {
+   "attempts": 3,
+   "best_seconds": 0.191641300014453,
+   "hint_level": 3,
+   "last_attempt": "2026-09-04T15:20:26+08:00",
+   "solution_viewed": true,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "WA": 2
+   }
+  },
+  "D2-03": {
+   "attempts": 3,
+   "best_seconds": 0.18655849999049678,
+   "hint_level": 0,
+   "last_attempt": "2026-09-04T15:58:53+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "WA": 2
+   }
+  },
+  "D2-04": {
+   "attempts": 3,
+   "best_seconds": 0.1899031999928411,
+   "hint_level": 0,
+   "last_attempt": "2026-09-04T16:11:28+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 2
+   }
+  },
+  "D2-05": {
+   "attempts": 1,
+   "best_seconds": 0.1846376000030432,
+   "hint_level": 0,
+   "last_attempt": "2026-09-04T16:49:07+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D2-06": {
+   "attempts": 5,
+   "best_seconds": 0.19419459998607635,
+   "hint_level": 0,
+   "last_attempt": "2026-09-04T17:07:01+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 2,
+    "WA": 3
+   }
+  },
+  "D2-07": {
+   "attempts": 1,
+   "best_seconds": 0.19230789999710396,
+   "hint_level": 0,
+   "last_attempt": "2026-09-04T17:10:17+08:00",
+   "solution_viewed": true,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D2-08": {
+   "attempts": 1,
+   "best_seconds": 0.2045743000053335,
+   "hint_level": 0,
+   "last_attempt": "2026-09-04T18:12:11+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D2-09": {
+   "attempts": 2,
+   "best_seconds": 0.18704150000121444,
+   "hint_level": 0,
+   "last_attempt": "2026-09-04T18:23:41+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "WA": 1
+   }
+  },
+  "D2-10": {
+   "attempts": 1,
+   "best_seconds": 0.19258480001008138,
+   "hint_level": 0,
+   "last_attempt": "2026-09-04T18:40:49+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D3-01": {
+   "attempts": 1,
+   "best_seconds": 0.18868199997814372,
+   "hint_level": 0,
+   "last_attempt": "2026-09-05T13:34:24+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D3-02": {
+   "attempts": 2,
+   "best_seconds": 0.19775509997271,
+   "hint_level": 0,
+   "last_attempt": "2026-09-05T20:55:29+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "WA": 1
+   }
+  },
+  "D3-03": {
+   "attempts": 1,
+   "best_seconds": 0.1979082000325434,
+   "hint_level": 0,
+   "last_attempt": "2026-09-05T21:05:32+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D3-04": {
+   "attempts": 4,
+   "best_seconds": 0.19672569999238476,
+   "hint_level": 0,
+   "last_attempt": "2026-09-05T21:15:55+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "WA": 3
+   }
+  },
+  "D3-05": {
+   "attempts": 2,
+   "best_seconds": 0.1918197000049986,
+   "hint_level": 0,
+   "last_attempt": "2026-09-05T21:37:16+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 1
+   }
+  },
+  "D3-06": {
+   "attempts": 4,
+   "best_seconds": 0.19426790002034977,
+   "hint_level": 0,
+   "last_attempt": "2026-09-06T15:46:26+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 1,
+    "WA": 2
+   }
+  },
+  "D3-07": {
+   "attempts": 1,
+   "best_seconds": 0.19194300001254305,
+   "hint_level": 0,
+   "last_attempt": "2026-09-06T16:05:56+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D3-08": {
+   "attempts": 7,
+   "best_seconds": 0.18271769996499643,
+   "hint_level": 0,
+   "last_attempt": "2026-09-06T17:25:08+08:00",
+   "solution_viewed": true,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 6
+   }
+  },
+  "D3-09": {
+   "attempts": 5,
+   "best_seconds": 0.19114880001870915,
+   "hint_level": 0,
+   "last_attempt": "2026-09-06T18:10:11+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 2,
+    "WA": 2
+   }
+  },
+  "D3-10": {
+   "attempts": 1,
+   "best_seconds": 0.18726129998685792,
+   "hint_level": 0,
+   "last_attempt": "2026-09-06T18:49:20+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D4-01": {
+   "attempts": 1,
+   "best_seconds": 0.192601399961859,
+   "hint_level": 0,
+   "last_attempt": "2026-09-06T20:25:05+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D4-02": {
+   "attempts": 2,
+   "best_seconds": 0.18164620001334697,
+   "hint_level": 0,
+   "last_attempt": "2026-09-06T20:44:01+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 1
+   }
+  },
+  "D4-03": {
+   "attempts": 3,
+   "best_seconds": 0.18586680002044886,
+   "hint_level": 0,
+   "last_attempt": "2026-09-06T21:17:45+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "WA": 2
+   }
+  },
+  "D4-04": {
+   "attempts": 5,
+   "best_seconds": 0.19382530002621934,
+   "hint_level": 0,
+   "last_attempt": "2026-09-07T16:31:14+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 4
+   }
+  },
+  "D4-05": {
+   "attempts": 1,
+   "best_seconds": 0.19802579999668524,
+   "hint_level": 0,
+   "last_attempt": "2026-09-07T16:51:31+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D4-06": {
+   "attempts": 1,
+   "best_seconds": 0.17950460000429302,
+   "hint_level": 0,
+   "last_attempt": "2026-09-07T17:12:16+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1
+   }
+  },
+  "D4-07": {
+   "attempts": 2,
+   "best_seconds": 0.1826461999444291,
+   "hint_level": 0,
+   "last_attempt": "2026-09-07T17:21:51+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 1
+   }
+  },
+  "D4-08": {
+   "attempts": 7,
+   "best_seconds": 0.1815626000170596,
+   "hint_level": 0,
+   "last_attempt": "2026-09-07T17:50:29+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 2,
+    "WA": 4
+   }
+  },
+  "D4-09": {
+   "attempts": 4,
+   "best_seconds": 0.18802050000522286,
+   "hint_level": 0,
+   "last_attempt": "2026-09-07T20:44:02+08:00",
+   "solution_viewed": false,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 3
+   }
+  },
+  "D4-10": {
+   "attempts": 20,
+   "best_seconds": 0.18244639999466017,
+   "hint_level": 3,
+   "last_attempt": "2026-09-07T21:55:01+08:00",
+   "solution_viewed": true,
+   "solved": true,
+   "statuses": {
+    "AC": 1,
+    "RE": 3,
+    "WA": 16
+   }
+  }
+ },
+ "version": 1
+}

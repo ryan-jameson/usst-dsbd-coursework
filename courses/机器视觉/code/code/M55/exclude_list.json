@@ -1,0 +1,9 @@
+[
+ {
+  "config_name": "Debug",
+  "exclude_files": [
+   "libraries/components/wifi-host-driver",
+   "board/board.c"
+  ]
+ }
+]

@@ -1,0 +1,922 @@
+from pathlib import Path
+from xml.sax.saxutils import escape
+
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib.units import cm
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.platypus import (
+    KeepTogether,
+    PageBreak,
+    Paragraph,
+    SimpleDocTemplate,
+    Spacer,
+    Table,
+    TableStyle,
+)
+
+
+ROOT = Path(__file__).resolve().parent
+OUT_MD = ROOT / "复习导论.md"
+OUT_PDF = ROOT / "复习导论.pdf"
+FALLBACK_PDF = ROOT / "复习导论_七天清爽版.pdf"
+
+FONT_DIR = Path(r"C:\Windows\Fonts")
+FONT_REGULAR = FONT_DIR / "NotoSansSC-VF.ttf"
+FONT_BOLD = FONT_DIR / "simhei.ttf"
+
+SOURCE_SUMMARY = [
+    "期中 - 总结.pptx：107 页，重点保留初等模型、数学规划、线性规划、0-1 规划、可分离规划、库存、Logistic、传染病、差分方程、调度建模。",
+    "期末 - 总结.pptx：199 页，重点保留状态决策、遗传概率转移、席位分配、投票、多属性决策、AHP、超额售票、贝叶斯、统计拟合、PCA、博弈。",
+]
+
+REMOVED = [
+    "课程引入、知识框架重复页、装饰图片说明、口号式定义。",
+    "只解释名词但不服务解题的概念页，例如过长的背景材料和重复的小结页。",
+    "软件求解输出的原始长日志；仅保留最优解、影子价格、敏感性范围等可复习结果。",
+    "公式已经在题解中出现的重复公式页；仅在导论和题解中保留必要版本。",
+]
+
+SCHEDULE = [
+    {
+        "day": "第 1 天",
+        "focus": "建模入门与线性规划",
+        "tasks": "完成 Q1-Q4。重点是把文字题翻译成变量、目标函数和约束条件；把线性规划与 0-1 逻辑约束单独默写一遍。",
+        "check": "能不看答案写出奶制品 LP，并解释影子价格为什么能判断是否购买额外资源。",
+    },
+    {
+        "day": "第 2 天",
+        "focus": "整数规划与分段规划",
+        "tasks": "完成 Q5-Q8。项目选择、原油采购、库存周期、森林救火都按“先拆变量，再写目标，再写约束”的顺序复习。",
+        "check": "能说清 0-1 前置依赖怎样写，能推导库存模型 T*=sqrt(2c1/(c2 r))。",
+    },
+    {
+        "day": "第 3 天",
+        "focus": "动态模型",
+        "tasks": "完成 Q9-Q12。集中处理 Logistic、传染病、减肥差分方程和机场调度，把连续变化与离散递推分开。",
+        "check": "能解释 SIR 中 sigma s>1 的意义，并能写出减肥递推式的参数来源。",
+    },
+    {
+        "day": "第 4 天",
+        "focus": "离散状态与团体决策",
+        "tasks": "完成 Q13-Q16。商人过河、遗传转移、席位分配和投票规则放在一起复习，重点看状态、转移和规则如何改变结果。",
+        "check": "能独立列出商人过河的安全状态，能解释 Hamilton 法为什么会出现席位悖论。",
+    },
+    {
+        "day": "第 5 天",
+        "focus": "多属性决策与 AHP",
+        "tasks": "完成 Q17-Q20。先掌握决策矩阵和权重，再比较 SAW、WP、TOPSIS、AHP，最后做超额售票概率优化。",
+        "check": "能按步骤写出 TOPSIS 的 S+、S-、C；能算出超额售票 q=17 的判据。",
+    },
+    {
+        "day": "第 6 天",
+        "focus": "概率统计与回归",
+        "tasks": "完成 Q21-Q24。朴素贝叶斯、随机化回答、线性拟合、样本方差都按“概率意义/统计意义”复习，不只背公式。",
+        "check": "能解释 Warner/Simmons 如何保护隐私，能说明样本方差为什么除以 n-1。",
+    },
+    {
+        "day": "第 7 天",
+        "focus": "PCA、博弈与全卷回顾",
+        "tasks": "完成 Q25，并回看 Q3、Q10、Q15、Q18、Q20、Q22 这些较容易混淆的题。最后用 90 分钟按题型口述建模入口。",
+        "check": "看到新题时，能在 1 分钟内判断它属于规划、动态、状态、概率、多属性、统计还是博弈。",
+    },
+]
+
+MODULES = [
+    ("第 1 天：建模入门与线性规划", ["Q1", "Q2", "Q3", "Q4"]),
+    ("第 2 天：整数规划与分段规划", ["Q5", "Q6", "Q7", "Q8"]),
+    ("第 3 天：动态模型", ["Q9", "Q10", "Q11", "Q12"]),
+    ("第 4 天：离散状态与团体决策", ["Q13", "Q14", "Q15", "Q16"]),
+    ("第 5 天：多属性决策与概率优化", ["Q17", "Q18", "Q19", "Q20"]),
+    ("第 6 天：概率统计与回归", ["Q21", "Q22", "Q23", "Q24"]),
+    ("第 7 天：PCA、博弈与全卷回顾", ["Q25"]),
+]
+
+BACKGROUND_BY_ID = {
+    "Q1": "校园和居民区常用减速带控制车速。课件把车辆从一条减速带出发、加速到限速、再减速到下一条减速带的过程简化为两段匀变速运动，因此要用测试数据估计加速度并确定两条减速带的距离。",
+    "Q2": "抽样估计题来自“德国坦克问题”：如果物品编号是连续发放的，随机看到的最大编号通常低于真实总数。出租车案例把车牌号看成连续编号，用少量观察样本估计城市出租车总量。",
+    "Q3": "奶制品厂每天有固定牛奶、工时和 A1 加工能力，可以把牛奶分配给 A1 或 A2 两种产品。题目既要找最大利润生产计划，也要解释额外资源和利润变化对最优计划的影响。",
+    "Q4": "0-1 规划用 0 表示不选、1 表示选择。许多“必须、不能、至多、至少”的文字规则都可以变成简单线性不等式，这是后面项目选择、指派问题和背包问题的基础。",
+    "Q5": "企业面对多个可参与项目，每个项目有 KPI、所属类别和前置基础要求。题目要求在满足类别数量下尽量少参加项目，并在项目数相同情况下尽量提高 KPI。",
+    "Q6": "原油采购题中，原油 A 的价格不是一个固定单价，而是购买量越多，边际单价越低。这个分段成本让模型看起来非线性，但可以用分段线性化方法转成线性规划。",
+    "Q7": "配件厂轮换生产产品时，每生产一次要付准备费，生产太多又会产生库存费。题目要在准备费和库存费之间折中，决定多久生产一次、一次生产多少。",
+    "Q8": "森林救火题不是直接问“队员越多越好”，因为队员多会降低损失但提高救援成本。建模目标是把森林损失费和救援费放进同一个总费用函数，再寻找最合适人数。",
+    "Q9": "渔场鱼量可以自然增长，但捕捞会减少鱼量。Logistic 捕捞模型关心的是怎样在不破坏长期稳定的前提下，获得最大持续产量或最大利润。",
+    "Q10": "传染病模型把人群分成健康者、感染者和移除者，用微分方程描述人数比例随时间变化。SI、SIS、SIR 三个模型对应不同的治愈和免疫假设。",
+    "Q11": "减肥策略把每周体重看成离散时间序列。体重变化由摄入热量、代谢消耗和运动消耗共同决定，因此可以用差分方程安排分阶段减重计划。",
+    "Q12": "机场塔台需要在新飞机进入空域时判断是否会碰撞，并通过调整飞行方向避免危险。题目的目标不是改变飞机位置，而是在安全约束下让所有方向调整尽量小。",
+    "Q13": "商人过河题是典型状态决策问题。船每次载人会改变两岸人数，而任何一岸随从多于商人都会不安全，因此要在安全状态集合里寻找一条从初始到目标的路径。",
+    "Q14": "遗传题把基因型看成状态，把繁殖结果看成概率转移。父母给后代各贡献一个基因，因此可用条件概率列出后代属于 D、H、R 的概率。",
+    "Q15": "席位分配题讨论人口比例与整数席位之间的矛盾。Hamilton 法按份额和余数分配，EP 法按相对公平逐席分配，两种规则可能给出不同结果。",
+    "Q16": "投票题说明“获胜者”取决于选举规则。同一批选民排序不变，简单多数、决胜法、Coombs 法和 Borda 法可能选出不同候选者。",
+    "Q17": "汽车选购题把候选车看成方案，把价格、性能、款式看成属性。因为属性量纲不同、重要性不同，需要先标准化和赋权，再用综合方法排序。",
+    "Q18": "TOPSIS 把每个方案看成属性空间里的一个点。好方案应接近由最好属性组成的正理想解，同时远离由最差属性组成的负理想解。",
+    "Q19": "AHP 适合准则和方案难以直接量化的决策题。它通过两两比较得到权重，再用一致性检验控制主观判断的矛盾程度。",
+    "Q20": "航空公司允许超额售票，是因为部分旅客会订票后不登机。多卖票能增加收益，但如果来的人太多就要赔偿并影响声誉，因此要用概率模型选择 q。",
+    "Q21": "评论分类题用历史评论作为先验数据，根据关键词“好、快、坏”判断新评论是好评还是差评。朴素贝叶斯假设关键词在给定类别下条件独立。",
+    "Q22": "作弊调查属于敏感问题，直接询问会导致不真实回答。随机化回答让调查者不知道个体回答的是敏感问题还是无关问题，但总体比例仍能通过全概率公式估计。",
+    "Q23": "热敏电阻题给出温度和电阻的实验数据，要求用一条直线描述二者关系，并预测 60 摄氏度时的电阻。核心是最小二乘拟合和插值预测。",
+    "Q24": "游客消费题用小样本估计总体波动。样本均值来自同一批数据，会让波动估计偏小，所以估计总体方差时通常要做 n-1 修正。",
+    "Q25": "PCA、点球博弈和报价博弈是后半部分的综合建模题。它们不一定要求完整数值计算，更重要的是看出题型入口：降维、完全信息博弈和不完全信息博弈。",
+}
+
+GUIDE_BY_ID = {
+    "Q1": "先统一单位，再把总路程拆成加速距离和减速距离。",
+    "Q2": "先把车牌转成连续序号，再用最大编号修正估计总量。",
+    "Q3": "先写 LP，再用紧约束、影子价格和敏感性解释三个追问。",
+    "Q4": "把中文逻辑翻译成 0-1 变量之间的不等式。",
+    "Q5": "先写类别约束和前置依赖，再处理“项目少”和“KPI 高”的双目标。",
+    "Q6": "先写混合比例和库存约束，再把购买成本按断点线性化。",
+    "Q7": "把平均费用拆成准备费平均值和平均库存费。",
+    "Q8": "先把损失费和救援费合成总费用，再说明人数的临界条件。",
+    "Q9": "先找稳定平衡点，再把持续产量写成捕捞强度的函数。",
+    "Q10": "先分清是否治愈、是否免疫，再用阈值判断感染增减。",
+    "Q11": "先用当前体重不变反推代谢系数，再递推两阶段计划。",
+    "Q12": "先确定方向角调整量，再写安全距离约束和最小调整目标。",
+    "Q13": "先列安全状态集合，再找从 (3,3) 到 (0,0) 的合法转移序列。",
+    "Q14": "按父母各给一个基因逐项计算条件概率。",
+    "Q15": "Hamilton 先按余数补席，EP 逐席比较 Q 值。",
+    "Q16": "同一投票表分别套用不同规则，比较使用了哪些排序信息。",
+    "Q17": "先统一属性方向，再标准化、赋权、综合排序。",
+    "Q18": "计算到正理想解和负理想解的距离，再算相对接近度。",
+    "Q19": "按层次结构、成对比较、权重、一致性、综合权重五步写。",
+    "Q20": "把爽约人数看成二项分布，用累计概率阈值找最小 q。",
+    "Q21": "分别算好评和差评的未归一化得分，谁大判谁。",
+    "Q22": "用全概率公式把“回答是”的总体比例拆成两个问题来源。",
+    "Q23": "用最小二乘求直线，再代入 60 摄氏度预测。",
+    "Q24": "先解释自由度，再说明描述样本和估计总体的区别。",
+    "Q25": "分别抓住 PCA、点球博弈、报价博弈的建模入口。",
+}
+
+QUESTIONS = [
+    {
+        "id": "Q1",
+        "title": "减速带间距应该如何设计？",
+        "source": "期中 S9-S12",
+        "topic": "初等模型；匀加速/匀减速；最小二乘估计参数",
+        "difficulty": "基础",
+        "question": "校园道路限速 40 km/h。汽车过减速带后从近似静止开始加速，到 40 km/h 时应开始减速，下一条减速带处速度再次接近 0。根据 PPT 中加速、减速测试数据，估计相邻减速带间距。",
+        "solution": [
+            "把速度单位统一。40 km/h = 40 x 1000 / 3600 ≈ 11.1 m/s。",
+            "建立最简单的物理模型：加速段 v=a1 t，减速段 v=a2 t。因为测试图近似线性，PPT 用 t=c v+d 拟合，斜率 c 的倒数就是加速度的绝对值，即 a≈1/c。",
+            "PPT 给出的拟合斜率为 c1=0.4536，c2=-0.6084。距离可用 s=1/2 a t^2，也可写成 s=1/2 c v^2。加速和减速两段相加：s≈(c1+|c2|)vmax^2/2。",
+            "代入 vmax=11.1：s≈(0.4536+0.6084) x 11.1^2 / 2≈65.6 m。考虑实际驾驶反应、施工取整和安全裕量，PPT 给出的设计值约为 66.5 m，可取 67 m。",
+            "这题的关键不是背数字，而是把实际问题变成“先加速再减速”的两段路程相加。考试中若数据不同，只要重新拟合 c1、c2，再代入同一个公式即可。",
+        ],
+    },
+    {
+        "id": "Q2",
+        "title": "怎样用 10 个出租车牌号估计城市出租车总量？",
+        "source": "期中 S15-S16",
+        "topic": "抽样估计；连续编号；德国坦克问题",
+        "difficulty": "基础",
+        "question": "已知出租车牌号从 0101 开始顺序发放。随机看到 10 辆车：0421、0128、0702、0410、0598、0674、0712、0529、0867、0312。估计城市出租车总数。",
+        "solution": [
+            "先把牌号转成从 1 开始的序号。若 0101 是第 1 辆，则 0867 对应序号 m=867-100=767。",
+            "如果只说“至少有多少辆”，答案是至少 767 辆，因为已经看到了第 767 个序号。",
+            "若要估计总数，用连续编号抽样的无偏近似公式：N_hat=(n+1)m/n-1，其中 n=10，m=767。",
+            "计算得 N_hat=11 x 767 / 10 - 1=842.7，约为 843 辆。对应最大牌号约为 0101+843-1，即 0943 左右。",
+            "直观理解：样本最大值通常小于真实最大值，所以不能把 0867 当作总量；要向上补一个“没抽到的尾巴”。",
+        ],
+    },
+    {
+        "id": "Q3",
+        "title": "奶制品生产计划的线性规划如何建模并解释结果？",
+        "source": "期中 S30-S38",
+        "topic": "线性规划；影子价格；敏感性分析",
+        "difficulty": "中等",
+        "question": "50 桶牛奶可生产 A1 或 A2。1 桶牛奶生产 A1 需 12h 得 3kg，利润 24 元/kg；生产 A2 需 8h 得 4kg，利润 16 元/kg。每天工时 480h，A1 加工上限 100kg。求最大利润，并回答：35 元买 1 桶牛奶买吗？临时工最多每小时付多少？A1 利润升至 30 元/kg 是否改变计划？",
+        "solution": [
+            "设 x1 为用于生产 A1 的牛奶桶数，x2 为用于生产 A2 的牛奶桶数。每桶 A1 利润 24 x 3=72 元，每桶 A2 利润 16 x 4=64 元。",
+            "模型为 max z=72x1+64x2；约束为 x1+x2<=50，12x1+8x2<=480，3x1<=100，x1,x2>=0。",
+            "由图解法或单纯形法，最优解在两个紧约束 x1+x2=50 与 12x1+8x2=480 的交点。解得 x1=20，x2=30，最大利润 z=72x20+64x30=3360 元。",
+            "资源状态：牛奶和工时用完，A1 加工能力只用了 60kg，剩余 40kg。因此前两个约束是紧约束，第三个约束不是紧约束。",
+            "PPT 给出的影子价格为：牛奶 48 元/桶、时间 2 元/小时、A1 能力 0。意思是，在当前最优结构不变的范围内，多 1 桶牛奶可多赚约 48 元，多 1 小时工时可多赚约 2 元，多 1kg A1 能力没有用。",
+            "35 元买 1 桶牛奶：买，因为 35<48；最多买 10 桶，因为右端项敏感性允许牛奶增加 10 桶。",
+            "临时工最高工资：最多 2 元/小时。若超过 2 元，增加工时带来的利润不够付工资。",
+            "A1 利润从 24 元/kg 升到 30 元/kg，则 x1 目标系数从 72 升到 90。PPT 给出的 x1 系数允许范围是 (64,96)，90 在范围内，所以最优生产计划不变，仍是 x1=20、x2=30。",
+        ],
+    },
+    {
+        "id": "Q4",
+        "title": "0-1 规划中常见逻辑约束怎样写？",
+        "source": "期中 S42",
+        "topic": "0-1 变量；逻辑命题线性化",
+        "difficulty": "基础",
+        "question": "设 x1,x2 都是 0-1 变量。如何表达“选甲必选乙”“选甲必不选乙”“甲乙至多选一人”“甲乙至少选一人”？",
+        "solution": [
+            "0-1 变量的好处是，很多逻辑关系可以直接写成线性不等式。",
+            "选甲必选乙：x1<=x2。若 x1=1，则 x2 必须为 1；若 x1=0，则 x2 可选可不选。",
+            "选甲必不选乙：x1+x2<=1，或 x1<=1-x2。若 x1=1，则 x2 只能为 0。",
+            "甲乙至多选一人：x1+x2<=1。允许都不选、只选甲、只选乙，不允许都选。",
+            "甲乙至少选一人：x1+x2>=1。允许只选甲、只选乙、都选，不允许都不选。",
+            "如果题目要求“恰好选一人”，则同时满足至多和至少，即 x1+x2=1。",
+        ],
+    },
+    {
+        "id": "Q5",
+        "title": "项目选择问题如何建 0-1 规划模型？",
+        "source": "期中 S43-S50",
+        "topic": "0-1 规划；多目标处理；前置依赖",
+        "difficulty": "中等",
+        "question": "9 个项目有 KPI、类别和基础要求。要求至少参与 2 项生产、3 项化工、2 项数字模拟；同时项目数尽量少，KPI 尽量高。如何建模？PPT 的最优结果是什么？",
+        "solution": [
+            "设 xi=1 表示参与第 i 个项目，xi=0 表示不参与。",
+            "类别约束按集合求和。例如生产类项目集合为 P，则 sum_{i in P} xi>=2；化工类集合 C 满足 sum_{i in C} xi>=3；数字模拟类集合 D 满足 sum_{i in D} xi>=2。",
+            "基础要求用“选后项必须选前项”表达。例如项目 3 需要项目 1 和 2，则 x3<=x1 且 x3<=x2；项目 8 需要项目 5，则 x8<=x5。",
+            "多目标不要直接混在一起。常见做法是分两步：先最小化参与项目总数 sum xi；在最小项目数固定后，再最大化 KPI 总和 sum KPI_i xi。",
+            "PPT 给出的一个最优选择是项目 1、2、3、6、7、9，共 6 个项目，总 KPI=21。加入额外约束后，PPT 给出 x1=x2=x3=x5=x7=x9=1 的解，总 KPI=22，且提示最优解不唯一，可用 x6 替换 x9。",
+            "考试写解答时，重点是把类别要求和前置依赖写正确；求解结果可以用枚举、整数规划软件或逻辑推理得到。",
+        ],
+    },
+    {
+        "id": "Q6",
+        "title": "原油采购为什么属于可分离规划？",
+        "source": "期中 S51-S55",
+        "topic": "分段线性成本；可分离规划；线性化",
+        "difficulty": "较难",
+        "question": "原油 A 的购买价格分三段：0-500 吨为 10 千元/吨，500-1000 吨超出部分为 8 千元/吨，1000-1500 吨超出部分为 6 千元/吨。公司用 A、B 混合生产汽油甲、乙，并满足 A 含量下限。如何建立采购与加工模型？",
+        "solution": [
+            "设 x11、x12 分别为用于甲、乙汽油的原油 A 吨数，x21、x22 分别为用于甲、乙汽油的原油 B 吨数，y 为购买的原油 A 吨数。",
+            "库存约束：x11+x12<=500+y，x21+x22<=1000，0<=y<=1500。",
+            "比例约束：甲汽油 A 比例不低于 50%，所以 x11/(x11+x21)>=0.5，化为 x11>=x21；乙汽油 A 比例不低于 60%，所以 x12/(x12+x22)>=0.6，化为 2x12>=3x22。",
+            "收入为 4.8(x11+x21)+5.6(x12+x22)，单位为千元。难点在采购成本 c(y) 是分段线性的：c(0)=0，c(500)=5000，c(1000)=9000，c(1500)=12000。",
+            "目标函数为 max 利润 = 收入 - c(y)。由于 c(y) 分段线性，可引入断点权重 z1,z2,z3,z4，使 y=sum z_k b_k，c(y)=sum z_k c(b_k)，sum z_k=1，z_k>=0，并要求只在相邻断点之间插值。",
+            "这题通常不要求手算最终吨数，复习重点是看出“成本函数可分段线性化”，从而把非线性采购成本转成线性规划可处理的形式。",
+        ],
+    },
+    {
+        "id": "Q7",
+        "title": "生产准备费与贮存费如何决定最优生产周期？",
+        "source": "期中 S56-S61",
+        "topic": "库存模型；平均费用；连续化",
+        "difficulty": "中等",
+        "question": "某产品日需求量 r=100 件，每次生产准备费 c1=5000 元，每天每件贮存费 c2=1 元。生产时间忽略。多少天生产一次、每次生产多少件使平均每天总费用最小？",
+        "solution": [
+            "设 T 天生产一次，每次生产 Q 件。为了刚好满足需求，Q=rT。",
+            "准备费平均到每天为 c1/T。周期越短，准备费越高；周期越长，准备费越低。",
+            "库存从 Q 线性降到 0，连续近似下平均库存为 Q/2=rT/2，所以平均贮存费为 c2 rT/2。",
+            "平均每天费用 C(T)=c1/T+c2 rT/2。",
+            "求导：C'(T)=-c1/T^2+c2 r/2。令 C'(T)=0，得 T*=sqrt(2c1/(c2 r))。",
+            "代入 c1=5000、c2=1、r=100，T*=sqrt(100)=10 天，Q*=rT=1000 件。",
+            "PPT 中离散日结算例子 10 天一次的费用为 950 元/天；连续模型给 1000 元/天。数值略有差别，但最优周期同为 10 天。考试中说明采用连续近似即可。",
+        ],
+    },
+    {
+        "id": "Q8",
+        "title": "森林救火应派多少队员？",
+        "source": "期中 S62-S66",
+        "topic": "目标函数转换；损失费与救援费平衡",
+        "difficulty": "较难",
+        "question": "森林失火后，队员多则损失小但救援费高，队员少则损失大但救援费低。如何建立派出队员人数 x 的优化模型？",
+        "solution": [
+            "设 x 为消防队员人数，t=0 为失火时刻，t1 为开始救火时刻，t2 为灭火时刻，B(t2) 为最终烧毁面积。",
+            "总费用由两部分构成：森林损失费 c1 B(t2)，以及救援费 c2 x(t2-t1)+c3 x。这里 c2 是单位时间单位队员费用，c3 是每名队员一次性费用。",
+            "火势规律需要简化。PPT 的思路是先分析单位时间烧毁面积 dB/dt，而不是直接猜 B(t)。救火前火势随时间增强，救火后增长速度被队员人数 x 抑制。",
+            "目标函数可写为 C(x)=c1 B(t2(x))+c2 x(t2(x)-t1)+c3 x。x 越大，B(t2) 和 t2 通常越小，但救援费越大。",
+            "约束是 x>=0 且队员灭火能力要足以压住火势，例如需要 lambda x>beta 这一类临界条件，否则火势不能被有效控制。",
+            "这题的解题重点是“现实目标不能直接写成一个数字时，要先拆成可计算的费用项”。真正考试若给出 beta、lambda、c1、c2、c3，才继续对 C(x) 求导或枚举整数 x。",
+        ],
+    },
+    {
+        "id": "Q9",
+        "title": "Logistic 捕捞模型如何求最大持续产量？",
+        "source": "期中 S69-S74",
+        "topic": "Logistic 方程；平衡点；最优捕捞强度",
+        "difficulty": "中等",
+        "question": "无捕捞时鱼量 x 满足 Logistic 增长 dx/dt=rx(1-x/N)。单位时间捕捞量与鱼量成正比 h(x)=Ex。如何控制 E 使持续产量最大？若考虑价格 p 和捕捞强度成本 c，又如何求效益最大？",
+        "solution": [
+            "有捕捞时模型为 dx/dt=rx(1-x/N)-Ex。",
+            "持续捕捞要求鱼量稳定，即 dx/dt=0。除 x=0 外，正平衡点满足 r(1-x/N)=E，因此 x=N(1-E/r)，要求 E<r。",
+            "持续产量 h=Ex=EN(1-E/r)。这是关于 E 的二次函数，开口向下。",
+            "求导 h'(E)=N(1-2E/r)。令 h'(E)=0，得 E*=r/2，对应 x*=N/2，最大持续产量 hmax=rN/4。",
+            "若考虑利润 R(E)=p h(E)-cE=pEN(1-E/r)-cE，求导得 pN(1-2E/r)-c=0。",
+            "因此 E*=r/2 x (1-c/(pN))。若 c>=pN，则捕捞成本过高，最优是不捕或极弱捕捞；若 c<pN，则按该强度捕捞。",
+            "通俗记法：产量最大时鱼量保留在环境容量的一半；利润最大时还要扣掉捕捞成本，所以捕捞强度通常低于产量最大强度。",
+        ],
+    },
+    {
+        "id": "Q10",
+        "title": "SI、SIS、SIR 传染病模型分别解决什么问题？",
+        "source": "期中 S75-S82",
+        "topic": "微分方程；传染病阈值；基本感染数",
+        "difficulty": "中等",
+        "question": "给出 SI、SIS、SIR 三类传染病模型的基本方程，并解释何时感染人数增加、何时减少。",
+        "solution": [
+            "SI 模型只有健康者 S 和感染者 I，比例记为 s(t)、i(t)，且 s+i=1。模型为 di/dt=lambda s i=lambda i(1-i)。当 i=1/2 时增长最快，曲线呈 S 形，但它不考虑治愈。",
+            "SIS 模型允许感染者治愈后重新变成健康者。方程为 di/dt=lambda s i - mu i=lambda i(1-i)-mu i。",
+            "SIS 的结论：若 lambda<=mu，感染比例最终降到 0；若 lambda>mu，感染比例趋向 1-mu/lambda。",
+            "SIR 模型把人群分成健康者 s、感染者 i、移除者 r，方程为 ds/dt=-lambda s i，di/dt=lambda s i - mu i，dr/dt=mu i。",
+            "定义 sigma=lambda/mu。因为 1/mu 是平均感染期，所以 sigma 表示一个感染者在整个感染期平均能感染多少人。",
+            "SIR 中 i 的增减由 sigma s 判断：sigma s>1 时 i 增加，sigma s<1 时 i 减少。拐点发生在 s=1/sigma。",
+            "复习时要记住三者的差别：SI 不治愈，SIS 治愈但不免疫，SIR 治愈且免疫。",
+        ],
+    },
+    {
+        "id": "Q11",
+        "title": "减肥计划如何用差分方程安排？",
+        "source": "期中 S90-S102",
+        "topic": "差分方程；两阶段计划；参数敏感性",
+        "difficulty": "中等",
+        "question": "某人身高 1.70m、体重 100kg，每周摄入 20000 kcal 时体重长期不变。平均 8000 kcal 增加 1kg，目标降到 75kg。如何建立模型并安排两阶段计划？",
+        "solution": [
+            "设 w(k) 为第 k 周初体重，c(k) 为第 k 周摄入热量，alpha=1/8000 kg/kcal。模型为 w(k+1)=w(k)+alpha c(k)-beta w(k)。",
+            "由当前稳定状态估计 beta：100kg、20000kcal 时体重不变，所以 alpha x 20000 = beta x 100。alpha x 20000=2.5，因此 beta=0.025。",
+            "第一阶段每周少摄入 1000kcal，直到安全下限 10000kcal/周。PPT 采用 c(k)=20000-1000k，k=1,...,10，因此第 11 周初体重约 w(11)=93.6157kg。",
+            "第二阶段保持 c=10000kcal/周。递推式变为 w(k+1)=0.975w(k)+1.25。从 w(11)=93.6157 继续递推，约 22 周达到 75kg，总计 32 周。",
+            "若增加运动，相当于把 beta 从 0.025 提高到 0.03。PPT 给出第 11 周初体重约 89.3319kg，第二阶段约 12 周达到目标，总计 22 周。",
+            "达到 75kg 后要维持体重，令 w(k+1)=w(k)=75，得 c=beta w/alpha=0.025 x 75 x 8000=15000kcal/周。",
+            "这题的核心是先用“当前体重不变”反推个人代谢系数 beta，再用同一个递推式模拟不同方案。",
+        ],
+    },
+    {
+        "id": "Q12",
+        "title": "机场塔台调度问题怎样建成优化模型？",
+        "source": "期中 S103-S105",
+        "topic": "资源分配；非线性约束；碰撞避免",
+        "difficulty": "较难",
+        "question": "空域内多架飞机水平飞行，位置和速度已知。新飞机进入时，若存在碰撞风险，应调整所有飞机方向角，使调整幅度尽量小。如何建模？",
+        "solution": [
+            "决策变量是每架飞机的方向角调整量 delta_i，而不是飞机位置。位置会随时间由速度和方向自动决定。",
+            "目标函数可取 min sum delta_i^2 或 min max |delta_i|。前者让总调整小，后者控制最大单机改动。",
+            "约束 1：每架飞机方向角调整幅度不超过 30 度，即 |delta_i|<=30°。",
+            "约束 2：任意两架飞机在未来相关时间内距离都必须大于 8km。若第 i 架初始位置为 p_i，调整后速度为 v_i(delta_i)，则要求 ||p_i+v_i t - p_j-v_j t||>=8 对所有关键 t 成立。",
+            "约束 3：空域容量和速度条件按题意加入，例如最多 6 架进入、速度均为 800km/h、新进入飞机与区域内飞机初始距离大于 60km。",
+            "这是典型“安全约束 + 最小扰动”的优化题。考试中不一定要求求数值解，但必须把碰撞约束和角度调整目标写清楚。",
+        ],
+    },
+    {
+        "id": "Q13",
+        "title": "商人过河问题如何表达为状态转移？",
+        "source": "期末 S5-S12",
+        "topic": "状态集合；容许状态；决策序列",
+        "difficulty": "中等",
+        "question": "三名商人各带一名随从过河，船每次最多坐两人。任一岸只要随从多于商人且商人数不为 0，商人就不安全。求一个安全过河方案，并说明一般数学表达。",
+        "solution": [
+            "用状态 s=(x,y) 表示此岸商人数 x、随从数 y。初始状态为 (3,3)，目标状态为 (0,0)。",
+            "容许状态是安全状态：若 x=0 或 x=3，则 y 可为 0,1,2,3；若 x=1 或 2，则必须 x=y。因此 S={(3,y),(0,y),y=0..3} union {(1,1),(2,2)}。",
+            "决策 d=(u,v) 表示本次船上 u 名商人、v 名随从，要求 1<=u+v<=2。",
+            "若船从此岸到彼岸，状态减少 d；若船返回，状态增加 d。可统一写为 s_{i+1}=s_i+(-1)^i d_i，具体正负取决于编号从哪一岸开始。",
+            "一个可行方案为：CC 过去，C 回来；CC 过去，C 回来；MM 过去，MC 回来；MM 过去，C 回来；CC 过去，C 回来；CC 过去。",
+            "对应此岸状态序列：(3,3)->(3,1)->(3,2)->(3,0)->(3,1)->(1,1)->(2,2)->(0,2)->(0,3)->(0,1)->(0,2)->(0,0)。每一步都在容许状态集合 S 中。",
+            "这题容易错在只看此岸，忘记彼岸也要安全。用容许状态集合可以一次性保证两岸都安全。",
+        ],
+    },
+    {
+        "id": "Q14",
+        "title": "遗传问题的概率转移矩阵怎么写？",
+        "source": "期末 S15-S24",
+        "topic": "概率转移矩阵；条件概率；基因型",
+        "difficulty": "中等",
+        "question": "基因型 D=dd、H=dr、R=rr。若一方固定为混种 H，另一方分别为 D、H、R，后代为 D、H、R 的概率是多少？如何写成转移矩阵？",
+        "solution": [
+            "D 与 H 繁殖：D 只能给 d，H 以 1/2 给 d、1/2 给 r，所以后代 D 概率 1/2，H 概率 1/2，R 概率 0。",
+            "H 与 H 繁殖：两方各以 1/2 给 d 或 r。dd 概率 1/4，dr 概率 1/2，rr 概率 1/4。",
+            "R 与 H 繁殖：R 只能给 r，H 以 1/2 给 d、1/2 给 r，所以后代 D 概率 0，H 概率 1/2，R 概率 1/2。",
+            "按状态顺序 D,H,R，转移矩阵可写为 P=[[1/2,1/2,0],[1/4,1/2,1/4],[0,1/2,1/2]]，行表示当前类型，列表示下一代类型。",
+            "矩阵元素的含义是 p_ij=P(下一代为 j | 当前父母组合为 i)。例如 P(D|DH)=1 x 1/2=1/2，P(R|HH)=1/2 x 1/2=1/4。",
+            "近亲繁殖扩展题会把父母组合扩成 DD、RR、DH、DR、HH、HR 六个状态，方法相同：逐一列出后代组合概率。",
+        ],
+    },
+    {
+        "id": "Q15",
+        "title": "Hamilton 法和 EP 法分配席位有什么差别？",
+        "source": "期末 S27-S38",
+        "topic": "席位分配；Hamilton 方法；相等比例法",
+        "difficulty": "中等",
+        "question": "三州人口为 103、63、34，总人口 200。分配 20 席或 21 席。用 Hamilton 法和 EP 法分别如何处理？",
+        "solution": [
+            "Hamilton 法先算份额 q_i=Np_i/P，再取整数部分，剩余席位按小数部分从大到小补。",
+            "20 席时，份额为 10.3、6.3、3.4。先分 10、6、3，共 19 席；最大余数是丙 0.4，所以结果为 10、6、4。",
+            "21 席时，份额为 10.815、6.615、3.570。先分 10、6、3，共 19 席；余数最大的两个是甲、乙，所以结果为 11、7、3。",
+            "这说明 Hamilton 法会出现不公平现象：总席位从 20 增加到 21，丙州反而从 4 席降到 3 席。",
+            "EP 法一席一席分配，下一席给 Q_i=p_i/sqrt(n_i(n_i+1)) 最大的一方。若从 19 席的 10、6、3 开始，第 20 席的 Q 约为甲 9.8207、乙 9.7211、丙 9.8150，因此第 20 席给甲。",
+            "分成 11、6、3 后，第 21 席的 Q 约为甲 8.9650、乙 9.7211、丙 9.8150，因此第 21 席给丙，结果为 11、6、4。",
+            "复习记忆：Hamilton 简单但可能悖论；EP 用每席代表人数的相对公平来决定下一席。",
+        ],
+    },
+    {
+        "id": "Q16",
+        "title": "同一组投票为什么会得到不同获胜者？",
+        "source": "期末 S39-S46",
+        "topic": "投票规则；简单多数；Coombs；Borda",
+        "difficulty": "中等",
+        "question": "30 名学生在 A、B、C、D 四个候选项中排序投票。PPT 中不同规则得到 B、C、D 等不同获胜者。请说明各方法如何得出结果。",
+        "solution": [
+            "可用 PPT 隐含的偏好组理解：9 人为 A>D>C>B，10 人为 C>D>A>B，11 人为 B>D>C>A。",
+            "简单多数法只看第一名票数：A 有 9 票，B 有 11 票，C 有 10 票，D 有 0 票，所以 B 获胜。问题是 19 人把 B 排在最后。",
+            "单轮决胜法让第一名票数最多的 B 和 C 进入决胜。9 个 A>D>C>B 的选民更偏向 C，10 个 C 组选民选 C，11 个 B 组选民选 B，所以 C 以 19:11 获胜。",
+            "系列决胜法每轮淘汰第一名票数最少者。先淘汰 D，再淘汰 A，最后 C 对 B，仍是 C 获胜。",
+            "Coombs 法每轮淘汰倒数第一最多者。第一轮 B 被 19 人排最后，先淘汰 B；之后 A 成为倒数第一最多者；最后 D 对 C，D 获胜。",
+            "Borda 法给第 1、2、3、4 名分别 4、3、2、1 分。A=9x4+10x2+11x1=67；B=11x4+19x1=63；C=10x4+20x2=80；D=30x3=90，所以 D 获胜。",
+            "结论：投票不是单纯统计问题，而是规则选择问题。不同规则使用的排序信息不同，因此公平性标准也不同。",
+        ],
+    },
+    {
+        "id": "Q17",
+        "title": "汽车选购的多属性决策怎样做？",
+        "source": "期末 S50-S72",
+        "topic": "决策矩阵；熵权；SAW/WP/TOPSIS",
+        "difficulty": "中等",
+        "question": "三辆车 A1、A2、A3，属性为价格、性能、款式。价格为 25、18、12 万，性能为 9、7、5，款式为 7、7、5。如何用多属性决策给出排序？",
+        "solution": [
+            "第一步，明确属性类型。价格是费用型，越小越好；性能和款式是效益型，越大越好。",
+            "第二步，将费用型转成效益型，例如用倒数 1/价格，或按 PPT 的统一效益型矩阵处理。然后进行比例尺度标准化，可用归一化、最大化或模一化。",
+            "第三步，确定权重。PPT 用信息熵法得到 w=(0.5330,0.3293,0.1377)^T，说明价格区分度最大，款式区分度最小。",
+            "第四步，用综合方法计算。SAW 的公式为 v_i=sum_j w_j r_ij；WP 的公式为 v_i=prod_j d_ij^{w_j}，费用型权重取负；TOPSIS 用距离正理想解近、距负理想解远来排序。",
+            "PPT 给出的 SAW 结果，例如最大化标准化下 v=(0.7228,0.7492,0.8143)^T，顺序为 A3>A2>A1。",
+            "最终三种综合方法的排序基本一致：A3 最优，A2 次之，A1 最后。直观原因是 A3 价格优势非常大，而价格权重又最大。",
+            "考试写法要完整：目标、方案、属性、决策矩阵、标准化、权重、综合值、排序，缺一项都容易扣分。",
+        ],
+    },
+    {
+        "id": "Q18",
+        "title": "TOPSIS 的距离和相对接近度如何解释？",
+        "source": "期末 S65-S71",
+        "topic": "TOPSIS；理想解；欧氏距离",
+        "difficulty": "较难",
+        "question": "在汽车选购例中，PPT 给出 TOPSIS 距离 S+=(0.2141,0.1470,0.1087)，S-=(0.1087,0.0966,0.2141)。如何计算相对接近度并排序？",
+        "solution": [
+            "TOPSIS 先把每个方案看成属性空间中的一个点。正理想解 v+ 由每个属性的最好值组成，负理想解 v- 由每个属性的最差值组成。",
+            "对每个方案 Ai，计算到正理想解的距离 S_i+，以及到负理想解的距离 S_i-。",
+            "相对接近度公式为 C_i=S_i-/(S_i+ + S_i-)。C_i 越大，说明越接近理想解、越远离最差解。",
+            "代入 A1：C1=0.1087/(0.2141+0.1087)=0.3368。",
+            "代入 A2：C2=0.0966/(0.1470+0.0966)=0.3966。",
+            "代入 A3：C3=0.2141/(0.1087+0.2141)=0.6633。",
+            "因此排序为 A3>A2>A1。若要把 C 再归一化，PPT 给出约 (0.2411,0.2840,0.4749)，排序不变。",
+            "TOPSIS 的口语解释：最好的方案不是某一项最好，而是整体上离“全都好”的虚拟方案最近，且离“全都差”的虚拟方案最远。",
+        ],
+    },
+    {
+        "id": "Q19",
+        "title": "AHP 职员晋升问题应怎样写步骤？",
+        "source": "期末 S82-S90",
+        "topic": "层次分析法；成对比较；一致性检验",
+        "difficulty": "中等",
+        "question": "目标是职员晋升，准则包括工作年限、教育程度、工作能力、道德品质，方案为 A1、A2、A3。如何用 AHP 求综合排序？",
+        "solution": [
+            "第一步，建层次结构：目标层是“晋升 Y”，准则层是 X1-X4，方案层是 A1-A3。",
+            "第二步，对准则两两比较，得到正互反矩阵 A。矩阵元素 a_ij 表示 Xi 相对 Xj 对目标的重要性，且 a_ji=1/a_ij，a_ii=1。",
+            "第三步，求 A 的最大特征根对应特征向量，并归一化为准则权重 w^(2)。如果矩阵完全一致，则 a_ij=w_i/w_j，最大特征根等于 n。",
+            "第四步，对每个准则 Xj，再让方案 A1-A3 两两比较，得到方案相对该准则的权重向量。把这些向量组成矩阵 W^(3)。",
+            "第五步，做一致性检验。CI=(lambda_max-n)/(n-1)，CR=CI/RI。通常 CR<0.1 认为一致性可接受。",
+            "第六步，综合权重为 w^(3)=W^(3) w^(2)。PPT 给出的晋升综合权重为 (0.4505,0.3202,0.2292)^T。",
+            "因此排序为 A1>A2>A3。写题时要说明：AHP 的主观性来自成对比较，可靠性靠一致性检验约束。",
+        ],
+    },
+    {
+        "id": "Q20",
+        "title": "航空公司超额售票数量如何确定？",
+        "source": "期末 S93-S102",
+        "topic": "二项分布；期望收益；声誉约束",
+        "difficulty": "较难",
+        "question": "飞机容量 n=300，每位订票旅客不登机概率 p=0.05，补偿金额与票价比 s=s2/s1=1/2。如何确定平均收益最大的超额售票数量 q？",
+        "solution": [
+            "设超额售票 q 张，则订票人数为 n+q。随机变量 r 表示不按时登机人数，r~Bin(n+q,p)。",
+            "若 r<=q，说明实际来的人超过座位，有 q-r 人无法登机，要赔偿。收益为 s1 n - s2(q-r)。",
+            "若 r>q，说明座位没坐满，实际登机人数为 n+q-r，收益为 s1(n+q-r)。",
+            "平均收益 E(q)=sum S(r,q) f(r)。直接逐个 q 算可以，但 PPT 给出更简洁的判据：选择最小 q，使 P(r<=q)>=s1/(s1+s2)=1/(1+s)。",
+            "这里 s=1/2，所以阈值为 1/(1+1/2)=2/3。",
+            "代入 n=300、p=0.05，对 r~Bin(300+q,0.05) 从 q=0 往上找。q=17 时 P(r<=17)≈0.6761，刚超过 2/3，因此 q=17。",
+            "声誉约束另算：若最多希望超过 j 人无法登机的概率不超过 alpha，则要求 P_j(q)=P(q-r>j)<=alpha。若 q=17 收益高但 P_j(q) 太大，就要减小 q。",
+            "直观理解：p 越大，爽约人越多，可以多卖；赔偿比 s 越大，超卖风险越贵，应少卖。",
+        ],
+    },
+    {
+        "id": "Q21",
+        "title": "贝叶斯评论分类怎样判断好评/差评？",
+        "source": "期末 S103-S109",
+        "topic": "朴素贝叶斯；拉普拉斯平滑；分类得分",
+        "difficulty": "中等",
+        "question": "历史评论提取关键词“好、快、坏”并标记好评/差评。新评论 X={包含好，包含快，不包含坏}。如何用朴素贝叶斯判断类别？",
+        "solution": [
+            "朴素贝叶斯的核心是假设各特征条件独立，所以 P(X|C)=P(x1|C)P(x2|C)P(x3|C)。",
+            "PPT 中好评和差评各 4 条，因此先验 P(pos)=P(neg)=1/2。",
+            "使用拉普拉斯平滑后，PPT 给出：P(好=是|pos)=0.667，P(快=是|pos)=0.5，P(坏=否|pos)=0.833。",
+            "差评下对应概率为：P(好=是|neg)=0.167，P(快=是|neg)=0.167，P(坏=否|neg)=0.167。",
+            "计算好评得分：score(pos)=0.5 x 0.667 x 0.5 x 0.833≈0.1389。",
+            "计算差评得分：score(neg)=0.5 x 0.167 x 0.167 x 0.167≈0.0023。",
+            "因为 0.1389 远大于 0.0023，所以新评论判为好评。",
+            "注意：分类时不需要计算 P(X) 的精确值，因为对所有类别它都是同一个分母，比较得分即可。",
+        ],
+    },
+    {
+        "id": "Q22",
+        "title": "随机化回答如何估计作弊比例？",
+        "source": "期末 S111-S117",
+        "topic": "全概率公式；Warner 模型；Simmons 模型",
+        "difficulty": "较难",
+        "question": "抽 13 张牌决定回答问题。抽到 1-10 回答敏感问题 A，抽到 J/Q/K 回答问题 B。如何根据“回答是”的比例估计作弊比例？",
+        "solution": [
+            "Warner 模型中，A 是“你作弊过吗？”，B 是“你从未作弊过吗？”。设 p 为作弊比例，P(A)=10/13，P(B)=3/13。",
+            "回答“是”的概率为 P(C)=pP(A)+(1-p)P(B)。因为作弊者对 A 答是，不作弊者对 B 答是。",
+            "若 400 张答卷中 112 张回答是，则 P(C)=112/400=0.28。",
+            "代入 0.28=p x 10/13+(1-p) x 3/13，解得 p≈0.091，即约 9.1%。",
+            "Simmons 模型把 B 改成与作弊无关的问题，例如“生日月份是偶数吗？”，其答是概率 p0=1/2。",
+            "此时 P(C)=P(A)p+P(B)p0。若 400 张中 80 张回答是，则 0.20=(10/13)p+(3/13)(1/2)，解得 p≈0.11。",
+            "随机化回答保护隐私的原因是：外人不知道被调查者回答的是 A 还是 B，单个回答不能直接判断个人是否作弊；但总体比例仍可由全概率公式估计。",
+        ],
+    },
+    {
+        "id": "Q23",
+        "title": "热敏电阻数据如何做线性拟合并预测？",
+        "source": "期末 S119",
+        "topic": "最小二乘；一元线性回归；预测",
+        "difficulty": "基础",
+        "question": "温度 t 为 20.5、32.7、51.0、73.0、95.7 摄氏度时，电阻 R 为 765、826、873、942、1032 欧。用 R=at+b 拟合，求 60 摄氏度时的电阻。",
+        "solution": [
+            "线性拟合的目标是让残差平方和 sum(R_i-(a t_i+b))^2 最小。",
+            "最小二乘计算得到 a≈3.3987，b≈702.0968。因此拟合式为 R≈3.3987t+702.0968。",
+            "代入 t=60，R(60)≈3.3987 x 60+702.0968≈906.0 欧。",
+            "拟合优度可用 R^2 衡量。根据这组数据计算 R^2≈0.993，说明线性关系很强，用线性模型预测 60 摄氏度处于数据范围内，比较合理。",
+            "考试中要写清楚：拟合不是穿过所有点，而是找一条让总体误差最小的直线。",
+        ],
+    },
+    {
+        "id": "Q24",
+        "title": "为什么样本方差要做修正？",
+        "source": "期末 S125-S127",
+        "topic": "参数估计；样本方差；无偏修正",
+        "difficulty": "基础",
+        "question": "随机抽取 10 名游客消费金额来估计总体消费波动。为什么总体方差估计常用除以 n-1 的修正样本方差，而不是除以 n？",
+        "solution": [
+            "样本均值 x_bar 是用样本自己算出来的，它会天然靠近这 10 个样本点。",
+            "如果再用 sum(x_i-x_bar)^2/n 估计总体方差，波动会被低估，因为 x_bar 已经“迎合”了样本。",
+            "修正样本方差用 s^2=sum(x_i-x_bar)^2/(n-1)。这里 n-1 叫自由度，意思是 10 个偏差之和必须为 0，真正能自由变化的只有 9 个。",
+            "PPT 的结论强调：未修正样本方差会低估总体真实方差，可能导致风险准备不足；修正后标准差更大，更适合估计总体波动。",
+            "做题步骤是：先算样本均值，再算每个数据与均值的差，平方求和，最后根据题目要求除以 n 或 n-1。",
+            "如果题目问“描述这 10 个样本本身的波动”，可除以 n；如果题目问“用样本估计总体方差”，通常除以 n-1。",
+        ],
+    },
+    {
+        "id": "Q25",
+        "title": "PCA 与博弈模型应如何作为综合题复习？",
+        "source": "期末 S156-S164, S182-S198",
+        "topic": "PCA 降维；纳什均衡；不完全信息博弈",
+        "difficulty": "较难",
+        "question": "PPT 后半包含成绩综合评价的 PCA、点球大战博弈和报价策略博弈。这三类题不一定要求完整数值计算，复习时应掌握什么解题框架？",
+        "solution": [
+            "PCA 的入口是“变量多且相关”。成绩评价有 6 门课，闭卷与开卷课程可能相关。步骤是标准化数据、计算相关矩阵、求特征值和特征向量、按贡献率选择主成分、用主成分得分排序。",
+            "PCA 的通俗解释：把多个相关指标旋转成少数几个互不相关的新指标。第一主成分保留最大方差信息，第二主成分在与第一主成分垂直的方向上保留剩余主要信息。",
+            "点球博弈是完全信息静态零和博弈。参与人是罚球队员和守门员；策略是左/右；罚球队员收益是进球概率，守门员收益可取其相反数。",
+            "若收益矩阵为 [[a,b],[c,d]] 且不存在纯策略纳什均衡，则混合均衡让对方无差异。罚球队员选择左的概率 p=(d-c)/(a-b-c+d)，守门员扑左的概率 q=(d-b)/(a-b-c+d)。",
+            "报价博弈是不完全信息静态博弈。卖方知道自己的价值 vs，买方知道自己的价值 vb，双方只知道对方价值分布。策略不是一个固定报价，而是函数 ps(vs)、pb(vb)。",
+            "成交规则是 pb>=ps 时以均价成交。成交时卖方收益 (ps+pb)/2-vs，买方收益 vb-(ps+pb)/2；不成交收益为 0。",
+            "复习时不必把报价博弈的均衡推到最后一行，但必须能说明：信息不对称会导致双方保守报价，部分本来有交易价值的情况也可能不成交，因此效率低于完全信息情形。",
+        ],
+    },
+]
+
+
+def register_fonts() -> None:
+    pdfmetrics.registerFont(TTFont("NotoSC", str(FONT_REGULAR)))
+    pdfmetrics.registerFont(TTFont("NotoSC-Bold", str(FONT_BOLD)))
+
+
+def md_escape(text: str) -> str:
+    return text.replace("\n", " ")
+
+
+def questions_by_id() -> dict[str, dict]:
+    return {q["id"]: q for q in QUESTIONS}
+
+
+def build_markdown() -> str:
+    qmap = questions_by_id()
+    lines = [
+        "# 复习导论",
+        "",
+        "## 0. 使用说明",
+        "",
+        "这份导论按 7 天复习节奏重排两份总结 PPT。每道题都先重述题目背景，再给题目要求、解题导引和详细解答；即使不打开 PPT，也能直接从 PDF 开始复习。",
+        "",
+        "### 输入来源",
+    ]
+    for item in SOURCE_SUMMARY:
+        lines.append(f"- {item}")
+    lines += ["", "### 已删除或弱化的内容"]
+    for item in REMOVED:
+        lines.append(f"- {item}")
+
+    lines += ["", "## 1. 七天复习时间安排表", ""]
+    lines.append("| 天数 | 重点 | 任务 | 当天验收 |")
+    lines.append("|---|---|---|---|")
+    for row in SCHEDULE:
+        lines.append(f"| {row['day']} | {row['focus']} | {row['tasks']} | {row['check']} |")
+
+    lines += ["", "## 2. 知识点与难度导图", ""]
+    lines.append("| 题号 | 知识点 | 难度 | PPT 来源 |")
+    lines.append("|---|---|---|---|")
+    for q in QUESTIONS:
+        lines.append(f"| {q['id']} | {q['topic']} | {q['difficulty']} | {q['source']} |")
+
+    lines += ["", "## 3. 七天模块化题目与详细解答", ""]
+    for module_name, qids in MODULES:
+        lines += [f"### {module_name}", ""]
+        for qid in qids:
+            q = qmap[qid]
+            lines += [
+                f"#### {q['id']} {q['title']}",
+                "",
+                f"- 知识点：{q['topic']}",
+                f"- 难度：{q['difficulty']}",
+                f"- 来源：{q['source']}",
+                "",
+                f"题目背景：{BACKGROUND_BY_ID[q['id']]}",
+                "",
+                f"题目要求：{q['question']}",
+                "",
+                f"解题导引：{GUIDE_BY_ID[q['id']]}",
+                "",
+                "详细解答：",
+            ]
+            for i, step in enumerate(q["solution"], 1):
+                lines.append(f"{i}. {step}")
+            lines.append("")
+
+    return "\n".join(lines)
+
+
+def p(text: str, style: ParagraphStyle) -> Paragraph:
+    return Paragraph(escape(text).replace("\n", "<br/>"), style)
+
+
+def make_table(rows, widths, body_style, header_style):
+    data = []
+    for row_index, row in enumerate(rows):
+        row_style = header_style if row_index == 0 else body_style
+        data.append([p(str(cell), row_style) for cell in row])
+    tbl = Table(data, colWidths=widths, repeatRows=1)
+    tbl.setStyle(
+        TableStyle(
+            [
+                ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#344054")),
+                ("GRID", (0, 0), (-1, -1), 0.35, colors.HexColor("#D0D5DD")),
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("LEFTPADDING", (0, 0), (-1, -1), 6),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+                ("TOPPADDING", (0, 0), (-1, -1), 6),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+                ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F9FAFB")]),
+            ]
+        )
+    )
+    return tbl
+
+
+def callout(label: str, text: str, label_style: ParagraphStyle, body_style: ParagraphStyle, width: float, fill: str) -> Table:
+    tbl = Table(
+        [[p(label, label_style)], [p(text, body_style)]],
+        colWidths=[width],
+        hAlign="LEFT",
+    )
+    tbl.setStyle(
+        TableStyle(
+            [
+                ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor(fill)),
+                ("BOX", (0, 0), (-1, -1), 0.55, colors.HexColor("#D0D5DD")),
+                ("LINEBELOW", (0, 0), (-1, 0), 0.35, colors.HexColor("#D0D5DD")),
+                ("LEFTPADDING", (0, 0), (-1, -1), 8),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 8),
+                ("TOPPADDING", (0, 0), (-1, -1), 6),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+            ]
+        )
+    )
+    return tbl
+
+
+def build_pdf(out_pdf: Path = OUT_PDF) -> Path:
+    register_fonts()
+    margin_x = 1.75 * cm
+    margin_y = 1.45 * cm
+    content_width = A4[0] - 2 * margin_x
+    doc = SimpleDocTemplate(
+        str(out_pdf),
+        pagesize=A4,
+        leftMargin=margin_x,
+        rightMargin=margin_x,
+        topMargin=margin_y,
+        bottomMargin=margin_y,
+        title="复习导论",
+        author="Codex",
+    )
+
+    styles = getSampleStyleSheet()
+    styles.add(
+        ParagraphStyle(
+            "CNTitle",
+            fontName="NotoSC-Bold",
+            fontSize=24,
+            leading=31,
+            alignment=TA_CENTER,
+            textColor=colors.HexColor("#101828"),
+            spaceAfter=12,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "CNH1",
+            fontName="NotoSC-Bold",
+            fontSize=15.5,
+            leading=20,
+            textColor=colors.HexColor("#1D2939"),
+            spaceBefore=14,
+            spaceAfter=8,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "CNH2",
+            fontName="NotoSC-Bold",
+            fontSize=13,
+            leading=17,
+            textColor=colors.HexColor("#175CD3"),
+            spaceBefore=12,
+            spaceAfter=6,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "ModuleTitle",
+            fontName="NotoSC-Bold",
+            fontSize=16,
+            leading=21,
+            textColor=colors.white,
+            backColor=colors.HexColor("#344054"),
+            borderPadding=(7, 8, 7),
+            spaceBefore=4,
+            spaceAfter=12,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "QuestionTitle",
+            fontName="NotoSC-Bold",
+            fontSize=13.2,
+            leading=17,
+            textColor=colors.HexColor("#175CD3"),
+            spaceBefore=10,
+            spaceAfter=4,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "CNBody",
+            fontName="NotoSC",
+            fontSize=9.8,
+            leading=15.5,
+            textColor=colors.HexColor("#101828"),
+            spaceAfter=5,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "CNSmall",
+            fontName="NotoSC",
+            fontSize=8.4,
+            leading=12,
+            textColor=colors.HexColor("#344054"),
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "TableHeader",
+            fontName="NotoSC-Bold",
+            fontSize=8.7,
+            leading=11.5,
+            textColor=colors.white,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "CNMeta",
+            fontName="NotoSC",
+            fontSize=8.5,
+            leading=12,
+            textColor=colors.HexColor("#475467"),
+            spaceAfter=4,
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "BoxLabel",
+            fontName="NotoSC-Bold",
+            fontSize=9.2,
+            leading=12,
+            textColor=colors.HexColor("#344054"),
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "BoxBody",
+            fontName="NotoSC",
+            fontSize=9.4,
+            leading=14.5,
+            textColor=colors.HexColor("#101828"),
+        )
+    )
+    styles.add(
+        ParagraphStyle(
+            "StepHeading",
+            fontName="NotoSC-Bold",
+            fontSize=10.2,
+            leading=13,
+            textColor=colors.HexColor("#344054"),
+            spaceBefore=7,
+            spaceAfter=3,
+        )
+    )
+
+    story = []
+    story.append(p("复习导论", styles["CNTitle"]))
+    story.append(p("七天清爽重排版：每题先读背景，再看要求、导引和详细解答。", styles["CNBody"]))
+
+    story.append(p("0. 使用说明", styles["CNH1"]))
+    story.append(
+        p(
+            "主体只保留能直接训练的题目、案例、公式和解题步骤。每道题都补了题目背景，适合不打开 PPT 时直接从本 PDF 开始复习。",
+            styles["CNBody"],
+        )
+    )
+    for item in SOURCE_SUMMARY:
+        story.append(p("来源：" + item, styles["CNMeta"]))
+    story.append(p("删除或弱化内容：" + "；".join(REMOVED), styles["CNMeta"]))
+
+    story.append(p("1. 七天复习时间安排表", styles["CNH1"]))
+    sched_rows = [["天数", "重点", "任务", "当天验收"]]
+    for row in SCHEDULE:
+        sched_rows.append([row["day"], row["focus"], row["tasks"], row["check"]])
+    story.append(
+        make_table(
+            sched_rows,
+            [1.55 * cm, 3.0 * cm, 7.0 * cm, content_width - 11.55 * cm],
+            styles["CNSmall"],
+            styles["TableHeader"],
+        )
+    )
+    story.append(PageBreak())
+
+    story.append(p("2. 知识点与难度导图", styles["CNH1"]))
+    map_rows = [["题号", "知识点", "难度", "PPT 来源"]]
+    for q in QUESTIONS:
+        map_rows.append([q["id"], q["topic"], q["difficulty"], q["source"]])
+    story.append(
+        make_table(
+            map_rows,
+            [1.25 * cm, content_width - 6.15 * cm, 1.65 * cm, 3.25 * cm],
+            styles["CNSmall"],
+            styles["TableHeader"],
+        )
+    )
+    story.append(PageBreak())
+
+    qmap = questions_by_id()
+    story.append(p("3. 七天模块化题目与详细解答", styles["CNH1"]))
+    for module_index, (module_name, qids) in enumerate(MODULES):
+        if module_index > 0:
+            story.append(Spacer(1, 0.45 * cm))
+        story.append(p(module_name, styles["ModuleTitle"]))
+        for qid in qids:
+            q = qmap[qid]
+            intro = [
+                p(f"{q['id']} {q['title']}", styles["QuestionTitle"]),
+                p(f"知识点：{q['topic']}　|　难度：{q['difficulty']}　|　来源：{q['source']}", styles["CNMeta"]),
+                callout("题目背景", BACKGROUND_BY_ID[q["id"]], styles["BoxLabel"], styles["BoxBody"], content_width, "#F8FAFC"),
+            ]
+            story.append(KeepTogether(intro))
+            story.append(Spacer(1, 0.10 * cm))
+            story.append(callout("题目要求", q["question"], styles["BoxLabel"], styles["BoxBody"], content_width, "#F9FAFB"))
+            story.append(p("解题导引", styles["StepHeading"]))
+            story.append(p(GUIDE_BY_ID[q["id"]], styles["CNBody"]))
+            story.append(p("详细解答", styles["StepHeading"]))
+            for i, step in enumerate(q["solution"], 1):
+                story.append(p(f"{i}. {step}", styles["CNBody"]))
+            story.append(Spacer(1, 0.35 * cm))
+
+    def footer(canvas, doc_):
+        canvas.saveState()
+        canvas.setFont("NotoSC", 7)
+        canvas.setFillColor(colors.HexColor("#667085"))
+        canvas.drawRightString(A4[0] - margin_x, 0.72 * cm, f"复习导论 · 七天清爽重排版 · 第 {doc_.page} 页")
+        canvas.restoreState()
+
+    doc.build(story, onFirstPage=footer, onLaterPages=footer)
+    return out_pdf
+
+
+def main() -> None:
+    OUT_MD.write_text(build_markdown(), encoding="utf-8")
+    try:
+        out_pdf = build_pdf(OUT_PDF)
+    except PermissionError:
+        out_pdf = build_pdf(FALLBACK_PDF)
+    print(f"wrote {OUT_MD}")
+    print(f"wrote {out_pdf}")
+
+
+if __name__ == "__main__":
+    main()

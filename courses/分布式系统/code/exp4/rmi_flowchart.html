@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验四 RMI 分布式系统 - 程序流程图</title>
+    <!-- 引入 Mermaid.js 库来渲染流程图 -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .mermaid-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .instructions {
+            margin-top: 30px;
+            line-height: 1.6;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>实验四 RMI 分布式系统 - 交互流程图</h1>
+    <p class="subtitle">展示客户端、注册表、服务端与数据库之间的核心通信流程</p>
+
+    <!-- 用 Mermaid 语法编写流程图 -->
+    <div class="mermaid-wrapper">
+        <div class="mermaid">
+            flowchart LR
+                %% 客户端控制流节点
+                C_Start(["启动客户端"]) --> C_UI["展示GUI交互面板"]
+                C_UI --> C_WaitOp{"用户操作种类?"}
+                
+                C_WaitOp -- 连接操作 --> C_Find["lookup查找StudentService"]
+                C_Find --> C_CheckConn{"获取代理成功?"}
+                C_CheckConn -- 否 --> C_Err[/"输出连接失败"/] --> C_WaitOp
+                C_CheckConn -- 是 --> C_ConnMsg[/"输出连接成功"/] --> C_WaitOp
+                
+                C_WaitOp -- 数据操作 --> C_Input[/"读取表单参数"/]
+                C_Input --> C_Serialize["参数序列化"]
+                C_Serialize --> C_Call["通过Stub发起远程调用"]
+
+                C_Receive["反序列化解析返回值"] --> C_Show[/"在日志区输出结果"/]
+                C_Show --> C_WaitOp
+
+                %% 服务端控制流节点
+                S_Start(["启动服务端"]) --> S_UI["展示GUI控制台"]
+                S_UI --> S_WaitClick{"点击启动按钮?"}
+                S_WaitClick -- 否 --> S_WaitClick
+                S_WaitClick -- 是 --> S_InitDB["初始化数据库连接"]
+                S_InitDB --> S_Check1{"连接成功?"}
+                S_Check1 -- 否 --> S_Err1[/"输出失败日志"/] --> S_End(["服务端关闭"])
+                S_Check1 -- 是 --> S_Reg["创建Registry对象"]
+                S_Reg --> S_Bind["绑定核心服务至1099端口"]
+                S_Bind --> S_Ready[/"输出服务就绪"/]
+                S_Ready --> S_WaitCall["阻塞等待客户端调用..."]
+                
+                S_WaitCall --> S_DBOp["执行 JDBC SQL操作"]
+                S_DBOp --> S_DBRes["获取数据库结果集"]
+                S_DBRes --> S_Return["封装结果对象并序列化"]
+
+                %% 跨端通信通道 (横向)
+                C_Call -. 发送网络请求 .-> S_WaitCall
+                S_Return -. 响应返回 .-> C_Receive
+
+                %% 定义子图容器以包裹节点 (极简兼容写法)
+                subgraph 客户端区域
+                    C_Start
+                    C_UI
+                    C_WaitOp
+                    C_Find
+                    C_CheckConn
+                    C_Err
+                    C_ConnMsg
+                    C_Input
+                    C_Serialize
+                    C_Call
+                    C_Receive
+                    C_Show
+                end
+
+                subgraph 服务端区域
+                    S_Start
+                    S_UI
+                    S_WaitClick
+                    S_InitDB
+                    S_Check1
+                    S_Err1
+                    S_End
+                    S_Reg
+                    S_Bind
+                    S_Ready
+                    S_WaitCall
+                    S_DBOp
+                    S_DBRes
+                    S_Return
+                end
+        </div>
+    </div>
+
+    <div class="instructions">
+        <h3>💡 节点关系说明：</h3>
+        <ul>
+            <li><b>客户端 GUI (RMIClient)：</b> 完全不包含任何 JDBC 代码，仅依靠引入 <code>IRemoteStudentService.java</code> 接口约束来调用方法。</li>
+            <li><b>RMI Registry：</b> 相当于中介黄页。服务端在这里“挂牌”，客户端通过“挂牌名”找到真正的远程处理对象。</li>
+            <li><b>网络序列化/反序列化：</b> 客户端的参数 (如 Student 对象) 到服务端的传输是在不同 Java 虚拟机(JVM)和不同内存地址空间进行的，所有对象必须被序列化传输，这就是实体类需实现 <code>Serializable</code> 的原因。</li>
+            <li><b>服务端与数据库 (Server & MySQL)：</b> 真正将逻辑请求转换为 <code>SQL</code> 指令的地方，也是系统中唯一和 <code>.env</code> 及 <code>database</code> 直接通讯的节点，确保了数据库高安全性。</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

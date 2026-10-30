@@ -1,0 +1,16 @@
+.env
+.env.*
+*.pem
+*.key
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+PRIVATE*/
+.DS_Store
+Thumbs.db
+.wpp_backup/
+~$*
+.wps_backup/

@@ -1,0 +1,132 @@
+#include <bits/stdc++.h>
+#define MAXSIZE 100
+void exit(){
+	printf("程序结束\n"); 
+}
+
+void again(){
+	printf("请再输一次\n");
+}
+
+typedef struct{
+	int top;//栈顶元素 
+	int data[MAXSIZE];
+}SqStack ,*linkStack;//栈定义
+
+linkStack InitStack(SqStack *s){
+	s=(linkStack)malloc(sizeof(SqStack));
+	s->top=-1;//初始化栈顶 
+	return s;
+} //栈初始化
+
+int Push(SqStack *s,int e){
+	if(s->top==MAXSIZE-1) return 0;//栈满条件 
+	else{
+		s->top++;//栈顶上移 
+		s->data[s->top]=e;
+		return 1;
+	}
+}//入栈操作 
+ 
+int Pop(SqStack *s,int e){
+	if(s->top==-1) return 0;//栈空条件 
+	else{
+		e=s->data[s->top];
+		s->top--;//栈顶下移 
+		printf("%d已出栈\n",e);
+		return 1;
+	}
+}//出栈操作
+
+typedef struct{
+	int front;//队头元素 
+	int rear;//队尾元素 
+	int data[MAXSIZE];
+}SqQueue ,*linkQueue;//队列初始定义 
+
+linkQueue InitQueue(SqQueue *q){
+	q=(linkQueue)malloc(sizeof(SqQueue));
+	q->front=-1;
+	q->rear=-1;
+	return q;
+} //队列初始化 
+
+int enQueue(SqQueue *q,int e){
+	if(q->rear==MAXSIZE-1) return 0;//队满条件 
+	else{
+		q->rear++;//队尾上移 
+		q->data[q->rear]=e;
+		return 1;
+	}
+}//入队操作
+
+int deQueue(SqQueue *q,int e){
+	if(q->front==q->rear) return 0;//队空条件 
+	else{
+		q->front++;//队头上移 
+		e=q->data[q->front];
+		printf("%d已出队\n",e);
+		return 1;
+	}
+} //出队操作 
+
+void menu(){
+	printf("#1	入栈\n");
+	printf("#2	出栈\n");
+	printf("#3	查看栈\n");
+	printf("#4	入队\n");
+	printf("#5	出队\n");
+	printf("#6	查看队\n");
+	printf("#0	退出\n");
+} //菜单选用 
+
+main(){
+	int n;
+	int opt;
+	SqStack *s;
+	s=InitStack(s);
+	SqQueue *q;
+	q=InitQueue(q);//参数初始化 
+	
+	menu();
+	while(1){
+		printf("请输入选项\n");
+		scanf("%d",&opt);
+		switch(opt){
+			case 1:
+				printf("请输入元素\n");
+				scanf("%d",&n);
+				if(Push(s,n)) printf("输入成功\n");
+				else printf("栈满\n");
+				break; 
+			case 2:
+				if(!Pop(s,n)) printf("栈空\n");
+				break;
+			case 3:
+				printf("栈元素依次为\n");
+				for(int i=s->top;i>=0;i--){
+					printf("%d\n",s->data[i]);
+				}
+				break;
+			case 4:
+				printf("请输入元素\n");
+				scanf("%d",&n);
+				if(enQueue(q,n)) printf("输入成功\n");
+				else printf("队满\n");
+				break;
+			case 5:
+				if(!deQueue(q,n)) printf("队空\n");
+				break;
+			case 6:
+				printf("队元素依次为\n");
+				for(int i=q->rear;i>q->front;i--){
+					printf("%d\n",q->data[i]);
+				}
+				break; 
+			case 0: exit();break; 
+			default: again();break;//不符合条件 再输一次 
+		}
+		if(opt==0) break;
+		else continue;
+	}
+} 

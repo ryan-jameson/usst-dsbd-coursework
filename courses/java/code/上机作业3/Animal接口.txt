@@ -1,0 +1,36 @@
+package classlearn;
+
+interface Animal {
+    // 常量
+    int CONSTANT_VALUE = 10;
+
+    // 抽象方法，没有方法体
+    void run();
+}
+
+ class Birds implements Animal {
+    // 实现接口中的抽象方法
+    public void run() {
+        System.out.println("birds are flying.");
+    }
+}
+ class Dogs implements Animal {
+    // 实现接口中的抽象方法
+    public void run() {
+        System.out.println("dogs are running.");
+    }
+}
+ class Fish implements Animal {
+    // 实现接口中的抽象方法
+    public void run() {
+        System.out.println("fish are swimming.");
+    }
+}
+public class Animals {
+	public static void main(String[] args) {
+        Birds b=new Birds();
+        Fish f=new Fish();
+        b.run();
+        f.run();
+    }
+}
